@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Family Call - V4 Fixed</title>
+<title>Family Call</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#075E54">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5977/5977.png">
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',Arial}
 body{margin:0;background:#ece5dd}
@@ -18,7 +23,6 @@ input{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-radius:1
 .btn-red{background:#e74c3c;color:#fff}
 .contact{display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border-radius:14px;margin:8px 0}
 .avatar{width:52px;height:52px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700}
-.contact-info{flex:1}
 .icon-btn{width:44px;height:44px;border-radius:50%;border:none;font-size:20px;cursor:pointer}
 .call-btn{background:#25D366;color:#fff}
 .video-btn{background:#075E54;color:#fff}
@@ -35,19 +39,22 @@ input{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-radius:1
 #incoming{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;flex-direction:column;align-items:center;justify-content:center;color:#fff}
 .small{font-size:13px;color:#666}
 .mic-test{background:#e8f5e9;padding:10px;border-radius:10px;margin-top:10px;text-align:center}
+#installBtn{display:none;background:#ff9800;color:#fff}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo">📞</div><div><h2 style="margin:0">Family Call V4</h2><p style="margin:0;font-size:12px">Audio / Video Fixed</p></div></div>
+<div class="header"><div class="logo">📞</div><div style="flex:1"><h2 style="margin:0">Family Call</h2><p id="myStatus" style="margin:0;font-size:12px">Offline</p></div><button onclick="logout()" style="background:rgba(255,255,255,.2);color:#fff;border:none;padding:8px 12px;border-radius:20px">Logout</button></div>
 <div class="container">
+<button id="installBtn" class="btn" onclick="installApp()">📲 App Install Karo - Home Screen pe Icon Banega</button>
 <div class="card" id="loginCard">
-<h3 style="margin:0">Login</h3>
+<h3 style="margin:0">Ek Baar Login - Hamesha Saved</h3>
 <input id="myName" placeholder="Apna Naam">
 <input id="myNumber" type="tel" placeholder="Mobile Number">
 <button class="btn btn-green" onclick="login()">Login Karo</button>
-<div class="mic-test"><b>🎤 Pehle Mic Test Karo</b><br><button class="btn btn-dark" onclick="testMic()">Mic Test Karo - Bolo Hello</button><p id="micStatus" class="small">Abhi test nahi hua</p></div>
+<div class="mic-test"><b>🎤 Pehle Mic Test Karo</b><br><button class="btn btn-dark" onclick="testMic()">Mic Test Karo</button><p id="micStatus" class="small">Abhi test nahi hua</p></div>
 </div>
 <div class="card" id="addCard" style="display:none">
+<div style="background:#e8f5e9;padding:8px;border-radius:10px;text-align:center">✅ Aap Logged In Ho - <b id="showMyNum"></b><br><span class="small">App khula rakho, call aati rahegi</span></div>
 <input id="famName" placeholder="Naam - Ammi">
 <input id="famNumber" type="tel" placeholder="Unka Number">
 <button class="btn btn-dark" onclick="addFamily()">+ Add Karo</button>
@@ -57,47 +64,58 @@ input{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-radius:1
 <input id="callTo" type="tel" placeholder="Number daalo">
 <button class="btn btn-green" onclick="makeCall(true)">🎥 Video Call</button>
 <button class="btn btn-dark" onclick="makeCall(false)">🎧 Audio Call</button>
-<p class="small">Audio Call me sirf awaz aayegi, video nahi khulega.</p>
 </div>
 </div>
-
 <div id="callScreen">
 <video id="remoteVideo" autoplay playsinline></video>
 <audio id="remoteAudio" autoplay playsinline></audio>
 <video id="myVideo" autoplay muted playsinline></video>
 <div id="audioUI"><div class="bigAvatar">🎧</div><h2 id="audioName">Family</h2><p>Audio Call Chal Rahi Hai...</p><p style="font-size:40px">🎙️ 🔊</p></div>
 <div class="call-top"><h2 id="callName" style="margin:0">Family</h2><p id="callStatus" style="opacity:.8">Connecting...</p></div>
-<div class="call-controls">
-<button class="ctrl" id="muteBtn" onclick="toggleMute()">🎤</button>
-<button class="ctrl" id="speakerBtn" onclick="toggleSpeaker()">🔊</button>
-<button class="ctrl red" onclick="endCall()">📞</button>
+<div class="call-controls"><button class="ctrl" id="muteBtn" onclick="toggleMute()">🎤</button><button class="ctrl" onclick="toggleSpeaker()">🔊</button><button class="ctrl red" onclick="endCall()">📞</button></div>
 </div>
-</div>
-
 <div id="incoming">
 <div style="width:110px;height:110px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:50px" id="inIcon">👤</div>
 <h2 id="inName">Family</h2><p id="inType">Call aa rahi hai...</p>
+<audio id="ringTone" loop src="https://actions.google.com/sounds/v1/alarms/phone_call.ogg"></audio>
 <div style="display:flex;gap:20px"><button class="ctrl red" style="width:70px;height:70px;font-size:28px" onclick="rejectCall()">✖</button><button class="ctrl" style="width:70px;height:70px;background:#25D366;color:#fff;font-size:28px" onclick="acceptCall()">📞</button></div>
 </div>
-
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>
-let peer, myStream, currentCall, incomingCall, isMuted=false, isVideoCall=true;
+let peer, myStream, currentCall, incomingCall, isMuted=false, isVideoCall=true, deferredPrompt=null;
 let family = JSON.parse(localStorage.getItem('family_v2') || '[]');
+// PWA Install
+window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='block'; });
+function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao'); } }
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+// AUTO LOGIN - Page khulte hi purana login yaad
+window.onload = ()=>{
+  let savedNum = localStorage.getItem('myNumber');
+  let savedName = localStorage.getItem('myName');
+  if(savedNum){
+    document.getElementById('myNumber').value=savedNum;
+    document.getElementById('myName').value=savedName||'';
+    login(true);
+  }
+};
 function testMic(){
   document.getElementById('micStatus').innerText='Mic maang rahe hain... Allow dabao';
-  navigator.mediaDevices.getUserMedia({video:false, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{
-    document.getElementById('micStatus').innerText='✅ Mic Sahi Hai! Ab call me awaz aayegi.';
-    s.getTracks().forEach(t=>t.stop());
-  }).catch(e=>{ document.getElementById('micStatus').innerText='❌ Mic Block Hai! Upar Lock icon se Allow karo.'; });
+  navigator.mediaDevices.getUserMedia({video:false, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ document.getElementById('micStatus').innerText='✅ Mic Sahi Hai!'; s.getTracks().forEach(t=>t.stop()); }).catch(e=>{ document.getElementById('micStatus').innerText='❌ Mic Block Hai! Lock icon se Allow karo.'; });
 }
-function login(){
+function login(isAuto){
   let num=document.getElementById('myNumber').value.trim();
-  if(num.length<10){alert('Sahi number daalo');return;}
+  let name=document.getElementById('myName').value.trim()||'Me';
+  if(num.length<10){ if(!isAuto) alert('Sahi number daalo'); return; }
+  // SAVE KARO - Dobara login nahi karna padega
+  localStorage.setItem('myNumber', num); localStorage.setItem('myName', name);
   document.getElementById('loginCard').style.display='none';
   document.getElementById('addCard').style.display='block';
   document.getElementById('directCard').style.display='block';
+  document.getElementById('showMyNum').innerText=name+' - '+num;
+  document.getElementById('myStatus').innerText='● Online - Call aane ke liye taiyaar';
+  if(peer) peer.destroy();
   peer=new Peer('family-'+num);
+  peer.on('open',()=>{ console.log('Online'); });
   peer.on('call',call=>{
     incomingCall=call;
     let isV = call.metadata ? call.metadata.isVideo : true;
@@ -105,88 +123,24 @@ function login(){
     document.getElementById('inType').innerText = isV ? '🎥 Video Call aa rahi hai...' : '🎧 Audio Call aa rahi hai...';
     document.getElementById('inIcon').innerText = isV ? '🎥' : '🎧';
     document.getElementById('incoming').style.display='flex';
+    document.getElementById('ringTone').play().catch(()=>{});
+    if(navigator.vibrate) navigator.vibrate([500,200,500]);
   });
   renderFamily();
 }
-function addFamily(){
-  let n=document.getElementById('famName').value.trim();
-  let num=document.getElementById('famNumber').value.trim();
-  if(!n||!num){alert('Naam aur Number daalo');return;}
-  family.push({name:n,number:num}); localStorage.setItem('family_v2',JSON.stringify(family));
-  document.getElementById('famName').value='';document.getElementById('famNumber').value=''; renderFamily();
-}
-function renderFamily(){
-  let h=''; family.forEach(f=>{ h+=`<div class="contact"><div class="avatar">${f.name.charAt(0).toUpperCase()}</div><div class="contact-info" style="flex:1"><b>${f.name}</b><br><span class="small">${f.number}</span></div><button class="icon-btn video-btn" onclick="callFamily('${f.number}','${f.name}',true)">🎥</button><button class="icon-btn call-btn" onclick="callFamily('${f.number}','${f.name}',false)">📞</button></div>`; });
-  document.getElementById('familyList').innerHTML=h;
-}
+function logout(){ localStorage.removeItem('myNumber'); localStorage.removeItem('myName'); if(peer) peer.destroy(); location.reload(); }
+function addFamily(){ let n=document.getElementById('famName').value.trim(); let num=document.getElementById('famNumber').value.trim(); if(!n||!num){alert('Naam aur Number daalo');return;} family.push({name:n,number:num}); localStorage.setItem('family_v2',JSON.stringify(family)); document.getElementById('famName').value='';document.getElementById('famNumber').value=''; renderFamily(); }
+function renderFamily(){ let h=''; family.forEach(f=>{ h+=`<div class="contact"><div class="avatar">${f.name.charAt(0).toUpperCase()}</div><div style="flex:1"><b>${f.name}</b><br><span class="small">${f.number}</span></div><button class="icon-btn video-btn" onclick="callFamily('${f.number}','${f.name}',true)">🎥</button><button class="icon-btn call-btn" onclick="callFamily('${f.number}','${f.name}',false)">📞</button></div>`; }); document.getElementById('familyList').innerHTML=h; }
 function callFamily(num,name,isVideo){document.getElementById('callTo').value=num;makeCall(isVideo,name);}
-function setupCallUI(isVideo, name){
-  isVideoCall=isVideo;
-  document.getElementById('callName').innerText=name;
-  document.getElementById('audioName').innerText=name;
-  if(isVideo){
-    document.getElementById('remoteVideo').style.display='block';
-    document.getElementById('myVideo').style.display='block';
-    document.getElementById('audioUI').style.display='none';
-  } else {
-    document.getElementById('remoteVideo').style.display='none';
-    document.getElementById('myVideo').style.display='none';
-    document.getElementById('audioUI').style.display='flex';
-  }
-}
-function handleCallEvents(call){
-  call.on('stream',rs=>{
-    document.getElementById('remoteVideo').srcObject=rs;
-    let a=document.getElementById('remoteAudio'); a.srcObject=rs; a.play().catch(()=>{});
-    document.getElementById('callStatus').innerText = isVideoCall ? 'Video Call chal rahi hai...' : 'Audio Call chal rahi hai... Bolo Hello';
-  });
-  // FIX 1: Dusri taraf se cut kare to yahan bhi auto cut
-  call.on('close',()=>{ console.log('Dusri taraf se cut'); forceEndCall(); });
-  call.on('error',()=>{ forceEndCall(); });
-}
-function makeCall(isVideo,name){
-  let to=document.getElementById('callTo').value.trim();
-  if(!to){alert('Number daalo');return;}
-  setupCallUI(isVideo, name||to);
-  document.getElementById('callScreen').style.display='flex';
-  document.getElementById('callStatus').innerText='Call laga rahe hain...';
-  navigator.mediaDevices.getUserMedia({video:isVideo, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{
-    myStream=s; s.getAudioTracks().forEach(t=>t.enabled=true);
-    if(isVideo) document.getElementById('myVideo').srcObject=s;
-    let call=peer.call('family-'+to, s, {metadata:{isVideo:isVideo}});
-    handleCallEvents(call);
-    currentCall=call;
-  }).catch(e=>{alert('Mic/Camera Allow karo');});
-}
-function acceptCall(){
-  let isV = incomingCall.metadata ? incomingCall.metadata.isVideo : true;
-  document.getElementById('incoming').style.display='none';
-  setupCallUI(isV, incomingCall.peer.replace('family-',''));
-  document.getElementById('callScreen').style.display='flex';
-  document.getElementById('callStatus').innerText='Connecting...';
-  navigator.mediaDevices.getUserMedia({video:isV, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{
-    myStream=s; s.getAudioTracks().forEach(t=>t.enabled=true);
-    if(isV) document.getElementById('myVideo').srcObject=s;
-    incomingCall.answer(s);
-    handleCallEvents(incomingCall);
-    currentCall=incomingCall;
-  });
-}
-function rejectCall(){document.getElementById('incoming').style.display='none';if(incomingCall)incomingCall.close();}
-function forceEndCall(){
-  if(myStream)myStream.getTracks().forEach(t=>t.stop());
-  document.getElementById('callScreen').style.display='none';
-  document.getElementById('incoming').style.display='none';
-  document.getElementById('remoteVideo').srcObject=null;
-  document.getElementById('remoteAudio').srcObject=null;
-  currentCall=null;
-}
-function endCall(){
-  if(currentCall)currentCall.close();
-  forceEndCall();
-}
-function toggleMute(){isMuted=!isMuted;if(myStream)myStream.getAudioTracks().forEach(t=>t.enabled=!isMuted);document.getElementById('muteBtn').innerText=isMuted?'🔇':'🎤';document.getElementById('muteBtn').classList.toggle('active',isMuted);}
-function toggleSpeaker(){let a=document.getElementById('remoteAudio');a.volume=1; a.play(); alert('Speaker On kar diya - Volume Full karo');}
+function setupCallUI(isVideo, name){ isVideoCall=isVideo; document.getElementById('callName').innerText=name; document.getElementById('audioName').innerText=name; if(isVideo){ document.getElementById('remoteVideo').style.display='block'; document.getElementById('myVideo').style.display='block'; document.getElementById('audioUI').style.display='none'; } else { document.getElementById('remoteVideo').style.display='none'; document.getElementById('myVideo').style.display='none'; document.getElementById('audioUI').style.display='flex'; } }
+function handleCallEvents(call){ call.on('stream',rs=>{ document.getElementById('remoteVideo').srcObject=rs; let a=document.getElementById('remoteAudio'); a.srcObject=rs; a.play().catch(()=>{}); document.getElementById('callStatus').innerText = isVideoCall ? 'Video Call chal rahi hai...' : 'Audio Call chal rahi hai...'; }); call.on('close',()=>{ forceEndCall(); }); call.on('error',()=>{ forceEndCall(); }); }
+function makeCall(isVideo,name){ let to=document.getElementById('callTo').value.trim(); if(!to){alert('Number daalo');return;} setupCallUI(isVideo, name||to); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Call laga rahe hain...'; navigator.mediaDevices.getUserMedia({video:isVideo, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isVideo) document.getElementById('myVideo').srcObject=s; let call=peer.call('family-'+to, s, {metadata:{isVideo:isVideo}}); handleCallEvents(call); currentCall=call; }).catch(e=>{alert('Mic/Camera Allow karo');}); }
+function acceptCall(){ let isV = incomingCall.metadata ? incomingCall.metadata.isVideo : true; document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause(); setupCallUI(isV, incomingCall.peer.replace('family-','')); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Connecting...'; navigator.mediaDevices.getUserMedia({video:isV, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isV) document.getElementById('myVideo').srcObject=s; incomingCall.answer(s); handleCallEvents(incomingCall); currentCall=incomingCall; }); }
+function rejectCall(){ document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause(); if(incomingCall) incomingCall.close(); }
+function forceEndCall(){ document.getElementById('ringTone').pause(); if(myStream)myStream.getTracks().forEach(t=>t.stop()); document.getElementById('callScreen').style.display='none'; document.getElementById('incoming').style.display='none'; document.getElementById('remoteVideo').srcObject=null; document.getElementById('remoteAudio').srcObject=null; currentCall=null; }
+function endCall(){ if(currentCall)currentCall.close(); forceEndCall(); }
+function toggleMute(){ isMuted=!isMuted; if(myStream)myStream.getAudioTracks().forEach(t=>t.enabled=!isMuted); document.getElementById('muteBtn').innerText=isMuted?'🔇':'🎤'; document.getElementById('muteBtn').classList.toggle('active',isMuted); }
+function toggleSpeaker(){ let a=document.getElementById('remoteAudio'); a.volume=1; a.play(); alert('Speaker On - Volume Full karo'); }
 </script>
 </body>
 </html>
