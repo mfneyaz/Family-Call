@@ -1,0 +1,15 @@
+{
+  "name": "Family Call",
+  "short_name": "Family Call",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#075E54",
+  "theme_color": "#075E54",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/5977/5977.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
