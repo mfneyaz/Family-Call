@@ -5,139 +5,147 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Family Call</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#075E54">
+<meta name="theme-color" content="#E8FDF2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/724/724715.png">
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',Arial}
-body{margin:0;min-height:100vh;background:linear-gradient(135deg,#075E54 0%,#0a8a7a 25%,#25D366 55%,#7ed957 85%,#a8e063 100%);background-attachment:fixed;padding-bottom:25px;overflow-x:hidden}
-body::before{content:'';position:fixed;top:-70px;left:-70px;width:320px;height:320px;background:radial-gradient(circle,rgba(255,255,255,.45),transparent 70%);border-radius:50%;filter:blur(20px);z-index:0}
-body::after{content:'';position:fixed;bottom:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,.4),transparent 70%);border-radius:50%;filter:blur(20px);z-index:0}
-.header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.18);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);border-bottom:1px solid rgba(255,255,255,.35);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px}
-.header .logo{width:52px;height:52px;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.6));border:1px solid rgba(255,255,255,.7);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 6px 20px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.9)}
+body{margin:0;min-height:100vh;background:linear-gradient(180deg,#E8FDF2 0%,#D8F5E8 35%,#EAFBF2 70%,#F7FFFB 100%);padding-bottom:24px;overflow-x:hidden;color:#1A2B26}
+body::before{content:'';position:fixed;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,200,120,.22),transparent 70%);border-radius:50%;z-index:0}
+body::after{content:'';position:fixed;bottom:-60px;left:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(37,211,102,.18),transparent 70%);border-radius:50%;z-index:0}
+.header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.75);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);padding:14px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.8)}
+.header .h-avatar{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#25D366,#0AC47A);color:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 20px rgba(37,211,102,.35), inset 0 1px 0 rgba(255,255,255,.5)}
+.header .h-avatar img{width:100%;height:100%;object-fit:cover}
+.header h2{margin:0;font-size:20px;line-height:1}
+.header p{margin:2px 0 0;font-size:12px;color:#6B7F76}
+.top-pill{background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.9);padding:7px 12px;border-radius:20px;font-size:12px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;align-items:center;gap:6px}
+.top-pill .d{width:8px;height:8px;border-radius:50%;background:#00D68F;box-shadow:0 0 10px #00D68F}
+.top-pill.off .d{background:#FF5A5A;box-shadow:0 0 10px #FF5A5A}
 .container{position:relative;z-index:2;max-width:480px;margin:auto;padding:14px}
-.glass{background:rgba(255,255,255,.22);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:18px;margin:13px 0;box-shadow:0 10px 35px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.5);color:#fff}
-.glass-light{background:rgba(255,255,255,.35);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.6);border-radius:24px;padding:18px;margin:13px 0;color:#fff}
-input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.92);border-radius:14px;font-size:16px;outline:none}
-.btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
-.btn-green{background:linear-gradient(135deg,rgba(37,211,102,.95),rgba(18,140,126,.95));color:#fff;border:1px solid rgba(255,255,255,.5)}
-.btn-dark{background:rgba(7,94,84,.85);color:#fff;border:1px solid rgba(255,255,255,.4)}
-.btn-white{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.75));color:#075E54;border:1px solid rgba(255,255,255,.8)}
-.btn-orange{background:linear-gradient(135deg,rgba(255,152,0,.95),rgba(255,87,34,.95));color:#fff;border:1px solid rgba(255,255,255,.5)}
-.btn-glass{background:rgba(255,255,255,.25);color:#fff;border:1px solid rgba(255,255,255,.55);backdrop-filter:blur(12px)}
-.profile-row{display:flex;align-items:center;gap:12px}
-.my-avatar{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.65));color:#075E54;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;border:2px solid rgba(255,255,255,.8);box-shadow:0 6px 18px rgba(0,0,0,.2), inset 0 2px 4px rgba(255,255,255,.9);position:relative;overflow:hidden;cursor:pointer;flex-shrink:0}
+.card{background:rgba(255,255,255,.82);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid rgba(255,255,255,.95);border-radius:28px;padding:18px;margin:12px 0;box-shadow:0 12px 32px rgba(0,120,70,.09), inset 0 1px 0 rgba(255,255,255,.9)}
+.card-title{font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:space-between;margin:0 0 4px}
+.card-sub{font-size:12px;color:#6B7F76;margin:0 0 12px}
+input{width:100%;padding:13px 14px;margin:6px 0;border:1px solid #E2F2EA;background:rgba(255,255,255,.9);border-radius:16px;font-size:15px;outline:none;color:#1A2B26}
+input:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,211,102,.15)}
+.btn{width:100%;padding:13px;border:none;border-radius:16px;font-size:15px;font-weight:800;cursor:pointer;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-green{background:linear-gradient(135deg,#25D366,#0AC47A);color:#fff;box-shadow:0 8px 18px rgba(37,211,102,.32), inset 0 1px 0 rgba(255,255,255,.4)}
+.btn-white{background:rgba(255,255,255,.95);color:#075E54;border:1px solid #E2F2EA;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.btn svg{width:19px;height:19px;flex-shrink:0}
+/* GLASSY ICON BUTTONS - NAYA STYLE */
+.icon-row{display:flex;gap:10px;margin-top:14px}
+.icon-btn-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+.icon-btn-wrap small{font-size:10px;color:#6B7F76;font-weight:700;letter-spacing:.2px}
+.icon-btn{width:100%;height:52px;border-radius:18px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85));backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 16px rgba(0,120,70,.08), inset 0 1px 0 rgba(255,255,255,.9);transition:.18s}
+.icon-btn:active{transform:scale(.92)}
+.icon-btn svg{width:23px;height:23px}
+.icon-btn.green{background:linear-gradient(135deg,#25D366,#0AC47A);border:1px solid rgba(255,255,255,.5);box-shadow:0 8px 18px rgba(37,211,102,.32), inset 0 1px 0 rgba(255,255,255,.5)}
+.icon-btn.dark{background:linear-gradient(135deg,#0F3D2E,#075E54);border:1px solid rgba(255,255,255,.3);box-shadow:0 8px 18px rgba(7,94,84,.3), inset 0 1px 0 rgba(255,255,255,.3)}
+.icon-btn.red{background:linear-gradient(135deg,#FFF5F5,#FFEAEA);border:1px solid #FFE1E1}
+.icon-btn.red svg{stroke:#E74C3C}
+.profile-row{display:flex;align-items:center;gap:14px}
+.my-avatar{width:74px;height:74px;border-radius:24px;background:linear-gradient(135deg,#25D366,#0AC47A);color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;position:relative;overflow:hidden;flex-shrink:0;border:2px solid #fff;box-shadow:0 10px 22px rgba(37,211,102,.28), inset 0 1px 0 rgba(255,255,255,.5);cursor:pointer}
 .my-avatar img{width:100%;height:100%;object-fit:cover}
-.my-avatar .cam{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:11px;text-align:center;padding:2px 0}
-.logout-btn{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.75));color:#e74c3c;border:1px solid rgba(255,255,255,.8);padding:11px 14px;border-radius:20px;font-weight:700;font-size:13px;cursor:pointer}
-.status-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff3b30;box-shadow:0 0 10px #ff3b30}
-.contact{background:rgba(255,255,255,.30);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.65);border-radius:20px;padding:14px;margin:10px 0;box-shadow:0 8px 25px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.6);position:relative}
-.contact-top{display:flex;align-items:center;gap:12px;padding-right:88px}
-.avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.6));color:#075E54;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;position:relative;flex-shrink:0;border:2px solid rgba(255,255,255,.8);box-shadow:0 4px 15px rgba(0,0,0,.18), inset 0 2px 4px rgba(255,255,255,.9);overflow:hidden}
+.my-avatar .cam{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);color:#fff;display:flex;align-items:center;justify-content:center;padding:4px 0}
+.my-avatar .cam svg{width:14px;height:14px}
+.badge{background:#E8FDF2;color:#0A8A5A;padding:5px 11px;border-radius:20px;font-size:12px;font-weight:800;display:flex;align-items:center;gap:5px}
+.badge .bdot{width:7px;height:7px;border-radius:50%;background:#00D68F}
+.contact{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.95);border-radius:24px;padding:14px;margin:10px 0;box-shadow:0 10px 22px rgba(0,120,70,.07), inset 0 1px 0 #fff;position:relative}
+.contact-top{display:flex;align-items:center;gap:12px}
+.avatar{width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#D8F5E8,#B8EBD0);color:#075E54;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;position:relative;flex-shrink:0;overflow:hidden;border:2px solid #fff;box-shadow:0 6px 14px rgba(0,0,0,.06)}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.avatar .dot{position:absolute;bottom:2px;right:2px;width:15px;height:15px;border-radius:50%;border:2px solid #fff;background:#ff3b30;z-index:2}
-.avatar .dot.online{background:#00ff88;box-shadow:0 0 10px #00ff88}
+.avatar .dot{position:absolute;bottom:2px;right:2px;width:13px;height:13px;border-radius:50%;border:2px solid #fff;background:#FF5A5A;z-index:2}
+.avatar .dot.online{background:#00D68F;box-shadow:0 0 8px #00D68F}
 .contact-info{flex:1;min-width:0}
-.contact-name{font-size:17px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.contact-num{font-size:14px;color:rgba(255,255,255,.95)}
-.contact-sub{font-size:12px;color:rgba(255,255,255,.85)}
-.top-status{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-.status-pill{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5)}
-.status-pill.on{background:rgba(0,255,136,.25);color:#eafff3;border-color:rgba(0,255,136,.6)}
-.status-pill.off{background:rgba(255,255,255,.25);color:#fff}
-.status-pill .s-dot{width:8px;height:8px;border-radius:50%;background:#00ff88;box-shadow:0 0 6px #00ff88}
-.status-pill.off .s-dot{background:#ff3b30;box-shadow:0 0 6px #ff3b30}
-.last-seen{font-size:10px;color:rgba(255,255,255,.8)}
+.contact-name{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.contact-num{font-size:13px;color:#6B7F76;display:flex;align-items:center;gap:4px}
+.contact-num svg{width:12px;height:12px;stroke:#6B7F76}
 .contact-actions{display:flex;gap:10px;margin-top:12px}
-.action-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 8px;border-radius:14px;border:1px solid rgba(255,255,255,.6);backdrop-filter:blur(12px);font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.6)}
-.action-video{background:linear-gradient(135deg,rgba(7,94,84,.95),rgba(18,140,126,.9));color:#fff}
-.action-audio{background:linear-gradient(135deg,rgba(37,211,102,.95),rgba(0,180,90,.9));color:#fff}
-.action-del{flex:0 0 46px;background:rgba(255,255,255,.30);color:#fff;font-size:16px;padding:12px 0}
-.small{font-size:13px;opacity:.9}
-.empty-box{text-align:center;padding:20px;background:rgba(255,255,255,.18);border:1px dashed rgba(255,255,255,.6);border-radius:16px;margin-top:10px}
-#callScreen{display:none;position:fixed;inset:0;background:#111;z-index:99;flex-direction:column}
+.contact-actions .icon-btn{height:48px;border-radius:16px}
+.top-status{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.status-pill{display:flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(232,253,242,.9);backdrop-filter:blur(10px);color:#0A8A5A;border:1px solid #C8F2DC}
+.status-pill.off{background:rgba(255,241,241,.9);color:#E74C3C;border-color:#FFE1E1}
+.status-pill .s-dot{width:7px;height:7px;border-radius:50%;background:#00D68F}
+.status-pill.off .s-dot{background:#FF5A5A}
+.last-seen{font-size:10px;color:#9AAFA6}
+.empty-box{text-align:center;padding:18px;background:rgba(246,255,251,.8);border:1px dashed #C8E8D5;border-radius:18px;margin-top:10px;font-size:13px;color:#6B7F76}
+#callScreen{display:none;position:fixed;inset:0;background:#0A1F18;z-index:99;flex-direction:column}
 #remoteVideo{width:100%;height:100%;object-fit:cover;background:#000}
-#myVideo{width:110px;height:150px;object-fit:cover;border-radius:16px;position:absolute;top:15px;right:15px;border:2px solid #fff}
-#audioUI{display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#075E54,#128C7E);color:#fff}
-#audioUI .bigAvatar{width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.2);backdrop-filter:blur(15px);border:3px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+#myVideo{width:110px;height:150px;object-fit:cover;border-radius:20px;position:absolute;top:15px;right:15px;border:2px solid #fff}
+#audioUI{display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,#0A8A5A,#25D366);color:#fff}
+#audioUI .bigAvatar{width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.2);backdrop-filter:blur(12px);border:3px solid rgba(255,255,255,.8);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.5)}
 #audioUI .bigAvatar img{width:100%;height:100%;object-fit:cover}
+#audioUI .bigAvatar svg{width:60px;height:60px;stroke:#fff}
 .call-top{position:absolute;top:20px;left:0;right:0;text-align:center;color:#fff;z-index:5;display:flex;flex-direction:column;align-items:center}
-.call-top .call-pic{width:64px;height:64px;border-radius:50%;border:2px solid #fff;overflow:hidden;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;margin-bottom:6px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.call-top .call-pic{width:64px;height:64px;border-radius:20px;border:2px solid rgba(255,255,255,.9);overflow:hidden;background:rgba(255,255,255,.2);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;margin-bottom:6px}
 .call-top .call-pic img{width:100%;height:100%;object-fit:cover}
-.call-controls{position:absolute;bottom:25px;left:0;right:0;display:flex;justify-content:center;gap:14px}
-.ctrl{width:60px;height:60px;border-radius:50%;border:1px solid rgba(255,255,255,.6);font-size:22px;cursor:pointer;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.7));backdrop-filter:blur(12px);box-shadow:0 6px 18px rgba(0,0,0,.25), inset 0 1px 0 #fff}
-.ctrl.red{background:linear-gradient(135deg,#ff6b6b,#e74c3c);color:#fff}
-.ctrl.active{background:linear-gradient(135deg,#ffc107,#ff9800);color:#fff}
-#incoming{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(15px);z-index:100;flex-direction:column;align-items:center;justify-content:center;color:#fff}
-#incoming .in-pic{width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(15px);border:3px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;font-size:55px;overflow:hidden}
+.call-controls{position:absolute;bottom:28px;left:0;right:0;display:flex;justify-content:center;gap:16px}
+.ctrl{width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.6);cursor:pointer;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.75));backdrop-filter:blur(14px);box-shadow:0 10px 22px rgba(0,0,0,.25), inset 0 1px 0 #fff;display:flex;align-items:center;justify-content:center}
+.ctrl svg{width:26px;height:26px;stroke:#1A2B26}
+.ctrl.red{background:linear-gradient(135deg,#FF6B6B,#E74C3C);border-color:rgba(255,255,255,.5)}
+.ctrl.red svg{stroke:#fff}
+.ctrl.active{background:linear-gradient(135deg,#FFC107,#FF9800)}
+.ctrl.active svg{stroke:#fff}
+#incoming{display:none;position:fixed;inset:0;background:linear-gradient(180deg,#0A8A5A,#25D366);z-index:100;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+#incoming .in-pic{width:132px;height:132px;border-radius:50%;background:rgba(255,255,255,.2);backdrop-filter:blur(14px);border:3px solid rgba(255,255,255,.8);display:flex;align-items:center;justify-content:center;overflow:hidden}
 #incoming .in-pic img{width:100%;height:100%;object-fit:cover}
+#incoming .in-pic svg{width:56px;height:56px;stroke:#fff}
 #installBtn{display:none}
-.badge{background:rgba(255,255,255,.30);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5);padding:5px 11px;border-radius:20px;font-size:12px}
-.glass-chip{background:rgba(255,255,255,.28);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.45);padding:7px 11px;border-radius:20px}
-.debug-box{font-size:11px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);padding:8px 10px;border-radius:12px;margin-top:10px}
-#callEnded{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(15px);z-index:200;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px}
-#callEnded .ended-card{background:rgba(255,255,255,.18);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:28px 22px;max-width:340px;width:100%}
-#callEnded .ended-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.6));display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 14px;overflow:hidden}
+.debug-box{font-size:11px;background:rgba(246,255,251,.8);border:1px solid #E2F2EA;padding:8px 10px;border-radius:12px;margin-top:10px;color:#6B7F76}
+#callEnded{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);z-index:200;flex-direction:column;align-items:center;justify-content:center;color:#1A2B26;text-align:center;padding:20px}
+#callEnded .ended-card{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-radius:28px;padding:26px 22px;max-width:340px;width:100%;box-shadow:0 15px 40px rgba(0,0,0,.2)}
+#callEnded .ended-icon{width:80px;height:80px;border-radius:24px;background:#E8FDF2;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;overflow:hidden}
 #callEnded .ended-icon img{width:100%;height:100%;object-fit:cover}
-#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(0,0,0,.85);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.4);color:#fff;padding:12px 18px;border-radius:20px;font-size:14px;font-weight:700;z-index:300;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap}
+#callEnded .ended-icon svg{width:34px;height:34px;stroke:#0A8A5A}
+#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(26,43,38,.95);backdrop-filter:blur(14px);color:#fff;padding:12px 18px;border-radius:20px;font-size:14px;font-weight:700;z-index:300;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;display:flex;align-items:center;gap:8px}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.last-call{font-size:12px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:7px 10px;border-radius:12px;margin-top:10px;display:none}
-.pic-btn{background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.5);color:#fff;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;backdrop-filter:blur(10px)}
+.last-call{font-size:12px;background:rgba(246,255,251,.9);border:1px solid #E2F2EA;padding:7px 10px;border-radius:12px;margin-top:10px;display:none}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo">📞</div><div style="flex:1"><h2 style="margin:0;font-size:21px">Family Call</h2><p style="margin:0;font-size:12px;opacity:.9">✨ Full Glass • Audio • Video</p></div><span class="glass-chip" style="font-size:12px" id="topStatus">● Connecting...</span></div>
+<div class="header"><div class="h-avatar" id="headerAvatar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div style="flex:1"><h2 id="headerName">Family Call</h2><p>Audio • Video • Photo</p></div><span class="top-pill" id="topStatus"><span class="d"></span> Connecting...</span></div>
 
 <div id="toast"></div>
 
 <div class="container">
-<button id="installBtn" class="btn btn-orange" onclick="installApp()">📲 App Install Karo</button>
+<button id="installBtn" class="btn btn-green" onclick="installApp()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> App Install Karo</button>
 
-<div class="glass" id="loginCard">
-<h3 style="margin:0">👋 Welcome</h3><p class="small" style="margin:6px 0 12px">Ek baar login karo, hamesha saved rahega</p>
+<div class="card" id="loginCard">
+<h3 style="margin:0">Welcome</h3><p class="card-sub">Ek baar login karo, hamesha saved rahega</p>
 <input id="myName" placeholder="Apna Naam - Mohammed">
 <input id="myNumber" type="tel" placeholder="Mobile Number">
-<button class="btn btn-green" onclick="login()">✅ Login Karo</button>
-<div style="background:rgba(255,255,255,.25);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.45);padding:12px;border-radius:16px;margin-top:12px;text-align:center"><b>🎤 Mic Test</b><br><button class="btn btn-white" onclick="testMic()">Mic Test Karo</button><p id="micStatus" class="small">Abhi test nahi hua</p></div>
+<button class="btn btn-green" onclick="login()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Login Karo</button>
+<div style="background:rgba(246,255,251,.8);border:1px solid #E2F2EA;padding:12px;border-radius:18px;margin-top:12px;text-align:center"><b style="display:flex;align-items:center;justify-content:center;gap:6px"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg> Mic Test</b><br><button class="btn btn-white" onclick="testMic()">Mic Test Karo</button><p id="micStatus" style="font-size:12px;color:#6B7F76">Abhi test nahi hua</p></div>
 </div>
 
-<div class="glass" id="profileCard" style="display:none">
+<div class="card" id="profileCard" style="display:none">
 <div class="profile-row">
-<div class="my-avatar" id="myAvatar" onclick="document.getElementById('picInput').click()"><span id="myAvatarLetter">M</span><span class="cam">📷 Photo</span></div>
+<div class="my-avatar" id="myAvatar" onclick="document.getElementById('picInput').click()"><span id="myAvatarLetter">M</span><span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span></div>
 <input type="file" id="picInput" accept="image/*" style="display:none" onchange="changeMyPic(event)">
-<div style="flex:1">
-<div style="font-weight:800;font-size:18px" id="showMyName">Mohammed</div>
-<div style="font-size:14px;opacity:.95">ID: <b id="showMyNum">-</b></div>
-<div style="font-size:12px"><span class="status-dot" id="statusDot"></span> <span id="myStatus">Connecting...</span></div>
+<div style="flex:1;min-width:0">
+<div style="font-weight:800;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="showMyName">Mohammed</div>
+<div style="font-size:13px;color:#6B7F76">ID: <b id="showMyNum" style="color:#1A2B26">-</b></div>
+<div style="font-size:12px;color:#6B7F76"><span id="myStatus">Connecting...</span></div>
 </div>
 </div>
-<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-<button class="pic-btn" style="flex:1" onclick="document.getElementById('picInput').click()">📷 Photo Badlo</button>
-<button class="pic-btn" onclick="removeMyPic()">🗑️ Photo Hatayo</button>
-</div>
-<div style="display:flex;gap:10px;margin-top:10px">
-<button class="logout-btn" style="flex:1" onclick="logout()">🚪 Logout</button>
-<button onclick="copyMyNumber()" class="btn-glass" style="flex:1;padding:11px;border-radius:20px;font-weight:700;cursor:pointer">📋 Number Copy</button>
+<!-- SAB ICON - GLASSY SVG -->
+<div class="icon-row">
+<div class="icon-btn-wrap"><button class="icon-btn green" onclick="document.getElementById('picInput').click()" title="Photo Badlo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button><small>Photo</small></div>
+<div class="icon-btn-wrap"><button class="icon-btn" onclick="removeMyPic()" title="Photo Hatayo"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button><small>Delete</small></div>
+<div class="icon-btn-wrap"><button class="icon-btn" onclick="copyMyNumber()" title="Number Copy"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button><small>Copy</small></div>
+<div class="icon-btn-wrap"><button class="icon-btn red" onclick="logout()" title="Logout"><svg viewBox="0 0 24 24" fill="none" stroke="#E74C3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button><small>Logout</small></div>
 </div>
 <div class="debug-box" id="debugBox">Presence: Connecting...</div>
 <div class="last-call" id="lastCallBox"></div>
 </div>
 
-<div class="glass" id="addCard" style="display:none">
-<div style="display:flex;align-items:center;justify-content:space-between"><h3 style="margin:0">👨‍👩‍👧 Family Members</h3><span class="badge" id="famCount">0 Members</span></div>
-<p class="small" style="margin:6px 0">Status Top-Right me hai • 🎥 Video &nbsp; 📞 Audio - Neeche se call karo</p>
-<input id="famName" placeholder="Naam - Ammi">
+<div class="card" id="addCard" style="display:none">
+<div class="card-title"><span style="display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Family Members</span><span class="badge" id="famCount"><span class="bdot"></span> 0 Members</span></div>
+<p class="card-sub">Status Top-Right me hai • Icon dabake call karo</p>
+<input id="famName" placeholder="Naam - Abbu">
 <input id="famNumber" type="tel" placeholder="Unka Number">
-<button class="btn btn-green" onclick="addFamily()">+ Add Karo</button>
-<button class="btn btn-glass" style="width:100%;padding:10px;border-radius:12px;margin-top:8px;cursor:pointer" onclick="forceRefresh()">🔄 Status Refresh Karo</button>
+<button class="btn btn-green" onclick="addFamily()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Karo</button>
+<button class="btn btn-white" onclick="forceRefresh()"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Status Refresh Karo</button>
 <div id="familyList"></div>
-</div>
-
-<div class="glass-light" id="directCard" style="display:none">
-<h3 style="margin:0">📞 Direct Call</h3>
-<input id="callTo" type="tel" placeholder="Number daalo">
-<button class="btn btn-green" onclick="makeCall(true)">🎥 Video Call</button>
-<button class="btn btn-dark" onclick="makeCall(false)">🎧 Audio Call</button>
 </div>
 </div>
 
@@ -145,26 +153,33 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 <video id="remoteVideo" autoplay playsinline></video>
 <audio id="remoteAudio" autoplay playsinline></audio>
 <video id="myVideo" autoplay muted playsinline></video>
-<div id="audioUI"><div class="bigAvatar" id="audioBigPic">🎧</div><h2 id="audioName" style="margin:14px 0 4px">Family</h2><p id="audioNumber" style="margin:0;opacity:.85;font-size:13px"></p><p style="margin:8px 0">Audio Call Chal Rahi Hai...</p><p style="font-size:40px;margin:6px 0">🎙️ 🔊</p><p id="callTimer" style="font-size:18px;font-weight:700">Ringing...</p></div>
+<div id="audioUI"><div class="bigAvatar" id="audioBigPic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div><h2 id="audioName" style="margin:14px 0 4px">Family</h2><p id="audioNumber" style="margin:0;opacity:.85;font-size:13px"></p><p style="margin:8px 0">Audio Call Chal Rahi Hai...</p><p id="callTimer" style="font-size:18px;font-weight:700">Ringing...</p></div>
 <div class="call-top" id="callTop"><div class="call-pic" id="callTopPic">F</div><h2 id="callName" style="margin:0">Family</h2><p id="callNumber" style="margin:2px 0 0;font-size:12px;opacity:.85"></p><p id="callStatus" style="opacity:.8;margin:4px 0 0">Connecting...</p><p id="callTimerTop" style="font-size:15px;font-weight:700;margin:4px 0 0">Ringing...</p></div>
-<div class="call-controls"><button class="ctrl" id="muteBtn" onclick="toggleMute()">🎤</button><button class="ctrl" onclick="toggleSpeaker()">🔊</button><button class="ctrl red" onclick="endCall()">📞</button></div>
+<div class="call-controls">
+<button class="ctrl" id="muteBtn" onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></button>
+<button class="ctrl" onclick="toggleSpeaker()"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
+<button class="ctrl red" onclick="endCall()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91"/></svg></button>
+</div>
 </div>
 
 <div id="incoming">
-<div class="in-pic" id="inPic">👤</div>
+<div class="in-pic" id="inPic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
 <h2 id="inName" style="margin:14px 0 4px">Family</h2><p id="inNumber" style="margin:0 0 6px;opacity:.85;font-size:13px"></p><p id="inType">Call aa rahi hai...</p>
 <audio id="ringTone" loop src="https://actions.google.com/sounds/v1/alarms/phone_call.ogg"></audio>
-<div style="display:flex;gap:20px"><button class="ctrl red" style="width:72px;height:72px;font-size:28px" onclick="rejectCall()">✖</button><button class="ctrl" style="width:72px;height:72px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-size:28px" onclick="acceptCall()">📞</button></div>
+<div style="display:flex;gap:20px">
+<button class="ctrl red" style="width:74px;height:74px" onclick="rejectCall()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+<button class="ctrl" style="width:74px;height:74px;background:linear-gradient(135deg,#25D366,#0AC47A);border-color:rgba(255,255,255,.6)" onclick="acceptCall()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+</div>
 </div>
 
 <div id="callEnded">
 <div class="ended-card">
-<div class="ended-icon" id="endedIcon">📞</div>
+<div class="ended-icon" id="endedIcon"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
 <h2 id="endedTitle" style="margin:0 0 6px">Call Khatam Ho Gayi</h2>
-<p id="endedMsg" style="margin:0 0 6px;opacity:.9">Call khatam ho gayi</p>
+<p id="endedMsg" style="margin:0 0 6px;color:#6B7F76">Call khatam ho gayi</p>
 <p id="endedDuration" style="margin:0 0 16px;font-weight:700">Call Duration: 00:00</p>
-<button class="btn btn-green" onclick="closeEndedPopup()">✅ OK</button>
-<button class="btn btn-glass" id="endedCallBackBtn" onclick="callBackLast()">📞 Dobara Call Karo</button>
+<button class="btn btn-green" onclick="closeEndedPopup()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> OK</button>
+<button class="btn btn-white" onclick="callBackLast()"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Dobara Call Karo</button>
 </div>
 </div>
 
@@ -180,7 +195,7 @@ let noAnswerTimer=null, ringingStartTime=0;
 function getFamily(){ try{ return JSON.parse(localStorage.getItem('family_v2') || '[]'); }catch(e){ return []; } }
 function saveFamily(f){ localStorage.setItem('family_v2', JSON.stringify(f)); }
 let family = getFamily();
-window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='block'; });
+window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='flex'; });
 function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao'); } }
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 function getNameByNumber(num){
@@ -199,8 +214,10 @@ function getPicByNumber(num){
 }
 function setMyAvatarUI(){
   let av=document.getElementById('myAvatar');
-  if(myPicGlobal){ av.innerHTML='<img src="'+myPicGlobal+'"><span class="cam">📷 Photo</span>'; }
-  else { av.innerHTML='<span id="myAvatarLetter">'+(myNameGlobal.charAt(0).toUpperCase()||'M')+'</span><span class="cam">📷 Photo</span>'; }
+  let hv=document.getElementById('headerAvatar');
+  if(myPicGlobal){ av.innerHTML='<img src="'+myPicGlobal+'"><span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span>'; hv.innerHTML='<img src="'+myPicGlobal+'">'; }
+  else { av.innerHTML='<span id="myAvatarLetter">'+(myNameGlobal.charAt(0).toUpperCase()||'M')+'</span><span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span>'; hv.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>'; }
+  document.getElementById('headerName').innerText=myNameGlobal;
 }
 function changeMyPic(e){
   let file=e.target.files[0]; if(!file) return;
@@ -219,7 +236,7 @@ function changeMyPic(e){
       localStorage.setItem('myPic', smallPic);
       setMyAvatarUI();
       publishOnline(myNumberGlobal, myNameGlobal);
-      showToast('✅ Photo lag gayi!');
+      showToast('Photo lag gayi!');
     };
     img.src=ev.target.result;
   };
@@ -229,9 +246,8 @@ function removeMyPic(){ myPicGlobal=''; localStorage.removeItem('myPic'); setMyA
 function setStatusUI(isOnline){
   let top = document.getElementById('topStatus');
   let mid = document.getElementById('myStatus');
-  let dot = document.getElementById('statusDot');
-  if(isOnline){ top.innerText='● Online'; mid.innerText='Online - Call aane ke liye taiyaar'; dot.style.background='#00ff88'; dot.style.boxShadow='0 0 10px #00ff88'; }
-  else { top.innerText='● Offline'; mid.innerText='Offline - Internet check karo'; dot.style.background='#ff3b30'; dot.style.boxShadow='0 0 10px #ff3b30'; }
+  if(isOnline){ top.innerHTML='<span class="d"></span> Online'; top.classList.remove('off'); mid.innerText='Online - Call aane ke liye taiyaar'; }
+  else { top.innerHTML='<span class="d"></span> Offline'; top.classList.add('off'); mid.innerText='Offline - Internet check karo'; }
 }
 function logDebug(t){ let el=document.getElementById('debugBox'); if(el) el.innerText='Presence: '+t; }
 function showToast(msg){ let t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show'); setTimeout(()=>{ t.classList.remove('show'); }, 3500); }
@@ -257,7 +273,7 @@ function showCallEnded(type, name){
   let pic = getPicByNumber(lastCallNumber);
   let iconEl=document.getElementById('endedIcon');
   if(pic) iconEl.innerHTML='<img src="'+pic+'">';
-  else iconEl.innerText='📞';
+  else iconEl.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:34px;height:34px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
   let title='', msg='', durLabel='';
   if(type==='self'){ if(!callConnected){ title='Call Khatam Ho Gayi'; msg='Aapne call kaat di - Call lagi hi nahi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; } else { title='Call Khatam Ho Gayi'; msg='Aapne call kaat di'; durLabel='Baat Hui: '+durText; } }
   else if(type==='remote'){ if(!callConnected){ title='Call Kaat Di Gayi'; msg=displayName+' ne call kaat di - Call lagi hi nahi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; } else { title='Call Disconnected'; msg=displayName+' ne call kaat di'; durLabel='Baat Hui: '+durText; } }
@@ -270,11 +286,11 @@ function showCallEnded(type, name){
   document.getElementById('endedDuration').innerText=durLabel;
   document.getElementById('callEnded').style.display='flex';
   let box=document.getElementById('lastCallBox');
-  if(box){ box.style.display='block'; box.innerHTML='📞 Last Call: <b>'+displayName+'</b> • '+title+' • '+durLabel; }
+  if(box){ box.style.display='block'; box.innerHTML='Last Call: <b>'+displayName+'</b> • '+title+' • '+durLabel; }
   setTimeout(()=>{ closeEndedPopup(); }, 6000);
 }
 function closeEndedPopup(){ document.getElementById('callEnded').style.display='none'; }
-function callBackLast(){ closeEndedPopup(); if(lastCallNumber){ document.getElementById('callTo').value=lastCallNumber; makeCall(lastCallIsVideo, lastCallName); } }
+function callBackLast(){ closeEndedPopup(); if(lastCallNumber){ makeCall(lastCallIsVideo, lastCallName); } }
 window.onload = ()=>{
   myPicGlobal = localStorage.getItem('myPic') || '';
   renderFamily();
@@ -284,7 +300,7 @@ window.onload = ()=>{
 };
 function testMic(){
   document.getElementById('micStatus').innerText='Mic maang rahe hain... Allow dabao';
-  navigator.mediaDevices.getUserMedia({video:false, audio:true}).then(s=>{ document.getElementById('micStatus').innerText='✅ Mic Sahi Hai!'; s.getTracks().forEach(t=>t.stop()); }).catch(e=>{ document.getElementById('micStatus').innerText='❌ Mic Block Hai!'; });
+  navigator.mediaDevices.getUserMedia({video:false, audio:true}).then(s=>{ document.getElementById('micStatus').innerText='Mic Sahi Hai!'; s.getTracks().forEach(t=>t.stop()); }).catch(e=>{ document.getElementById('micStatus').innerText='Mic Block Hai!'; });
 }
 function sendCallSignal(toNumber, action){
   if(!mqttClient || !mqttConnected) return;
@@ -308,7 +324,7 @@ function startPresence(myNum, myName){
   try{ if(mqttClient) try{mqttClient.end(true);}catch(e){} }catch(e){}
   mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', { clientId: clientId, keepalive: 15, clean: true, will: { topic: 'family-call-v12/presence/'+myNum, payload: JSON.stringify({status:'offline', name:myName, pic:''}), retain: true } });
   mqttClient.on('connect', ()=>{
-    mqttConnected=true; logDebug('Presence Connected ✅ - ID: '+myNum);
+    mqttConnected=true; logDebug('Presence Connected - ID: '+myNum);
     mqttClient.subscribe('family-call-v12/presence/#');
     mqttClient.subscribe('family-call-v12/call/'+myNum);
     publishOnline(myNum, myName);
@@ -330,7 +346,7 @@ function startPresence(myNum, myName){
   mqttClient.on('close', ()=>{ mqttConnected=false; logDebug('Presence disconnected, retry...'); });
 }
 function publishOnline(num, name){ if(mqttClient && mqttConnected){ try{ mqttClient.publish('family-call-v12/presence/'+num, JSON.stringify({status:'online', name:name||'Me', pic:myPicGlobal||''}), {retain:true}); }catch(e){} } }
-function forceRefresh(){ renderFamily(); publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me'); alert('Refresh ho gaya ✅ - 5 sec wait karo'); }
+function forceRefresh(){ renderFamily(); publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me'); alert('Refresh ho gaya - 5 sec wait karo'); }
 function login(isAuto){
   let num=document.getElementById('myNumber').value.trim();
   let name=document.getElementById('myName').value.trim()||'Me';
@@ -340,7 +356,6 @@ function login(isAuto){
   document.getElementById('loginCard').style.display='none';
   document.getElementById('profileCard').style.display='block';
   document.getElementById('addCard').style.display='block';
-  document.getElementById('directCard').style.display='block';
   document.getElementById('showMyName').innerText=name;
   document.getElementById('showMyNum').innerText=num;
   setMyAvatarUI();
@@ -364,8 +379,8 @@ function login(isAuto){
     document.getElementById('inName').innerText=lastCallName;
     document.getElementById('inNumber').innerText=callerNum;
     let inPic = getPicByNumber(callerNum);
-    document.getElementById('inPic').innerHTML = inPic ? '<img src="'+inPic+'">' : '👤';
-    document.getElementById('inType').innerText = isV ? '🎥 Video Call aa rahi hai...' : '🎧 Audio Call aa rahi hai...';
+    document.getElementById('inPic').innerHTML = inPic ? '<img src="'+inPic+'">' : '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:56px;height:56px"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+    document.getElementById('inType').innerText = isV ? 'Video Call aa rahi hai...' : 'Audio Call aa rahi hai...';
     document.getElementById('incoming').style.display='flex';
     document.getElementById('ringTone').play().catch(()=>{});
     if(navigator.vibrate) navigator.vibrate([500,200,500]);
@@ -375,7 +390,7 @@ function login(isAuto){
         document.getElementById('ringTone').pause();
         try{ incomingCall.close(); }catch(e){}
         sendCallSignal(lastCallNumber, 'no-answer');
-        showToast('🔕 Missed Call - '+lastCallName);
+        showToast('Missed Call - '+lastCallName);
       }
     }, 30000);
   });
@@ -397,7 +412,7 @@ function addFamily(){
   saveFamily(family);
   document.getElementById('famName').value='';document.getElementById('famNumber').value='';
   onlineMap[num]='offline';
-  renderFamily(); alert(n+' add ho gaya ✅ - 5 sec me status aayega');
+  renderFamily(); alert(n+' add ho gaya - 5 sec me status aayega');
 }
 function deleteFamily(num){
   if(!confirm('Isko delete karna hai?')) return;
@@ -407,15 +422,14 @@ function deleteFamily(num){
 function renderFamily(){
   family = getFamily();
   let onlineCount = family.filter(f=> onlineMap[f.number]==='online').length;
-  document.getElementById('famCount').innerText = onlineCount + ' Online • ' + family.length + ' Total';
+  document.getElementById('famCount').innerHTML = '<span class="bdot"></span> ' + onlineCount + ' Online • ' + family.length + ' Total';
   let h='';
-  if(family.length===0){ h=`<div class="empty-box">👨‍👩‍👧 Abhi koi Family Member nahi hai<br><span class="small">Upar Naam + Number daal ke Add Karo</span></div>`; }
+  if(family.length===0){ h=`<div class="empty-box">Abhi koi Family Member nahi hai<br>Upar Naam + Number daal ke Add Karo</div>`; }
   else {
     family.forEach(f=>{
       let st = onlineMap[f.number] || 'offline';
       let dotClass = st==='online' ? 'dot online' : 'dot';
-      let pillHtml = st==='online' ? `<span class="status-pill on"><span class="s-dot"></span>● Online</span><span class="last-seen">Abhi Online</span>` : `<span class="status-pill off"><span class="s-dot"></span>○ Offline</span><span class="last-seen">${lastSeenMap[f.number]||'App band hai'}</span>`;
-      let sub = st==='online' ? 'Abhi call kar sakte ho' : 'Abhi App band hai';
+      let pillHtml = st==='online' ? `<span class="status-pill"><span class="s-dot"></span> Online</span><span class="last-seen">Abhi Online</span>` : `<span class="status-pill off"><span class="s-dot"></span> Offline</span><span class="last-seen">${lastSeenMap[f.number]||'App band hai'}</span>`;
       let pic = getPicByNumber(f.number);
       let avatarHtml = pic ? `<img src="${pic}">` : f.name.charAt(0).toUpperCase();
       h+=`<div class="contact">
@@ -424,14 +438,13 @@ function renderFamily(){
           <div class="avatar">${avatarHtml}<span class="${dotClass}"></span></div>
           <div class="contact-info">
             <div class="contact-name">${f.name}</div>
-            <div class="contact-num">📱 ${f.number}</div>
-            <div class="contact-sub">${sub}</div>
+            <div class="contact-num"><svg viewBox="0 0 24 24" fill="none" stroke="#6B7F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ${f.number}</div>
           </div>
         </div>
         <div class="contact-actions">
-          <button class="action-btn action-video" onclick="callFamily('${f.number}','${f.name}',true)">🎥 Video</button>
-          <button class="action-btn action-audio" onclick="callFamily('${f.number}','${f.name}',false)">📞 Audio</button>
-          <button class="action-btn action-del" onclick="deleteFamily('${f.number}')">🗑️</button>
+          <div class="icon-btn-wrap" style="flex:1"><button class="icon-btn dark" onclick="callFamily('${f.number}','${f.name}',true)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button><small>Video</small></div>
+          <div class="icon-btn-wrap" style="flex:1"><button class="icon-btn green" onclick="callFamily('${f.number}','${f.name}',false)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button><small>Audio</small></div>
+          <div class="icon-btn-wrap" style="flex:0 0 52px"><button class="icon-btn" onclick="deleteFamily('${f.number}')"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button><small>Delete</small></div>
         </div>
       </div>`;
     });
@@ -440,9 +453,8 @@ function renderFamily(){
 }
 function callFamily(num,name,isVideo){
   if(onlineMap[num]!=='online'){ if(!confirm(name+' abhi Offline dikh raha hai, phir bhi call lagau?')) return; }
-  document.getElementById('callTo').value=num;makeCall(isVideo,name);
+  makeCall(isVideo,name,num);
 }
-// === FIX: Audio me upar wala band, Video me beech wala band ===
 function setupCallUI(isVideo, name, number){
   isVideoCall=isVideo;
   let displayName = getNameByNumber(number) || name || number;
@@ -452,7 +464,7 @@ function setupCallUI(isVideo, name, number){
   document.getElementById('audioName').innerText=displayName;
   document.getElementById('audioNumber').innerText=number;
   document.getElementById('callTopPic').innerHTML = pic ? '<img src="'+pic+'">' : displayName.charAt(0).toUpperCase();
-  document.getElementById('audioBigPic').innerHTML = pic ? '<img src="'+pic+'">' : '🎧';
+  document.getElementById('audioBigPic').innerHTML = pic ? '<img src="'+pic+'">' : '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:60px;height:60px"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>';
   if(isVideo){
     document.getElementById('remoteVideo').style.display='block';
     document.getElementById('myVideo').style.display='block';
@@ -484,8 +496,8 @@ function handleCallEvents(call){
     showCallEnded('network', getNameByNumber(lastCallNumber));
   });
 }
-function makeCall(isVideo,name){
-  let to=document.getElementById('callTo').value.trim(); if(!to){alert('Number daalo');return;}
+function makeCall(isVideo,name,number){
+  let to=number || lastCallNumber; if(!to){alert('Number daalo');return;}
   lastCallNumber=to; lastCallName=getNameByNumber(to); lastCallIsVideo=isVideo; iEndedCall=false; callConnected=false; endedPopupShown=false;
   setupCallUI(isVideo, lastCallName, to); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Call laga rahe hain...';
   resetCallTimers();
@@ -505,7 +517,7 @@ function rejectCall(){
   document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause();
   sendCallSignal(lastCallNumber, 'rejected');
   if(incomingCall) try{incomingCall.close();}catch(e){}
-  showToast('❌ Call Reject kar di');
+  showToast('Call Reject kar di');
   showCallEnded('missed', lastCallName);
 }
 function forceEndCall(silent){
@@ -527,7 +539,13 @@ function endCall(){
   forceEndCall();
   showCallEnded('self', name);
 }
-function toggleMute(){ isMuted=!isMuted; if(myStream)myStream.getAudioTracks().forEach(t=>t.enabled=!isMuted); document.getElementById('muteBtn').innerText=isMuted?'🔇':'🎤'; document.getElementById('muteBtn').classList.toggle('active',isMuted); }
+function toggleMute(){
+  isMuted=!isMuted;
+  if(myStream)myStream.getAudioTracks().forEach(t=>t.enabled=!isMuted);
+  let b=document.getElementById('muteBtn');
+  if(isMuted){ b.classList.add('active'); b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px"><line x1="2" y1="2" x2="22" y2="22"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V5a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>'; }
+  else { b.classList.remove('active'); b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>'; }
+}
 function toggleSpeaker(){ let a=document.getElementById('remoteAudio'); a.volume=1; a.play(); alert('Speaker On - Volume Full karo'); }
 </script>
 </body>
