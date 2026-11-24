@@ -18,7 +18,7 @@ body.dark::before{background:radial-gradient(circle,rgba(139,92,246,.35),transpa
 body::after{content:'';position:fixed;bottom:-60px;left:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(37,211,102,.18),transparent 70%);border-radius:50%;z-index:0}
 body.dark::after{background:radial-gradient(circle,rgba(34,211,238,.28),transparent 70%)}
 .header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.75);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);padding:12px 16px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.8)}
-body.dark .header{background:rgba(11,15,30,.85);border-bottom:1px solid rgba(255,255,255,.1)}
+body.dark .header{background:rgba(11,15,30,.75);border-bottom:1px solid rgba(255,255,255,.1)}
 .logo-icon{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,#25D366,#0AC47A,#00C9FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 20px rgba(37,211,102,.4), inset 0 1px 0 rgba(255,255,255,.6);position:relative}
 body.dark .logo-icon{background:linear-gradient(135deg,#8B5CF6,#22D3EE,#A855F7);box-shadow:0 8px 22px rgba(139,92,246,.55), inset 0 1px 0 rgba(255,255,255,.6)}
 .logo-icon svg{width:25px;height:25px}
@@ -29,7 +29,6 @@ body.dark .logo-icon{background:linear-gradient(135deg,#8B5CF6,#22D3EE,#A855F7);
 body.dark .theme-toggle{background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.06));box-shadow:0 4px 14px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.2)}
 .theme-toggle svg{width:20px;height:20px}
 .container{position:relative;z-index:2;max-width:480px;margin:auto;padding:12px}
-/* USER CARD - STICKY - UPAR NAHI JAYEGA */
 #profileCard{position:sticky;top:70px;z-index:20}
 .card{background:var(--card);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid var(--border);border-radius:24px;padding:14px;margin:10px 0;box-shadow:0 10px 26px var(--shadow), inset 0 1px 0 rgba(255,255,255,.4)}
 body.dark .card{box-shadow:0 12px 32px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.12)}
@@ -47,18 +46,18 @@ body.dark .btn-green{background:linear-gradient(135deg,#8B5CF6,#22D3EE);box-shad
 body.dark .btn-white{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15)}
 .btn svg{width:18px;height:18px;flex-shrink:0}
 .top-icons{display:flex;gap:6px;flex-shrink:0;align-items:center}
+/* 2. SAB ICONS - BG HATAYA - Delete / Refresh jaisa */
 .mini-icon{width:36px;height:36px;border-radius:12px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85));backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,120,70,.07), inset 0 1px 0 rgba(255,255,255,.9);transition:.15s;padding:0}
 body.dark .mini-icon{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.18);box-shadow:0 4px 12px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.15)}
 .mini-icon:active{transform:scale(.88)}
-.mini-icon svg{width:17px;height:17px}
-.mini-icon.green{background:linear-gradient(135deg,#25D366,#0AC47A);border:1px solid rgba(255,255,255,.5);box-shadow:0 6px 14px rgba(37,211,102,.3), inset 0 1px 0 rgba(255,255,255,.5)}
-body.dark .mini-icon.green{background:linear-gradient(135deg,#8B5CF6,#22D3EE)}
-.mini-icon.dark{background:linear-gradient(135deg,#0F3D2E,#075E54);border:1px solid rgba(255,255,255,.3);box-shadow:0 6px 12px rgba(7,94,84,.25), inset 0 1px 0 rgba(255,255,255,.3)}
-body.dark .mini-icon.dark{background:linear-gradient(135deg,#6366F1,#8B5CF6)}
-.mini-icon.red{background:linear-gradient(135deg,#FFF5F5,#FFEAEA);border:1px solid #FFE1E1}
-body.dark .mini-icon.red{background:linear-gradient(135deg,rgba(255,90,90,.18),rgba(255,90,90,.08));border:1px solid rgba(255,90,90,.3)}
+.mini-icon svg{width:17px;height:17px;stroke:#1A2B26}
+body.dark .mini-icon svg{stroke:#fff}
+.mini-icon.green,.mini-icon.dark,.mini-icon.red{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85));border:1px solid rgba(255,255,255,.9);box-shadow:0 4px 10px rgba(0,120,70,.07), inset 0 1px 0 rgba(255,255,255,.9)}
+body.dark .mini-icon.green,body.dark .mini-icon.dark,body.dark .mini-icon.red{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.18);box-shadow:0 4px 12px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.15)}
+.mini-icon.green svg,.mini-icon.dark svg{stroke:#1A2B26}
+body.dark .mini-icon.green svg,body.dark .mini-icon.dark svg{stroke:#fff}
 .mini-icon.red svg{stroke:#E74C3C}
-/* ADD MEMBERS HEADER - Count ke pehle Refresh + Plus */
+body.dark .mini-icon.red svg{stroke:#FF8A8A}
 .add-header-actions{display:flex;align-items:center;gap:6px}
 .add-header-actions .mini-icon{width:34px;height:34px;border-radius:11px}
 .add-header-actions .mini-icon svg{width:16px;height:16px}
@@ -79,12 +78,14 @@ body.dark .user-status-pill.off{background:rgba(255,90,90,.15);color:#FCA5A5;bor
 .user-status-pill.off .sd{background:#FF5A5A;box-shadow:0 0 7px #FF5A5A}
 .filter-tabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
 .filter-tabs::-webkit-scrollbar{display:none}
-.filter-tab{flex-shrink:0;padding:8px 14px;border-radius:20px;border:1px solid #E2F2EA;background:#fff;font-size:12px;font-weight:800;color:#6B7F76;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.04);white-space:nowrap}
-body.dark .filter-tab{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#A8B3D1}
-.filter-tab.active{background:linear-gradient(135deg,#25D366,#0AC47A);color:#fff;border-color:rgba(255,255,255,.5);box-shadow:0 6px 14px rgba(37,211,102,.3)}
-body.dark .filter-tab.active{background:linear-gradient(135deg,#8B5CF6,#22D3EE);box-shadow:0 6px 14px rgba(139,92,246,.4)}
-.filter-tab .cnt{background:rgba(0,0,0,.08);padding:1px 6px;border-radius:10px;font-size:10px;margin-left:4px}
-.filter-tab.active .cnt{background:rgba(255,255,255,.25)}
+/* 3. TABS - GLASSY FILL */
+.filter-tab{flex-shrink:0;padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(240,255,247,.6));backdrop-filter:blur(12px) saturate(160%);-webkit-backdrop-filter:blur(12px) saturate(160%);font-size:12px;font-weight:800;color:#6B7F76;cursor:pointer;box-shadow:0 3px 10px rgba(0,120,70,.06), inset 0 1px 0 rgba(255,255,255,.9);white-space:nowrap;transition:.2s}
+body.dark .filter-tab{background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.16);color:#A8B3D1;box-shadow:0 3px 10px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.12)}
+.filter-tab.active{background:linear-gradient(135deg,rgba(37,211,102,.22),rgba(10,196,122,.14));border:1px solid rgba(37,211,102,.45);color:#075E54;box-shadow:0 6px 16px rgba(37,211,102,.18), inset 0 1px 0 rgba(255,255,255,.9)}
+body.dark .filter-tab.active{background:linear-gradient(135deg,rgba(139,92,246,.35),rgba(34,211,238,.22));border:1px solid rgba(139,92,246,.55);color:#fff;box-shadow:0 6px 18px rgba(139,92,246,.35), inset 0 1px 0 rgba(255,255,255,.25)}
+.filter-tab .cnt{background:rgba(0,0,0,.07);padding:1px 6px;border-radius:10px;font-size:10px;margin-left:4px}
+.filter-tab.active .cnt{background:rgba(255,255,255,.55)}
+body.dark .filter-tab.active .cnt{background:rgba(255,255,255,.25)}
 .cat-badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:10px;display:inline-block;margin-top:2px}
 .cat-Family{background:#E8FDF2;color:#0A8A5A;border:1px solid #C8F2DC}
 .cat-Friends{background:#E8F0FF;color:#3B5BDB;border:1px solid #C8D6FF}
@@ -94,7 +95,6 @@ body.dark .cat-Family{background:rgba(34,211,238,.15);color:#67E8F9;border:1px s
 body.dark .cat-Friends{background:rgba(139,92,246,.18);color:#C4B5FD;border:1px solid rgba(139,92,246,.3)}
 body.dark .cat-Office{background:rgba(251,191,36,.15);color:#FCD34D;border:1px solid rgba(251,191,36,.3)}
 body.dark .cat-Others{background:rgba(255,255,255,.1);color:#CBD5E1;border:1px solid rgba(255,255,255,.15)}
-/* CONTACT LIST - SIRF YE SCROLL HOGA */
 #familyList{max-height:52vh;overflow-y:auto;padding-right:2px;scrollbar-width:thin;scrollbar-color:#C8F2DC transparent}
 #familyList::-webkit-scrollbar{width:4px}
 #familyList::-webkit-scrollbar-thumb{background:#C8F2DC;border-radius:10px}
@@ -128,16 +128,15 @@ body.dark .popup-profile .pp-pic{background:linear-gradient(135deg,#8B5CF6,#22D3
 .popup-opt{width:100%;display:flex;align-items:center;gap:12px;padding:13px 12px;border-radius:16px;border:1px solid #EDF2F0;background:#fff;cursor:pointer;margin-bottom:8px;font-weight:700;font-size:14px;color:#1A2B26}
 body.dark .popup-opt{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff}
 .popup-opt .opt-icon{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.popup-opt .opt-icon.green{background:linear-gradient(135deg,#25D366,#0AC47A)}
+.popup-opt .opt-icon.green{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85))}
 .popup-opt .opt-icon.red{background:linear-gradient(135deg,#FFEAEA,#FFF5F5)}
 body.dark .popup-opt .opt-icon.red{background:rgba(255,90,90,.18)}
-.popup-opt .opt-icon.blue{background:linear-gradient(135deg,#3B82F6,#06B6D4)}
+.popup-opt .opt-icon.blue{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85))}
 .popup-opt .opt-icon.grey{background:#F1F3F5}
 body.dark .popup-opt .opt-icon.grey{background:rgba(255,255,255,.12)}
 .popup-opt svg{width:19px;height:19px}
 .popup-opt small{display:block;font-weight:500;font-size:11px;color:#6B7F76}
 body.dark .popup-opt small{color:#A8B3D1}
-/* ADD MEMBER MODAL - Same popup style */
 #addPopup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(10px);z-index:250;align-items:flex-end;justify-content:center}
 #addPopup.show{display:flex}
 #callScreen{display:none;position:fixed;inset:0;background:#0A1F18;z-index:99;flex-direction:column}
@@ -175,12 +174,12 @@ body.dark .debug-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,
 body.dark .last-call{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff}
 .online-banner{background:linear-gradient(135deg,#E8FDF2,#D8F5E8);border:1px solid #C8F2DC;border-radius:12px;padding:8px 10px;font-size:11px;color:#0A8A5A;font-weight:700;display:flex;align-items:center;gap:6px;margin-top:8px}
 body.dark .online-banner{background:rgba(139,92,246,.14);border:1px solid rgba(139,92,246,.3);color:#C4B5FD}
-/* FOOTER - Chhota + Thoda Dark */
-.footer{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:20;width:calc(100% - 28px);max-width:440px;background:rgba(15,45,32,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:9px 12px;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.18)}
-body.dark .footer{background:rgba(5,8,20,.92);border:1px solid rgba(139,92,246,.25);box-shadow:0 8px 22px rgba(0,0,0,.4)}
-.footer b{font-size:11.5px;color:#fff}
-.footer span{font-size:10.5px;color:rgba(255,255,255,.65)}
-.footer .f-line{width:24px;height:3px;border-radius:10px;background:linear-gradient(90deg,#25D366,#0AC47A);margin:0 auto 4px}
+/* 1. FOOTER - BILKUL HEADER JAISA */
+.footer{position:fixed;bottom:0;left:0;right:0;z-index:20;background:rgba(255,255,255,.75);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-top:1px solid rgba(255,255,255,.8);padding:11px 16px;text-align:center}
+body.dark .footer{background:rgba(11,15,30,.75);border-top:1px solid rgba(255,255,255,.1)}
+.footer b{font-size:12px;color:var(--text)}
+.footer span{font-size:11px;color:var(--sub)}
+.footer .f-line{width:28px;height:3px;border-radius:10px;background:linear-gradient(90deg,#25D366,#0AC47A);margin:0 auto 5px}
 body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 </style>
 </head>
@@ -204,7 +203,6 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <div style="background:rgba(246,255,251,.8);border:1px solid #E2F2EA;padding:11px;border-radius:16px;margin-top:10px;text-align:center"><b style="display:flex;align-items:center;justify-content:center;gap:6px"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg> Mic Test</b><br><button class="btn btn-white" onclick="testMic()">Mic Test Karo</button><p id="micStatus" style="font-size:12px;color:#6B7F76">Abhi test nahi hua</p></div>
 </div>
 
-<!-- USER CARD - STICKY -->
 <div class="card" id="profileCard" style="display:none">
 <div class="profile-row">
 <div class="my-avatar" id="myAvatar" onclick="openProfilePopup()"><span id="myAvatarLetter">M</span><span class="tap-hint">TAP • EDIT</span></div>
@@ -224,13 +222,12 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <div class="last-call" id="lastCallBox"></div>
 </div>
 
-<!-- ADD MEMBERS CARD - Header me Refresh + Plus + Count -->
 <div class="card" id="addCard" style="display:none">
 <div class="card-title">
 <span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Add Members</span>
 <div class="add-header-actions">
-<button class="mini-icon" onclick="forceRefresh()" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
-<button class="mini-icon green" onclick="openAddPopup()" title="Add Member"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+<button class="mini-icon" onclick="forceRefresh()" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+<button class="mini-icon" onclick="openAddPopup()" title="Add Member"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
 <span class="badge" id="famCount"><span class="bdot"></span> 0 Online</span>
 </div>
 </div>
@@ -240,7 +237,6 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 </div>
 </div>
 
-<!-- PROFILE POPUP -->
 <div id="profilePopup" onclick="if(event.target===this) closeProfilePopup()">
 <div class="popup-sheet">
 <div class="popup-handle"></div>
@@ -250,7 +246,7 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <div style="font-size:12px;color:#6B7F76" id="popupNumber">-</div>
 </div>
 <button class="popup-opt" onclick="closeProfilePopup(); document.getElementById('picInput').click()">
-<span class="opt-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
+<span class="opt-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
 <span style="flex:1;text-align:left">Photo Change Karo<small>Gallery se nayi photo lagao</small></span>
 <span style="color:#9AAFA6">›</span>
 </button>
@@ -260,7 +256,7 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <span style="color:#9AAFA6">›</span>
 </button>
 <button class="popup-opt" onclick="closeProfilePopup(); copyMyNumber()">
-<span class="opt-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+<span class="opt-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
 <span style="flex:1;text-align:left">Number Copy Karo<small>Apna number copy karke bhejo</small></span>
 <span style="color:#9AAFA6">›</span>
 </button>
@@ -272,7 +268,6 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 </div>
 </div>
 
-<!-- ADD MEMBER POPUP -->
 <div id="addPopup" onclick="if(event.target===this) closeAddPopup()">
 <div class="popup-sheet">
 <div class="popup-handle"></div>
@@ -646,8 +641,8 @@ function renderFamily(){
             <div><span class="cat-badge cat-${cat}">${cat}</span> <span class="status-line">${statusText}</span></div>
           </div>
           <div class="top-icons">
-            <button class="mini-icon dark" onclick="callFamily('${f.number}','${f.name}',true)" title="Video"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
-            <button class="mini-icon green" onclick="callFamily('${f.number}','${f.name}',false)" title="Audio"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+            <button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',true)" title="Video"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
+            <button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',false)" title="Audio"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
             <button class="mini-icon" onclick="deleteFamily('${f.number}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
           </div>
         </div>
