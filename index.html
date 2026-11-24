@@ -26,13 +26,16 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 .btn-orange{background:linear-gradient(135deg,rgba(255,152,0,.95),rgba(255,87,34,.95));color:#fff;border:1px solid rgba(255,255,255,.5)}
 .btn-glass{background:rgba(255,255,255,.25);color:#fff;border:1px solid rgba(255,255,255,.55);backdrop-filter:blur(12px)}
 .profile-row{display:flex;align-items:center;gap:12px}
-.my-avatar{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.65));color:#075E54;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;border:2px solid rgba(255,255,255,.8);box-shadow:0 6px 18px rgba(0,0,0,.2), inset 0 2px 4px rgba(255,255,255,.9)}
+.my-avatar{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.65));color:#075E54;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;border:2px solid rgba(255,255,255,.8);box-shadow:0 6px 18px rgba(0,0,0,.2), inset 0 2px 4px rgba(255,255,255,.9);position:relative;overflow:hidden;cursor:pointer;flex-shrink:0}
+.my-avatar img{width:100%;height:100%;object-fit:cover}
+.my-avatar .cam{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:11px;text-align:center;padding:2px 0}
 .logout-btn{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.75));color:#e74c3c;border:1px solid rgba(255,255,255,.8);padding:11px 14px;border-radius:20px;font-weight:700;font-size:13px;cursor:pointer}
 .status-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff3b30;box-shadow:0 0 10px #ff3b30}
 .contact{background:rgba(255,255,255,.30);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.65);border-radius:20px;padding:14px;margin:10px 0;box-shadow:0 8px 25px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.6);position:relative}
 .contact-top{display:flex;align-items:center;gap:12px;padding-right:88px}
-.avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.6));color:#075E54;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;position:relative;flex-shrink:0;border:2px solid rgba(255,255,255,.8);box-shadow:0 4px 15px rgba(0,0,0,.18), inset 0 2px 4px rgba(255,255,255,.9)}
-.avatar .dot{position:absolute;bottom:2px;right:2px;width:15px;height:15px;border-radius:50%;border:2px solid #fff;background:#ff3b30}
+.avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.6));color:#075E54;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;position:relative;flex-shrink:0;border:2px solid rgba(255,255,255,.8);box-shadow:0 4px 15px rgba(0,0,0,.18), inset 0 2px 4px rgba(255,255,255,.9);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar .dot{position:absolute;bottom:2px;right:2px;width:15px;height:15px;border-radius:50%;border:2px solid #fff;background:#ff3b30;z-index:2}
 .avatar .dot.online{background:#00ff88;box-shadow:0 0 10px #00ff88}
 .contact-info{flex:1;min-width:0}
 .contact-name{font-size:17px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -56,23 +59,30 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 #remoteVideo{width:100%;height:100%;object-fit:cover;background:#000}
 #myVideo{width:110px;height:150px;object-fit:cover;border-radius:16px;position:absolute;top:15px;right:15px;border:2px solid #fff}
 #audioUI{display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#075E54,#128C7E);color:#fff}
-#audioUI .bigAvatar{width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.2);backdrop-filter:blur(15px);border:2px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:60px}
-.call-top{position:absolute;top:20px;left:0;right:0;text-align:center;color:#fff;z-index:5}
+#audioUI .bigAvatar{width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.2);backdrop-filter:blur(15px);border:3px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+#audioUI .bigAvatar img{width:100%;height:100%;object-fit:cover}
+.call-top{position:absolute;top:20px;left:0;right:0;text-align:center;color:#fff;z-index:5;display:flex;flex-direction:column;align-items:center}
+.call-top .call-pic{width:64px;height:64px;border-radius:50%;border:2px solid #fff;overflow:hidden;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;margin-bottom:6px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.call-top .call-pic img{width:100%;height:100%;object-fit:cover}
 .call-controls{position:absolute;bottom:25px;left:0;right:0;display:flex;justify-content:center;gap:14px}
 .ctrl{width:60px;height:60px;border-radius:50%;border:1px solid rgba(255,255,255,.6);font-size:22px;cursor:pointer;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.7));backdrop-filter:blur(12px);box-shadow:0 6px 18px rgba(0,0,0,.25), inset 0 1px 0 #fff}
 .ctrl.red{background:linear-gradient(135deg,#ff6b6b,#e74c3c);color:#fff}
 .ctrl.active{background:linear-gradient(135deg,#ffc107,#ff9800);color:#fff}
 #incoming{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(15px);z-index:100;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+#incoming .in-pic{width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(15px);border:3px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;font-size:55px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+#incoming .in-pic img{width:100%;height:100%;object-fit:cover}
 #installBtn{display:none}
 .badge{background:rgba(255,255,255,.30);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5);padding:5px 11px;border-radius:20px;font-size:12px}
 .glass-chip{background:rgba(255,255,255,.28);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.45);padding:7px 11px;border-radius:20px}
 .debug-box{font-size:11px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);padding:8px 10px;border-radius:12px;margin-top:10px}
 #callEnded{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(15px);z-index:200;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px}
-#callEnded .ended-card{background:rgba(255,255,255,.18);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:28px 22px;max-width:340px;width:100%;box-shadow:0 15px 40px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.5)}
-#callEnded .ended-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.6));display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 14px}
+#callEnded .ended-card{background:rgba(255,255,255,.18);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:28px 22px;max-width:340px;width:100%}
+#callEnded .ended-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.6));display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 14px;overflow:hidden}
+#callEnded .ended-icon img{width:100%;height:100%;object-fit:cover}
 #toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(0,0,0,.85);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.4);color:#fff;padding:12px 18px;border-radius:20px;font-size:14px;font-weight:700;z-index:300;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .last-call{font-size:12px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:7px 10px;border-radius:12px;margin-top:10px;display:none}
+.pic-btn{background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.5);color:#fff;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;backdrop-filter:blur(10px)}
 </style>
 </head>
 <body>
@@ -93,14 +103,19 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 
 <div class="glass" id="profileCard" style="display:none">
 <div class="profile-row">
-<div class="my-avatar" id="myAvatar">M</div>
+<div class="my-avatar" id="myAvatar" onclick="document.getElementById('picInput').click()"><span id="myAvatarLetter">M</span><span class="cam">📷 Photo</span></div>
+<input type="file" id="picInput" accept="image/*" style="display:none" onchange="changeMyPic(event)">
 <div style="flex:1">
 <div style="font-weight:800;font-size:18px" id="showMyName">Mohammed</div>
 <div style="font-size:14px;opacity:.95">ID: <b id="showMyNum">-</b></div>
 <div style="font-size:12px"><span class="status-dot" id="statusDot"></span> <span id="myStatus">Connecting...</span></div>
 </div>
 </div>
-<div style="display:flex;gap:10px;margin-top:14px">
+<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+<button class="pic-btn" style="flex:1" onclick="document.getElementById('picInput').click()">📷 Photo Badlo</button>
+<button class="pic-btn" onclick="removeMyPic()">🗑️ Photo Hatayo</button>
+</div>
+<div style="display:flex;gap:10px;margin-top:10px">
 <button class="logout-btn" style="flex:1" onclick="logout()">🚪 Logout</button>
 <button onclick="copyMyNumber()" class="btn-glass" style="flex:1;padding:11px;border-radius:20px;font-weight:700;cursor:pointer">📋 Number Copy</button>
 </div>
@@ -130,14 +145,14 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 <video id="remoteVideo" autoplay playsinline></video>
 <audio id="remoteAudio" autoplay playsinline></audio>
 <video id="myVideo" autoplay muted playsinline></video>
-<div id="audioUI"><div class="bigAvatar">🎧</div><h2 id="audioName">Family</h2><p>Audio Call Chal Rahi Hai...</p><p style="font-size:40px">🎙️ 🔊</p><p id="callTimer" style="font-size:18px;font-weight:700">00:00</p></div>
-<div class="call-top"><h2 id="callName" style="margin:0">Family</h2><p id="callStatus" style="opacity:.8">Connecting...</p><p id="callTimerTop" style="font-size:15px;font-weight:700;margin:4px 0 0">00:00</p></div>
+<div id="audioUI"><div class="bigAvatar" id="audioBigPic">🎧</div><h2 id="audioName" style="margin:14px 0 4px">Family</h2><p id="audioNumber" style="margin:0;opacity:.85;font-size:13px"></p><p style="margin:8px 0">Audio Call Chal Rahi Hai...</p><p style="font-size:40px;margin:6px 0">🎙️ 🔊</p><p id="callTimer" style="font-size:18px;font-weight:700">Ringing...</p></div>
+<div class="call-top"><div class="call-pic" id="callTopPic">F</div><h2 id="callName" style="margin:0">Family</h2><p id="callNumber" style="margin:2px 0 0;font-size:12px;opacity:.85"></p><p id="callStatus" style="opacity:.8;margin:4px 0 0">Connecting...</p><p id="callTimerTop" style="font-size:15px;font-weight:700;margin:4px 0 0">Ringing...</p></div>
 <div class="call-controls"><button class="ctrl" id="muteBtn" onclick="toggleMute()">🎤</button><button class="ctrl" onclick="toggleSpeaker()">🔊</button><button class="ctrl red" onclick="endCall()">📞</button></div>
 </div>
 
 <div id="incoming">
-<div style="width:125px;height:125px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(15px);border:2px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:55px" id="inIcon">👤</div>
-<h2 id="inName">Family</h2><p id="inType">Call aa rahi hai...</p>
+<div class="in-pic" id="inPic">👤</div>
+<h2 id="inName" style="margin:14px 0 4px">Family</h2><p id="inNumber" style="margin:0 0 6px;opacity:.85;font-size:13px"></p><p id="inType">Call aa rahi hai...</p>
 <audio id="ringTone" loop src="https://actions.google.com/sounds/v1/alarms/phone_call.ogg"></audio>
 <div style="display:flex;gap:20px"><button class="ctrl red" style="width:72px;height:72px;font-size:28px" onclick="rejectCall()">✖</button><button class="ctrl" style="width:72px;height:72px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-size:28px" onclick="acceptCall()">📞</button></div>
 </div>
@@ -157,10 +172,9 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 <script>
 let peer, myStream, currentCall, incomingCall, isMuted=false, isVideoCall=true, deferredPrompt=null;
-let onlineMap = {}, lastSeenMap = {}, lastPingMap = {};
+let onlineMap = {}, lastSeenMap = {}, lastPingMap = {}, picMap = {}, nameMap = {};
 let mqttClient=null, mqttConnected=false, heartbeatTimer=null, cleanupTimer=null;
-let myNumberGlobal='', myNameGlobal='Me';
-// FIX: Ab 2 timer hain - Ringing aur Baat alag-alag
+let myNumberGlobal='', myNameGlobal='Me', myPicGlobal='';
 let callStartTime=0, callConnectedTime=0, callTimerInterval=null, lastCallName='', lastCallNumber='', lastCallIsVideo=true, callConnected=false, iEndedCall=false, endedPopupShown=false;
 let noAnswerTimer=null, ringingStartTime=0;
 function getFamily(){ try{ return JSON.parse(localStorage.getItem('family_v2') || '[]'); }catch(e){ return []; } }
@@ -169,6 +183,60 @@ let family = getFamily();
 window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='block'; });
 function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao'); } }
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+// === NAAM NIKALNA - NUMBER KI JAGAH NAAM ===
+function getNameByNumber(num){
+  if(!num) return 'Family';
+  // Pehle Family List me dekho
+  let f = getFamily().find(x=>x.number===num);
+  if(f) return f.name;
+  // Phir MQTT se aaya naam dekho
+  if(nameMap[num]) return nameMap[num];
+  if(num===myNumberGlobal) return myNameGlobal;
+  return num; // Naam nahi mila to number hi dikhao
+}
+function getPicByNumber(num){
+  if(!num) return '';
+  if(picMap[num]) return picMap[num];
+  if(num===myNumberGlobal) return myPicGlobal;
+  return '';
+}
+function setMyAvatarUI(){
+  let av=document.getElementById('myAvatar');
+  let letter=document.getElementById('myAvatarLetter');
+  if(myPicGlobal){
+    av.innerHTML='<img src="'+myPicGlobal+'"><span class="cam">📷 Photo</span>';
+  } else {
+    av.innerHTML='<span id="myAvatarLetter">'+(myNameGlobal.charAt(0).toUpperCase()||'M')+'</span><span class="cam">📷 Photo</span>';
+  }
+}
+// === PROFILE PIC - CHHOTI KARKE SAVE KARO ===
+function changeMyPic(e){
+  let file=e.target.files[0]; if(!file) return;
+  let reader=new FileReader();
+  reader.onload=function(ev){
+    let img=new Image();
+    img.onload=function(){
+      let canvas=document.createElement('canvas');
+      let size=200; canvas.width=size; canvas.height=size;
+      let ctx=canvas.getContext('2d');
+      // Center crop square
+      let s=Math.min(img.width, img.height);
+      let sx=(img.width-s)/2, sy=(img.height-s)/2;
+      ctx.drawImage(img, sx, sy, s, s, 0, 0, size, size);
+      let smallPic=canvas.toDataURL('image/jpeg', 0.65);
+      myPicGlobal=smallPic;
+      localStorage.setItem('myPic', smallPic);
+      setMyAvatarUI();
+      publishOnline(myNumberGlobal, myNameGlobal);
+      showToast('✅ Photo lag gayi!');
+    };
+    img.src=ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function removeMyPic(){
+  myPicGlobal=''; localStorage.removeItem('myPic'); setMyAvatarUI(); publishOnline(myNumberGlobal, myNameGlobal); showToast('Photo hata di');
+}
 function setStatusUI(isOnline){
   let top = document.getElementById('topStatus');
   let mid = document.getElementById('myStatus');
@@ -179,7 +247,6 @@ function setStatusUI(isOnline){
 function logDebug(t){ let el=document.getElementById('debugBox'); if(el) el.innerText='Presence: '+t; }
 function showToast(msg){ let t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show'); setTimeout(()=>{ t.classList.remove('show'); }, 3500); }
 function formatTime(sec){ let m=Math.floor(sec/60), s=sec%60; return (m<10?'0'+m:m)+':'+(s<10?'0'+s:s); }
-// FIX: Ringing ka timer alag, Baat ka timer alag
 function resetCallTimers(){
   callStartTime=Date.now(); ringingStartTime=Date.now(); callConnectedTime=0; callConnected=false;
   if(callTimerInterval) clearInterval(callTimerInterval); callTimerInterval=null;
@@ -187,52 +254,41 @@ function resetCallTimers(){
   document.getElementById('callTimerTop').innerText='Ringing...';
 }
 function startConnectedTimer(){
-  // Call sach me connect hui - abhi se Baat ka timer chalega
   callConnected=true; callConnectedTime=Date.now();
   if(callTimerInterval) clearInterval(callTimerInterval);
-  callTimerInterval=setInterval(()=>{
-    let sec=Math.floor((Date.now()-callConnectedTime)/1000);
-    let f=formatTime(sec);
-    document.getElementById('callTimer').innerText=f;
-    document.getElementById('callTimerTop').innerText=f;
-  }, 1000);
+  callTimerInterval=setInterval(()=>{ let sec=Math.floor((Date.now()-callConnectedTime)/1000); let f=formatTime(sec); document.getElementById('callTimer').innerText=f; document.getElementById('callTimerTop').innerText=f; }, 1000);
 }
-function getTalkDuration(){
-  // Agar call kabhi connect hi nahi hui to Baat 00:00 hai
-  if(!callConnected || !callConnectedTime) return 0;
-  return Math.floor((Date.now()-callConnectedTime)/1000);
-}
+function getTalkDuration(){ if(!callConnected || !callConnectedTime) return 0; return Math.floor((Date.now()-callConnectedTime)/1000); }
 function stopCallTimer(){ if(callTimerInterval){ clearInterval(callTimerInterval); callTimerInterval=null; } }
 function showCallEnded(type, name){
   if(endedPopupShown) return; endedPopupShown=true;
-  let talkSec = getTalkDuration();
-  stopCallTimer();
+  let talkSec = getTalkDuration(); stopCallTimer();
   let durText = formatTime(talkSec);
-  let title='', msg='', icon='📞', durLabel='';
-  if(type==='self'){
-    if(!callConnected){ title='Call Khatam Ho Gayi'; msg='Aapne call kaat di - Call lagi hi nahi'; icon='✅'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
-    else { title='Call Khatam Ho Gayi'; msg='Aapne call kaat di'; icon='✅'; durLabel='Baat Hui: '+durText; }
-  }
-  else if(type==='remote'){
-    if(!callConnected){ title='Call Kaat Di Gayi'; msg=(name||'Samne wale')+' ne call kaat di - Call lagi hi nahi'; icon='📞'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
-    else { title='Call Disconnected'; msg=(name||'Samne wale')+' ne call kaat di'; icon='📞'; durLabel='Baat Hui: '+durText; }
-  }
-  else if(type==='rejected'){ title='Call Reject Ho Gayi'; msg=(name||'Samne wale')+' ne call reject kar di'; icon='❌'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
-  else if(type==='missed'){ title='Missed Call'; msg='Aapne call nahi uthayi'; icon='🔕'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
-  else if(type==='no-answer'){ title='No Answer'; msg=(name||'Samne wale')+' ne call nahi uthayi'; icon='📵'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
-  else if(type==='network'){ title='Call Disconnected'; msg='Network ki wajah se call kat gayi'; icon='📶'; durLabel='Baat Hui: '+durText; }
-  document.getElementById('endedIcon').innerText=icon;
+  let displayName = getNameByNumber(lastCallNumber) || name;
+  // Ended popup me bhi photo
+  let pic = getPicByNumber(lastCallNumber);
+  let iconEl=document.getElementById('endedIcon');
+  if(pic) iconEl.innerHTML='<img src="'+pic+'">';
+  else iconEl.innerText='📞';
+  let title='', msg='', durLabel='';
+  if(type==='self'){ if(!callConnected){ title='Call Khatam Ho Gayi'; msg='Aapne call kaat di - Call lagi hi nahi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; } else { title='Call Khatam Ho Gayi'; msg='Aapne call kaat di'; durLabel='Baat Hui: '+durText; } }
+  else if(type==='remote'){ if(!callConnected){ title='Call Kaat Di Gayi'; msg=displayName+' ne call kaat di - Call lagi hi nahi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; } else { title='Call Disconnected'; msg=displayName+' ne call kaat di'; durLabel='Baat Hui: '+durText; } }
+  else if(type==='rejected'){ title='Call Reject Ho Gayi'; msg=displayName+' ne call reject kar di'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
+  else if(type==='missed'){ title='Missed Call'; msg='Aapne call nahi uthayi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
+  else if(type==='no-answer'){ title='No Answer'; msg=displayName+' ne call nahi uthayi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
+  else if(type==='network'){ title='Call Disconnected'; msg='Network ki wajah se call kat gayi'; durLabel='Baat Hui: '+durText; }
   document.getElementById('endedTitle').innerText=title;
   document.getElementById('endedMsg').innerText=msg;
   document.getElementById('endedDuration').innerText=durLabel;
   document.getElementById('callEnded').style.display='flex';
   let box=document.getElementById('lastCallBox');
-  if(box){ box.style.display='block'; box.innerHTML='📞 Last Call: <b>'+(name||lastCallName||'-')+'</b> • '+title+' • '+durLabel; }
+  if(box){ box.style.display='block'; box.innerHTML='📞 Last Call: <b>'+displayName+'</b> • '+title+' • '+durLabel; }
   setTimeout(()=>{ closeEndedPopup(); }, 6000);
 }
 function closeEndedPopup(){ document.getElementById('callEnded').style.display='none'; }
 function callBackLast(){ closeEndedPopup(); if(lastCallNumber){ document.getElementById('callTo').value=lastCallNumber; makeCall(lastCallIsVideo, lastCallName); } }
 window.onload = ()=>{
+  myPicGlobal = localStorage.getItem('myPic') || '';
   renderFamily();
   let savedNum = localStorage.getItem('myNumber');
   let savedName = localStorage.getItem('myName');
@@ -247,7 +303,8 @@ function sendCallSignal(toNumber, action){
   try{ mqttClient.publish('family-call-v12/call/'+toNumber, JSON.stringify({action:action, from:myNumberGlobal, fromName:myNameGlobal, time:Date.now()}), {retain:false}); }catch(e){}
 }
 function handleCallSignal(data){
-  let fromName = data.fromName || data.from || lastCallName;
+  let fromNum = data.from;
+  let fromName = getNameByNumber(fromNum);
   let isCalling = document.getElementById('callScreen').style.display==='flex';
   let isRinging = document.getElementById('incoming').style.display==='flex';
   if(!isCalling && !isRinging) return;
@@ -261,7 +318,7 @@ function startPresence(myNum, myName){
   let clientId = 'fam-'+myNum+'-'+Math.random().toString(36).substr(2,6);
   logDebug('Presence connect ho raha hai...');
   try{ if(mqttClient) try{mqttClient.end(true);}catch(e){} }catch(e){}
-  mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', { clientId: clientId, keepalive: 15, clean: true, will: { topic: 'family-call-v12/presence/'+myNum, payload: JSON.stringify({status:'offline', name:myName}), retain: true } });
+  mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', { clientId: clientId, keepalive: 15, clean: true, will: { topic: 'family-call-v12/presence/'+myNum, payload: JSON.stringify({status:'offline', name:myName, pic:''}), retain: true } });
   mqttClient.on('connect', ()=>{
     mqttConnected=true; logDebug('Presence Connected ✅ - ID: '+myNum);
     mqttClient.subscribe('family-call-v12/presence/#');
@@ -276,26 +333,29 @@ function startPresence(myNum, myName){
     try{
       if(topic.indexOf('/call/')!==-1){ let d = JSON.parse(payload.toString()); if(d.from!==myNum) handleCallSignal(d); return; }
       let data = JSON.parse(payload.toString()); let num = topic.split('/').pop(); if(num===myNum) return;
+      if(data.name) nameMap[num]=data.name;
+      if(data.pic) picMap[num]=data.pic;
       if(data.status==='online'){ onlineMap[num]='online'; lastPingMap[num]=Date.now(); lastSeenMap[num]='Abhi Online'; } else { onlineMap[num]='offline'; lastSeenMap[num]='App band hai'; } renderFamily();
     }catch(e){}
   });
   mqttClient.on('error', ()=>{ logDebug('Presence error, retry...'); });
   mqttClient.on('close', ()=>{ mqttConnected=false; logDebug('Presence disconnected, retry...'); });
 }
-function publishOnline(num, name){ if(mqttClient && mqttConnected){ try{ mqttClient.publish('family-call-v12/presence/'+num, JSON.stringify({status:'online', name:name||'Me'}), {retain:true}); }catch(e){} } }
+function publishOnline(num, name){ if(mqttClient && mqttConnected){ try{ mqttClient.publish('family-call-v12/presence/'+num, JSON.stringify({status:'online', name:name||'Me', pic:myPicGlobal||''}), {retain:true}); }catch(e){} } }
 function forceRefresh(){ renderFamily(); publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me'); alert('Refresh ho gaya ✅ - 5 sec wait karo'); }
 function login(isAuto){
   let num=document.getElementById('myNumber').value.trim();
   let name=document.getElementById('myName').value.trim()||'Me';
   if(num.length<10){ if(!isAuto) alert('Sahi number daalo'); return; }
   localStorage.setItem('myNumber', num); localStorage.setItem('myName', name);
+  myNameGlobal=name; myNumberGlobal=num;
   document.getElementById('loginCard').style.display='none';
   document.getElementById('profileCard').style.display='block';
   document.getElementById('addCard').style.display='block';
   document.getElementById('directCard').style.display='block';
   document.getElementById('showMyName').innerText=name;
   document.getElementById('showMyNum').innerText=num;
-  document.getElementById('myAvatar').innerText=name.charAt(0).toUpperCase();
+  setMyAvatarUI();
   setStatusUI(false);
   document.getElementById('myStatus').innerText='Connecting...';
   renderFamily();
@@ -308,12 +368,17 @@ function login(isAuto){
   peer.on('call',call=>{
     incomingCall=call;
     let isV = call.metadata ? call.metadata.isVideo : true;
-    lastCallName = call.peer.replace('family-',''); lastCallNumber = lastCallName; lastCallIsVideo = isV;
-    // Incoming pe bhi timer reset - abhi sirf Ringing hai, Baat nahi
+    let callerNum = call.peer.replace('family-','');
+    lastCallNumber = callerNum;
+    lastCallName = getNameByNumber(callerNum);
+    lastCallIsVideo = isV;
     resetCallTimers();
+    // Incoming me NAAM + PHOTO
     document.getElementById('inName').innerText=lastCallName;
+    document.getElementById('inNumber').innerText=callerNum;
+    let inPic = getPicByNumber(callerNum);
+    document.getElementById('inPic').innerHTML = inPic ? '<img src="'+inPic+'">' : '👤';
     document.getElementById('inType').innerText = isV ? '🎥 Video Call aa rahi hai...' : '🎧 Audio Call aa rahi hai...';
-    document.getElementById('inIcon').innerText = isV ? '🎥' : '🎧';
     document.getElementById('incoming').style.display='flex';
     document.getElementById('ringTone').play().catch(()=>{});
     if(navigator.vibrate) navigator.vibrate([500,200,500]);
@@ -364,10 +429,12 @@ function renderFamily(){
       let dotClass = st==='online' ? 'dot online' : 'dot';
       let pillHtml = st==='online' ? `<span class="status-pill on"><span class="s-dot"></span>● Online</span><span class="last-seen">Abhi Online</span>` : `<span class="status-pill off"><span class="s-dot"></span>○ Offline</span><span class="last-seen">${lastSeenMap[f.number]||'App band hai'}</span>`;
       let sub = st==='online' ? 'Abhi call kar sakte ho' : 'Abhi App band hai';
+      let pic = getPicByNumber(f.number);
+      let avatarHtml = pic ? `<img src="${pic}">` : f.name.charAt(0).toUpperCase();
       h+=`<div class="contact">
         <div class="top-status">${pillHtml}</div>
         <div class="contact-top">
-          <div class="avatar">${f.name.charAt(0).toUpperCase()}<span class="${dotClass}"></span></div>
+          <div class="avatar">${avatarHtml}<span class="${dotClass}"></span></div>
           <div class="contact-info">
             <div class="contact-name">${f.name}</div>
             <div class="contact-num">📱 ${f.number}</div>
@@ -388,10 +455,21 @@ function callFamily(num,name,isVideo){
   if(onlineMap[num]!=='online'){ if(!confirm(name+' abhi Offline dikh raha hai, phir bhi call lagau?')) return; }
   document.getElementById('callTo').value=num;makeCall(isVideo,name);
 }
-function setupCallUI(isVideo, name){ isVideoCall=isVideo; document.getElementById('callName').innerText=name; document.getElementById('audioName').innerText=name; if(isVideo){ document.getElementById('remoteVideo').style.display='block'; document.getElementById('myVideo').style.display='block'; document.getElementById('audioUI').style.display='none'; } else { document.getElementById('remoteVideo').style.display='none'; document.getElementById('myVideo').style.display='none'; document.getElementById('audioUI').style.display='flex'; } }
+function setupCallUI(isVideo, name, number){
+  isVideoCall=isVideo;
+  let displayName = getNameByNumber(number) || name || number;
+  let pic = getPicByNumber(number);
+  document.getElementById('callName').innerText=displayName;
+  document.getElementById('callNumber').innerText=number;
+  document.getElementById('audioName').innerText=displayName;
+  document.getElementById('audioNumber').innerText=number;
+  // Call screen photo - upar chhoti + Audio me badi
+  document.getElementById('callTopPic').innerHTML = pic ? '<img src="'+pic+'">' : displayName.charAt(0).toUpperCase();
+  document.getElementById('audioBigPic').innerHTML = pic ? '<img src="'+pic+'">' : '🎧';
+  if(isVideo){ document.getElementById('remoteVideo').style.display='block'; document.getElementById('myVideo').style.display='block'; document.getElementById('audioUI').style.display='none'; } else { document.getElementById('remoteVideo').style.display='none'; document.getElementById('myVideo').style.display='none'; document.getElementById('audioUI').style.display='flex'; }
+}
 function handleCallEvents(call){
   call.on('stream',rs=>{
-    // FIX: Yahi asli Connect hai - jab samne ki aawaz/video aayi, tabhi Timer chalega
     startConnectedTimer();
     document.getElementById('remoteVideo').srcObject=rs;
     let a=document.getElementById('remoteAudio'); a.srcObject=rs; a.play().catch(()=>{});
@@ -399,34 +477,30 @@ function handleCallEvents(call){
   });
   call.on('close',()=>{
     if(iEndedCall) return;
-    let name = lastCallName || call.peer.replace('family-','');
+    let name = getNameByNumber(lastCallNumber);
     if(!callConnected){ forceEndCall(true); showCallEnded('rejected', name); }
     else { forceEndCall(true); showCallEnded('remote', name); }
   });
   call.on('error',()=>{
     if(iEndedCall) return;
     forceEndCall(true);
-    showCallEnded('network', lastCallName);
+    showCallEnded('network', getNameByNumber(lastCallNumber));
   });
 }
 function makeCall(isVideo,name){
   let to=document.getElementById('callTo').value.trim(); if(!to){alert('Number daalo');return;}
-  lastCallName=name||to; lastCallNumber=to; lastCallIsVideo=isVideo; iEndedCall=false; callConnected=false; endedPopupShown=false;
-  setupCallUI(isVideo, lastCallName); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Call laga rahe hain...';
+  lastCallNumber=to; lastCallName=getNameByNumber(to); lastCallIsVideo=isVideo; iEndedCall=false; callConnected=false; endedPopupShown=false;
+  setupCallUI(isVideo, lastCallName, to); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Call laga rahe hain...';
   resetCallTimers();
   if(noAnswerTimer) clearTimeout(noAnswerTimer);
-  noAnswerTimer=setTimeout(()=>{
-    if(document.getElementById('callScreen').style.display==='flex' && !callConnected){
-      iEndedCall=true; forceEndCall(true); showCallEnded('no-answer', lastCallName);
-    }
-  }, 45000);
+  noAnswerTimer=setTimeout(()=>{ if(document.getElementById('callScreen').style.display==='flex' && !callConnected){ iEndedCall=true; forceEndCall(true); showCallEnded('no-answer', lastCallName); } }, 45000);
   navigator.mediaDevices.getUserMedia({video:isVideo, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isVideo) document.getElementById('myVideo').srcObject=s; let call=peer.call('family-'+to, s, {metadata:{isVideo:isVideo}}); handleCallEvents(call); currentCall=call; }).catch(e=>{alert('Mic/Camera Allow karo');});
 }
 function acceptCall(){
   let isV = incomingCall.metadata ? incomingCall.metadata.isVideo : true;
   document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause();
   iEndedCall=false; callConnected=false; endedPopupShown=false;
-  setupCallUI(isV, incomingCall.peer.replace('family-','')); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Connecting...';
+  setupCallUI(isV, lastCallName, lastCallNumber); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Connecting...';
   resetCallTimers();
   navigator.mediaDevices.getUserMedia({video:isV, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isV) document.getElementById('myVideo').srcObject=s; incomingCall.answer(s); handleCallEvents(incomingCall); currentCall=incomingCall; });
 }
@@ -435,7 +509,6 @@ function rejectCall(){
   sendCallSignal(lastCallNumber, 'rejected');
   if(incomingCall) try{incomingCall.close();}catch(e){}
   showToast('❌ Call Reject kar di');
-  // FIX: Reject wale ke yahan Baat 00:00 hi dikhegi
   showCallEnded('missed', lastCallName);
 }
 function forceEndCall(silent){
