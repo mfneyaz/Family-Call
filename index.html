@@ -24,15 +24,13 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 .btn-dark{background:rgba(7,94,84,.85);color:#fff;border:1px solid rgba(255,255,255,.4)}
 .btn-white{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.75));color:#075E54;border:1px solid rgba(255,255,255,.8)}
 .btn-orange{background:linear-gradient(135deg,rgba(255,152,0,.95),rgba(255,87,34,.95));color:#fff;border:1px solid rgba(255,255,255,.5)}
-.btn-glass{background:rgba(255,255,255,.25);color:#fff;border:1px solid rgba(255,255,255,.55);backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+.btn-glass{background:rgba(255,255,255,.25);color:#fff;border:1px solid rgba(255,255,255,.55);backdrop-filter:blur(12px)}
 .profile-row{display:flex;align-items:center;gap:12px}
 .my-avatar{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.65));color:#075E54;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;border:2px solid rgba(255,255,255,.8);box-shadow:0 6px 18px rgba(0,0,0,.2), inset 0 2px 4px rgba(255,255,255,.9)}
 .logout-btn{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.75));color:#e74c3c;border:1px solid rgba(255,255,255,.8);padding:11px 14px;border-radius:20px;font-weight:700;font-size:13px;cursor:pointer}
 .status-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff3b30;box-shadow:0 0 10px #ff3b30}
-
-/* === CONTACT - STATUS TOP RIGHT === */
 .contact{background:rgba(255,255,255,.30);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.65);border-radius:20px;padding:14px;margin:10px 0;box-shadow:0 8px 25px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.6);position:relative}
-.contact-top{display:flex;align-items:center;gap:12px;padding-right:82px}
+.contact-top{display:flex;align-items:center;gap:12px;padding-right:88px}
 .avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,255,255,.6));color:#075E54;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;position:relative;flex-shrink:0;border:2px solid rgba(255,255,255,.8);box-shadow:0 4px 15px rgba(0,0,0,.18), inset 0 2px 4px rgba(255,255,255,.9)}
 .avatar .dot{position:absolute;bottom:2px;right:2px;width:15px;height:15px;border-radius:50%;border:2px solid #fff;background:#ff3b30}
 .avatar .dot.online{background:#00ff88;box-shadow:0 0 10px #00ff88}
@@ -40,16 +38,12 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 .contact-name{font-size:17px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .contact-num{font-size:14px;color:rgba(255,255,255,.95)}
 .contact-sub{font-size:12px;color:rgba(255,255,255,.85)}
-/* TOP RIGHT STATUS */
 .top-status{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .status-pill{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 8px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.6)}
 .status-pill.on{background:rgba(0,255,136,.25);color:#eafff3;border-color:rgba(0,255,136,.6)}
 .status-pill.off{background:rgba(255,255,255,.25);color:#fff}
-.status-pill.checking{background:rgba(255,193,7,.25);color:#fff3d6}
 .status-pill .s-dot{width:8px;height:8px;border-radius:50%;background:#00ff88;box-shadow:0 0 6px #00ff88}
 .status-pill.off .s-dot{background:#ff3b30;box-shadow:0 0 6px #ff3b30}
-.status-pill.checking .s-dot{background:#ffc107;box-shadow:0 0 6px #ffc107;animation:blink 1s infinite}
-@keyframes blink{50%{opacity:.3}}
 .last-seen{font-size:10px;color:rgba(255,255,255,.8)}
 .contact-actions{display:flex;gap:10px;margin-top:12px}
 .action-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 8px;border-radius:14px;border:1px solid rgba(255,255,255,.6);backdrop-filter:blur(12px);font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.6)}
@@ -72,6 +66,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 #installBtn{display:none}
 .badge{background:rgba(255,255,255,.30);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5);padding:5px 11px;border-radius:20px;font-size:12px}
 .glass-chip{background:rgba(255,255,255,.28);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.45);padding:7px 11px;border-radius:20px}
+.debug-box{font-size:11px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);padding:8px 10px;border-radius:12px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -101,6 +96,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 <button class="logout-btn" style="flex:1" onclick="logout()">🚪 Logout</button>
 <button onclick="copyMyNumber()" class="btn-glass" style="flex:1;padding:11px;border-radius:20px;font-weight:700;cursor:pointer">📋 Number Copy</button>
 </div>
+<div class="debug-box" id="debugBox">Presence: Connecting...</div>
 </div>
 
 <div class="glass" id="addCard" style="display:none">
@@ -109,7 +105,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 <input id="famName" placeholder="Naam - Ammi">
 <input id="famNumber" type="tel" placeholder="Unka Number">
 <button class="btn btn-green" onclick="addFamily()">+ Add Karo</button>
-<button class="btn btn-glass" style="width:100%;padding:10px;border-radius:12px;margin-top:8px;cursor:pointer" onclick="checkFamilyOnline(true)">🔄 Status Refresh Karo</button>
+<button class="btn btn-glass" style="width:100%;padding:10px;border-radius:12px;margin-top:8px;cursor:pointer" onclick="forceRefresh()">🔄 Status Refresh Karo</button>
 <div id="familyList"></div>
 </div>
 
@@ -138,12 +134,12 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 </div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
 <script>
 let peer, myStream, currentCall, incomingCall, isMuted=false, isVideoCall=true, deferredPrompt=null;
-// Online status ab DIRECT PING se aayega - listAllPeers se nahi
-let onlineMap = {}; // number -> 'online' | 'offline' | 'checking'
-let lastSeenMap = {};
-let checkTimer = null, offlineTimer = null, isCurrentlyOnline = false, reconnectAttempts = 0, isChecking = false;
+let onlineMap = {}, lastSeenMap = {}, lastPingMap = {};
+let mqttClient=null, mqttConnected=false, heartbeatTimer=null, cleanupTimer=null;
+let myNumberGlobal='';
 function getFamily(){ try{ return JSON.parse(localStorage.getItem('family_v2') || '[]'); }catch(e){ return []; } }
 function saveFamily(f){ localStorage.setItem('family_v2', JSON.stringify(f)); }
 let family = getFamily();
@@ -151,16 +147,13 @@ window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferred
 function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao'); } }
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 function setStatusUI(isOnline){
-  isCurrentlyOnline = isOnline;
   let top = document.getElementById('topStatus');
   let mid = document.getElementById('myStatus');
   let dot = document.getElementById('statusDot');
   if(isOnline){ top.innerText='● Online'; mid.innerText='Online - Call aane ke liye taiyaar'; dot.style.background='#00ff88'; dot.style.boxShadow='0 0 10px #00ff88'; }
   else { top.innerText='● Offline'; mid.innerText='Offline - Internet check karo'; dot.style.background='#ff3b30'; dot.style.boxShadow='0 0 10px #ff3b30'; }
 }
-function markOnline(){ reconnectAttempts = 0; if(offlineTimer){ clearTimeout(offlineTimer); offlineTimer=null; } if(!isCurrentlyOnline) setStatusUI(true); }
-function markMaybeOffline(){ if(offlineTimer) return; offlineTimer = setTimeout(()=>{ setStatusUI(false); offlineTimer=null; }, 10000); }
-function safeReconnect(){ if(!peer) return; if(peer.disconnected && !peer.destroyed){ reconnectAttempts++; if(reconnectAttempts <= 5){ setTimeout(()=>{ try{ peer.reconnect(); }catch(e){} }, 3000); } } }
+function logDebug(t){ let el=document.getElementById('debugBox'); if(el) el.innerText='Presence: '+t; }
 window.onload = ()=>{
   renderFamily();
   let savedNum = localStorage.getItem('myNumber');
@@ -171,6 +164,84 @@ function testMic(){
   document.getElementById('micStatus').innerText='Mic maang rahe hain... Allow dabao';
   navigator.mediaDevices.getUserMedia({video:false, audio:true}).then(s=>{ document.getElementById('micStatus').innerText='✅ Mic Sahi Hai!'; s.getTracks().forEach(t=>t.stop()); }).catch(e=>{ document.getElementById('micStatus').innerText='❌ Mic Block Hai!'; });
 }
+
+// === MQTT PRESENCE - YEHI ASLI ONLINE SYSTEM HAI ===
+function startPresence(myNum, myName){
+  myNumberGlobal=myNum;
+  // Har device ka alag clientId - warna ek dusre ko kick karega
+  let clientId = 'fam-'+myNum+'-'+Math.random().toString(36).substr(2,6);
+  try{
+    mqttClient = new Paho.MQTT.Client('broker.emqx.io', 8084, '/mqtt', clientId);
+  }catch(e){ logDebug('MQTT load nahi hua'); return; }
+  mqttClient.onConnectionLost = (r)=>{
+    mqttConnected=false; logDebug('Presence disconnected, retry...');
+    setTimeout(()=>{ startPresence(myNum, myName); }, 4000);
+  };
+  mqttClient.onMessageArrived = (msg)=>{
+    try{
+      let topic = msg.destinationName;
+      let data = JSON.parse(msg.payloadString);
+      let num = topic.split('/').pop();
+      if(num===myNum) return;
+      if(data.status==='online'){
+        onlineMap[num]='online'; lastPingMap[num]=Date.now(); lastSeenMap[num]='Abhi Online';
+      } else {
+        onlineMap[num]='offline'; lastSeenMap[num]='App band hai';
+      }
+      renderFamily();
+    }catch(e){}
+  };
+  let will = new Paho.MQTT.Message(JSON.stringify({status:'offline', name:myName}));
+  will.destinationName = 'family-call-v12/presence/'+myNum;
+  will.retained = true;
+  mqttClient.connect({
+    useSSL:true, timeout:5, keepAliveInterval:15, willMessage:will,
+    onSuccess: ()=>{
+      mqttConnected=true; logDebug('Presence Connected ✅ - ID: '+myNum);
+      mqttClient.subscribe('family-call-v12/presence/#');
+      // Apna Online bhejo
+      let m = new Paho.MQTT.Message(JSON.stringify({status:'online', name:myName}));
+      m.destinationName='family-call-v12/presence/'+myNum; m.retained=true;
+      mqttClient.send(m);
+      // Har 5 sec me heartbeat
+      if(heartbeatTimer) clearInterval(heartbeatTimer);
+      heartbeatTimer=setInterval(()=>{
+        if(mqttConnected){
+          let hb = new Paho.MQTT.Message(JSON.stringify({status:'online', name:myName}));
+          hb.destinationName='family-call-v12/presence/'+myNum; hb.retained=true;
+          try{mqttClient.send(hb);}catch(e){}
+        }
+      }, 5000);
+      // Jo 15 sec se heartbeat nahi bheja wo Offline
+      if(cleanupTimer) clearInterval(cleanupTimer);
+      cleanupTimer=setInterval(()=>{
+        let now=Date.now();
+        family=getFamily();
+        family.forEach(f=>{
+          if(lastPingMap[f.number] && (now-lastPingMap[f.number] > 15000)){
+            if(onlineMap[f.number]!=='offline'){ onlineMap[f.number]='offline'; lastSeenMap[f.number]='App band hai'; renderFamily(); }
+          }
+        });
+      }, 5000);
+      // Dobara apna status sabko bhejo taaki dusra turant Online dekhe
+      setTimeout(()=>{ renderFamily(); }, 1000);
+    },
+    onFailure: ()=>{ logDebug('Presence fail, retry...'); setTimeout(()=>{ startPresence(myNum, myName); }, 4000); }
+  });
+}
+function forceRefresh(){
+  family=getFamily();
+  family.forEach(f=>{ if(!lastPingMap[f.number]) onlineMap[f.number]='offline'; });
+  renderFamily();
+  // Apna Online dobara bhejo
+  if(mqttClient && mqttConnected){
+    let m = new Paho.MQTT.Message(JSON.stringify({status:'online', name:localStorage.getItem('myName')||'Me'}));
+    m.destinationName='family-call-v12/presence/'+myNumberGlobal; m.retained=true;
+    try{mqttClient.send(m);}catch(e){}
+  }
+  alert('Refresh ho gaya ✅ - 5 sec wait karo');
+}
+
 function login(isAuto){
   let num=document.getElementById('myNumber').value.trim();
   let name=document.getElementById('myName').value.trim()||'Me';
@@ -183,26 +254,15 @@ function login(isAuto){
   document.getElementById('showMyName').innerText=name;
   document.getElementById('showMyNum').innerText=num;
   document.getElementById('myAvatar').innerText=name.charAt(0).toUpperCase();
-  if(checkTimer){ clearInterval(checkTimer); checkTimer=null; }
-  if(offlineTimer){ clearTimeout(offlineTimer); offlineTimer=null; }
   setStatusUI(false);
   document.getElementById('myStatus').innerText='Connecting...';
   renderFamily();
   if(peer){ try{peer.destroy();}catch(e){} }
   peer=new Peer('family-'+num);
-  peer.on('open',()=>{ markOnline(); checkFamilyOnline(); if(!checkTimer) checkTimer = setInterval(checkFamilyOnline, 20000); });
-  peer.on('disconnected',()=>{ markMaybeOffline(); safeReconnect(); });
-  peer.on('close',()=>{ markMaybeOffline(); });
-  peer.on('error',(err)=>{ if(err && err.type==='peer-unavailable') return; if(err && (err.type==='network' || err.type==='server-error' || err.type==='socket-error')){ markMaybeOffline(); safeReconnect(); } });
-  // Koi hume ping kare to turant jawab do - isse hum Online dikhenge
-  peer.on('connection', (conn)=>{
-    conn.on('data', (d)=>{
-      if(d && d.type==='ping'){ conn.send({type:'pong'}); }
-    });
-  });
-  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && peer && peer.disconnected) safeReconnect(); });
-  window.addEventListener('online', ()=>{ safeReconnect(); });
-  window.addEventListener('offline', ()=>{ markMaybeOffline(); });
+  peer.on('open',()=>{ setStatusUI(true); startPresence(num, name); });
+  peer.on('disconnected',()=>{ setTimeout(()=>{ try{peer.reconnect();}catch(e){} }, 3000); });
+  peer.on('error',()=>{});
+  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && peer && peer.disconnected) try{peer.reconnect();}catch(e){} });
   peer.on('call',call=>{
     incomingCall=call;
     let isV = call.metadata ? call.metadata.isVideo : true;
@@ -214,41 +274,13 @@ function login(isAuto){
     if(navigator.vibrate) navigator.vibrate([500,200,500]);
   });
 }
-// === NAYA: DIRECT PING - SEEDHA USKO POOCHO ONLINE HO? ===
-function pingOne(number){
-  return new Promise((resolve)=>{
-    let done=false;
-    let timer=setTimeout(()=>{ if(!done){ done=true; try{conn.close();}catch(e){} resolve(false); } }, 3500);
-    let conn;
-    try{ conn = peer.connect('family-'+number, {reliable:true}); }catch(e){ clearTimeout(timer); resolve(false); return; }
-    conn.on('open', ()=>{
-      try{ conn.send({type:'ping'}); }catch(e){ clearTimeout(timer); if(!done){done=true; resolve(false);} }
-    });
-    conn.on('data', (d)=>{
-      if(d && d.type==='pong' && !done){ done=true; clearTimeout(timer); try{conn.close();}catch(e){} resolve(true); }
-    });
-    conn.on('error', ()=>{ if(!done){ done=true; clearTimeout(timer); resolve(false); } });
-    conn.on('close', ()=>{ if(!done){ /* pong nahi aaya to timeout hi batayega */ } });
-  });
-}
-async function checkFamilyOnline(showToast){
-  if(!peer || !peer.open) return;
-  if(isChecking) return;
-  isChecking=true;
-  family = getFamily();
-  for(let f of family){
-    onlineMap[f.number]='checking'; renderFamily();
-    let isOn = await pingOne(f.number);
-    onlineMap[f.number]= isOn ? 'online' : 'offline';
-    if(isOn) lastSeenMap[f.number]='Abhi Online';
-    else if(!lastSeenMap[f.number]) lastSeenMap[f.number]='Abhi Offline';
-    renderFamily();
-  }
-  isChecking=false;
-  if(showToast) alert('Status check ho gaya ✅');
-}
 function copyMyNumber(){ let n=localStorage.getItem('myNumber'); navigator.clipboard.writeText(n); alert('Number copy ho gaya: '+n); }
-function logout(){ if(confirm('Logout karna hai? Dobara number daalna padega. Family list saved rahegi.')){ if(checkTimer) clearInterval(checkTimer); localStorage.removeItem('myNumber'); localStorage.removeItem('myName'); if(peer) try{peer.destroy();}catch(e){} location.reload(); } }
+function logout(){
+  if(confirm('Logout karna hai?')){
+    if(mqttClient && mqttConnected){ let m=new Paho.MQTT.Message(JSON.stringify({status:'offline'})); m.destinationName='family-call-v12/presence/'+myNumberGlobal; m.retained=true; try{mqttClient.send(m);}catch(e){} }
+    localStorage.removeItem('myNumber'); localStorage.removeItem('myName'); if(peer) try{peer.destroy();}catch(e){} location.reload();
+  }
+}
 function addFamily(){
   let n=document.getElementById('famName').value.trim();
   let num=document.getElementById('famNumber').value.trim();
@@ -258,15 +290,13 @@ function addFamily(){
   family.push({name:n,number:num});
   saveFamily(family);
   document.getElementById('famName').value='';document.getElementById('famNumber').value='';
-  onlineMap[num]='checking';
-  renderFamily(); checkFamilyOnline(); alert(n+' add ho gaya ✅');
+  onlineMap[num]='offline';
+  renderFamily(); alert(n+' add ho gaya ✅ - 5 sec me status aayega');
 }
 function deleteFamily(num){
   if(!confirm('Isko delete karna hai?')) return;
   family = getFamily().filter(f=>f.number!==num);
-  saveFamily(family);
-  delete onlineMap[num];
-  renderFamily();
+  saveFamily(family); delete onlineMap[num]; renderFamily();
 }
 function renderFamily(){
   family = getFamily();
@@ -276,13 +306,10 @@ function renderFamily(){
   if(family.length===0){ h=`<div class="empty-box">👨‍👩‍👧 Abhi koi Family Member nahi hai<br><span class="small">Upar Naam + Number daal ke Add Karo</span></div>`; }
   else {
     family.forEach(f=>{
-      let st = onlineMap[f.number] || 'checking';
+      let st = onlineMap[f.number] || 'offline';
       let dotClass = st==='online' ? 'dot online' : 'dot';
-      let pillHtml='';
-      let sub='';
-      if(st==='online'){ pillHtml=`<span class="status-pill on"><span class="s-dot"></span>● Online</span><span class="last-seen">Abhi Online</span>`; sub='Abhi call kar sakte ho'; }
-      else if(st==='offline'){ pillHtml=`<span class="status-pill off"><span class="s-dot"></span>○ Offline</span><span class="last-seen">App band hai</span>`; sub='Abhi App band hai'; }
-      else { pillHtml=`<span class="status-pill checking"><span class="s-dot"></span>Checking...</span>`; sub='Status check ho raha hai...'; }
+      let pillHtml = st==='online' ? `<span class="status-pill on"><span class="s-dot"></span>● Online</span><span class="last-seen">Abhi Online</span>` : `<span class="status-pill off"><span class="s-dot"></span>○ Offline</span><span class="last-seen">${lastSeenMap[f.number]||'App band hai'}</span>`;
+      let sub = st==='online' ? 'Abhi call kar sakte ho' : 'Abhi App band hai';
       h+=`<div class="contact">
         <div class="top-status">${pillHtml}</div>
         <div class="contact-top">
@@ -304,7 +331,7 @@ function renderFamily(){
   document.getElementById('familyList').innerHTML=h;
 }
 function callFamily(num,name,isVideo){
-  if(onlineMap[num]==='offline'){ if(!confirm(name+' abhi Offline dikh raha hai, phir bhi call lagau?')) return; }
+  if(onlineMap[num]!=='online'){ if(!confirm(name+' abhi Offline dikh raha hai, phir bhi call lagau?')) return; }
   document.getElementById('callTo').value=num;makeCall(isVideo,name);
 }
 function setupCallUI(isVideo, name){ isVideoCall=isVideo; document.getElementById('callName').innerText=name; document.getElementById('audioName').innerText=name; if(isVideo){ document.getElementById('remoteVideo').style.display='block'; document.getElementById('myVideo').style.display='block'; document.getElementById('audioUI').style.display='none'; } else { document.getElementById('remoteVideo').style.display='none'; document.getElementById('myVideo').style.display='none'; document.getElementById('audioUI').style.display='flex'; } }
