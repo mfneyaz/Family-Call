@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Family Call</title>
 <link rel="manifest" href="manifest.json">
-
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#E8FDF2">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#E8FDF2">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B0F1E">
-  
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/724/724715.png">
 <style>
@@ -48,11 +46,12 @@ body.dark .btn-green{background:linear-gradient(135deg,#8B5CF6,#22D3EE);box-shad
 .btn-white{background:rgba(255,255,255,.95);color:#075E54;border:1px solid #E2F2EA;box-shadow:0 4px 10px rgba(0,0,0,.04)}
 body.dark .btn-white{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15)}
 .btn svg{width:18px;height:18px;flex-shrink:0}
-.top-icons{display:flex;gap:6px;flex-shrink:0;align-items:center}
-.mini-icon{width:36px;height:36px;border-radius:12px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85));backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,120,70,.07), inset 0 1px 0 rgba(255,255,255,.9);transition:.15s;padding:0}
+.btn-small{padding:8px 10px;font-size:12px;border-radius:11px;width:auto;margin:0}
+.top-icons{display:flex;gap:4px;flex-shrink:0;align-items:center}
+.mini-icon{width:30px;height:30px;border-radius:10px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85));backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,120,70,.07), inset 0 1px 0 rgba(255,255,255,.9);transition:.15s;padding:0;flex-shrink:0}
 body.dark .mini-icon{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.18);box-shadow:0 4px 12px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.15)}
 .mini-icon:active{transform:scale(.88)}
-.mini-icon svg{width:17px;height:17px;stroke:#1A2B26}
+.mini-icon svg{width:15px;height:15px;stroke:#1A2B26}
 body.dark .mini-icon svg{stroke:#fff}
 .mini-icon.green,.mini-icon.dark,.mini-icon.red{background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85));border:1px solid rgba(255,255,255,.9);box-shadow:0 4px 10px rgba(0,120,70,.07), inset 0 1px 0 rgba(255,255,255,.9)}
 body.dark .mini-icon.green,body.dark .mini-icon.dark,body.dark .mini-icon.red{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.18);box-shadow:0 4px 12px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.15)}
@@ -60,6 +59,8 @@ body.dark .mini-icon.green,body.dark .mini-icon.dark,body.dark .mini-icon.red{ba
 body.dark .mini-icon.green svg,body.dark .mini-icon.dark svg{stroke:#fff}
 .mini-icon.red svg{stroke:#E74C3C}
 body.dark .mini-icon.red svg{stroke:#FF8A8A}
+.mini-icon.edit svg{stroke:#0A8A5A}
+body.dark .mini-icon.edit svg{stroke:#67E8F9}
 .add-header-actions{display:flex;align-items:center;gap:6px}
 .add-header-actions .mini-icon{width:34px;height:34px;border-radius:11px}
 .add-header-actions .mini-icon svg{width:16px;height:16px}
@@ -115,9 +116,8 @@ body.dark .avatar{background:linear-gradient(135deg,#8B5CF6,#22D3EE);color:#fff;
 body.dark .status-line{color:#7C8AA8}
 .empty-box{text-align:center;padding:14px;background:rgba(246,255,251,.8);border:1px dashed #C8E8D5;border-radius:16px;margin-top:8px;font-size:12px;color:#6B7F76}
 body.dark .empty-box{background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.2);color:#A8B3D1}
-/* POPUP - DONO KE LIYE DARK FIX */
-#profilePopup,#addPopup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(10px);z-index:250;align-items:flex-end;justify-content:center;padding-bottom:env(safe-area-inset-bottom)}
-#profilePopup.show,#addPopup.show{display:flex}
+#profilePopup,#addPopup,#editPopup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(10px);z-index:250;align-items:flex-end;justify-content:center;padding-bottom:env(safe-area-inset-bottom)}
+#profilePopup.show,#addPopup.show,#editPopup.show{display:flex}
 .popup-sheet{background:#FFFFFF;width:100%;max-width:480px;border-radius:28px 28px 0 0;padding:12px 18px calc(24px + env(safe-area-inset-bottom));animation:slideUp .25s ease;color:#1A2B26}
 body.dark .popup-sheet{background:#121A33;color:#fff;border-top:1px solid rgba(255,255,255,.15)}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
@@ -183,7 +183,24 @@ body.dark .debug-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,
 body.dark .last-call{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff}
 .online-banner{background:linear-gradient(135deg,#E8FDF2,#D8F5E8);border:1px solid #C8F2DC;border-radius:12px;padding:8px 10px;font-size:11px;color:#0A8A5A;font-weight:700;display:flex;align-items:center;gap:6px;margin-top:8px}
 body.dark .online-banner{background:rgba(139,92,246,.14);border:1px solid rgba(139,92,246,.3);color:#C4B5FD}
-/* FOOTER - HEADER JAISA - GREEN PATTI FIX */
+/* CALL LOG */
+#callLogList{max-height:48vh;overflow-y:auto;padding-right:2px}
+.log-item{display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:10px 11px;margin:0 0 8px;box-shadow:0 6px 14px var(--shadow)}
+.log-item .log-check{width:18px;height:18px;accent-color:#25D366;flex-shrink:0;cursor:pointer}
+.log-ava{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#D8F5E8,#B8EBD0);color:#075E54;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;overflow:hidden}
+body.dark .log-ava{background:linear-gradient(135deg,#8B5CF6,#22D3EE);color:#fff}
+.log-ava img{width:100%;height:100%;object-fit:cover}
+.log-info{flex:1;min-width:0}
+.log-name{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log-meta{font-size:11px;color:var(--sub);display:flex;gap:6px;flex-wrap:wrap}
+.log-tag{font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px}
+.tag-out{background:#E8FDF2;color:#0A8A5A}
+.tag-in{background:#E8F0FF;color:#3B5BDB}
+.tag-missed{background:#FFF1F1;color:#E74C3C}
+body.dark .tag-out{background:rgba(34,211,238,.15);color:#67E8F9}
+body.dark .tag-in{background:rgba(139,92,246,.18);color:#C4B5FD}
+body.dark .tag-missed{background:rgba(255,90,90,.15);color:#FCA5A5}
+.log-actions{display:flex;gap:4px;flex-shrink:0}
 .footer{position:fixed;bottom:0;left:0;right:0;z-index:20;background:rgba(255,255,255,.75);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-top:1px solid rgba(255,255,255,.8);border-bottom:none;padding:11px 16px;padding-bottom:calc(11px + env(safe-area-inset-bottom));text-align:center}
 body.dark .footer{background:rgba(11,15,30,.85);border-top:1px solid rgba(255,255,255,.1)}
 .footer b{font-size:12px;color:var(--text)}
@@ -198,12 +215,9 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <div style="flex:1"><h2>Family Call</h2><p>Your Family-Friend Calling Application</p></div>
 <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Day / Night"><svg id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg><svg id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
 </div>
-
 <div id="toast"></div>
-
 <div class="container">
 <button id="installBtn" class="btn btn-green" onclick="installApp()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> App Install Karo - Always Online ke liye</button>
-
 <div class="card" id="loginCard">
 <h3 style="margin:0">Welcome</h3><p class="card-sub">Ek baar login karo, hamesha Online rahega - WhatsApp jaisa</p>
 <input id="myName" placeholder="Apna Naam - Mohammed">
@@ -211,7 +225,6 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <button class="btn btn-green" onclick="login()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Login Karo</button>
 <div style="background:rgba(246,255,251,.8);border:1px solid #E2F2EA;padding:11px;border-radius:16px;margin-top:10px;text-align:center"><b style="display:flex;align-items:center;justify-content:center;gap:6px"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg> Mic Test</b><br><button class="btn btn-white" onclick="testMic()">Mic Test Karo</button><p id="micStatus" style="font-size:12px;color:#6B7F76">Abhi test nahi hua</p></div>
 </div>
-
 <div class="card" id="profileCard" style="display:none">
 <div class="profile-row">
 <div class="my-avatar" id="myAvatar" onclick="openProfilePopup()"><span id="myAvatarLetter">M</span><span class="tap-hint">TAP • EDIT</span></div>
@@ -230,7 +243,6 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <div class="debug-box" id="debugBox">Presence: Connecting...</div>
 <div class="last-call" id="lastCallBox"></div>
 </div>
-
 <div class="card" id="addCard" style="display:none">
 <div class="card-title">
 <span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Add Members</span>
@@ -244,6 +256,22 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <div class="filter-tabs" id="filterTabs"></div>
 <div id="familyList"></div>
 </div>
+
+<!-- CALL HISTORY CARD -->
+<div class="card" id="historyCard" style="display:none">
+<div class="card-title">
+<span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call History</span>
+<span class="badge" id="historyCount">0 Calls</span>
+</div>
+<p class="card-sub">Sare Calls ka Detail - Dobara Call + Delete</p>
+<div class="filter-tabs" id="historyTabs"></div>
+<div style="display:flex;gap:6px;margin-bottom:10px">
+<label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;cursor:pointer"><input type="checkbox" id="selectAllLog" onchange="toggleSelectAllLog(this.checked)" style="width:18px;height:18px;margin:0;accent-color:#25D366"> Select All</label>
+<button class="btn btn-white btn-small" onclick="deleteSelectedLogs()" style="flex:1">Selected Delete</button>
+<button class="btn btn-white btn-small" onclick="deleteAllLogs()" style="flex:1;color:#E74C3C">Delete All</button>
+</div>
+<div id="callLogList"></div>
+</div>
 </div>
 
 <div id="profilePopup" onclick="if(event.target===this) closeProfilePopup()">
@@ -256,23 +284,19 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 </div>
 <button class="popup-opt" onclick="closeProfilePopup(); document.getElementById('picInput').click()">
 <span class="opt-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
-<span style="flex:1;text-align:left">Photo Change Karo<small>Gallery se nayi photo lagao</small></span>
-<span style="color:#9AAFA6">›</span>
+<span style="flex:1;text-align:left">Photo Change Karo<small>Gallery se nayi photo lagao</small></span><span style="color:#9AAFA6">›</span>
 </button>
 <button class="popup-opt" onclick="closeProfilePopup(); removeMyPic()">
 <span class="opt-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="#E74C3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
-<span style="flex:1;text-align:left">Photo Delete Karo<small>Profile photo hata do</small></span>
-<span style="color:#9AAFA6">›</span>
+<span style="flex:1;text-align:left">Photo Delete Karo<small>Profile photo hata do</small></span><span style="color:#9AAFA6">›</span>
 </button>
 <button class="popup-opt" onclick="closeProfilePopup(); copyMyNumber()">
 <span class="opt-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
-<span style="flex:1;text-align:left">Number Copy Karo<small>Apna number copy karke bhejo</small></span>
-<span style="color:#9AAFA6">›</span>
+<span style="flex:1;text-align:left">Number Copy Karo<small>Apna number copy karke bhejo</small></span><span style="color:#9AAFA6">›</span>
 </button>
 <button class="popup-opt" onclick="closeProfilePopup()">
 <span class="opt-icon grey"><svg viewBox="0 0 24 24" fill="none" stroke="#6B7F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
-<span style="flex:1;text-align:left">Close<small>Wapas jao</small></span>
-<span style="color:#9AAFA6">›</span>
+<span style="flex:1;text-align:left">Close<small>Wapas jao</small></span><span style="color:#9AAFA6">›</span>
 </button>
 </div>
 </div>
@@ -284,24 +308,32 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <p class="popup-sub">Naam + Number + Category chuno</p>
 <input id="famName" placeholder="Naam - Abbu">
 <input id="famNumber" type="tel" placeholder="Unka Number">
-<select id="famCategory">
-<option value="Family">Family</option>
-<option value="Friends">Friends</option>
-<option value="Office">Office</option>
-<option value="Others">Others</option>
-</select>
+<select id="famCategory"><option value="Family">Family</option><option value="Friends">Friends</option><option value="Office">Office</option><option value="Others">Others</option></select>
 <button class="btn btn-green" onclick="addFamily()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Karo</button>
 <button class="btn btn-white" onclick="closeAddPopup()">Cancel</button>
 </div>
 </div>
 
-<div class="footer"><div class="f-line"></div><b>Designed & Developed by: Mohammad Firoz Alam</b><br><span>Family Call • Your Family-Friend Calling Application</span></div>
+<!-- EDIT POPUP -->
+<div id="editPopup" onclick="if(event.target===this) closeEditPopup()">
+<div class="popup-sheet">
+<div class="popup-handle"></div>
+<h3 class="popup-title">Edit Contact</h3>
+<p class="popup-sub">Naam / Number / Category badlo</p>
+<input id="editName" placeholder="Naam">
+<input id="editNumber" type="tel" placeholder="Number">
+<select id="editCategory"><option value="Family">Family</option><option value="Friends">Friends</option><option value="Office">Office</option><option value="Others">Others</option></select>
+<button class="btn btn-green" onclick="saveEdit()">Save Karo</button>
+<button class="btn btn-white" onclick="closeEditPopup()">Cancel</button>
+</div>
+</div>
 
+<div class="footer"><div class="f-line"></div><b>Designed & Developed by: Mohammad Firoz Alam</b><br><span>Family Call • Your Family-Friend Calling Application</span></div>
 <div id="callScreen">
 <video id="remoteVideo" autoplay playsinline></video>
 <audio id="remoteAudio" autoplay playsinline></audio>
 <video id="myVideo" autoplay muted playsinline></video>
-<div id="audioUI"><div class="bigAvatar" id="audioBigPic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div><h2 id="audioName" style="margin:14px 0 4px">Family</h2><p id="audioNumber" style="margin:0;opacity:.85;font-size:13px"></p><p style="margin:8px 0">Audio Call Chal Rahi Hai...</p><p id="callTimer" style="font-size:18px;font-weight:700">Ringing...</p></div>
+<div id="audioUI"><div class="bigAvatar" id="audioBigPic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:60px;height:60px"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div><h2 id="audioName" style="margin:14px 0 4px">Family</h2><p id="audioNumber" style="margin:0;opacity:.85;font-size:13px"></p><p style="margin:8px 0">Audio Call Chal Rahi Hai...</p><p id="callTimer" style="font-size:18px;font-weight:700">Ringing...</p></div>
 <div class="call-top" id="callTop"><div class="call-pic" id="callTopPic">F</div><h2 id="callName" style="margin:0">Family</h2><p id="callNumber" style="margin:2px 0 0;font-size:12px;opacity:.85"></p><p id="callStatus" style="opacity:.8;margin:4px 0 0">Connecting...</p><p id="callTimerTop" style="font-size:15px;font-weight:700;margin:4px 0 0">Ringing...</p></div>
 <div class="call-controls">
 <button class="ctrl" id="muteBtn" onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></button>
@@ -309,7 +341,6 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <button class="ctrl red" onclick="endCall()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91"/></svg></button>
 </div>
 </div>
-
 <div id="incoming">
 <div class="in-pic" id="inPic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
 <h2 id="inName" style="margin:14px 0 4px">Family</h2><p id="inNumber" style="margin:0 0 6px;opacity:.85;font-size:13px"></p><p id="inType">Call aa rahi hai...</p>
@@ -319,7 +350,6 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <button class="ctrl" style="width:74px;height:74px;background:linear-gradient(135deg,#25D366,#0AC47A);border-color:rgba(255,255,255,.6)" onclick="acceptCall()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
 </div>
 </div>
-
 <div id="callEnded">
 <div class="ended-card">
 <div class="ended-icon" id="endedIcon"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
@@ -330,7 +360,6 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <button class="btn btn-white" onclick="callBackLast()"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Dobara Call Karo</button>
 </div>
 </div>
-
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 <script>
@@ -340,425 +369,158 @@ let mqttClient=null, mqttConnected=false, heartbeatTimer=null, cleanupTimer=null
 let myNumberGlobal='', myNameGlobal='Me', myPicGlobal='';
 let callStartTime=0, callConnectedTime=0, callTimerInterval=null, lastCallName='', lastCallNumber='', lastCallIsVideo=true, callConnected=false, iEndedCall=false, endedPopupShown=false;
 let noAnswerTimer=null, ringingStartTime=0;
-let activeFilter='All';
-function applyTheme(){
-  let t = localStorage.getItem('theme') || 'light';
-  document.body.classList.toggle('dark', t==='dark');
-  document.getElementById('themeIconSun').style.display = t==='dark' ? 'none' : 'block';
-  document.getElementById('themeIconMoon').style.display = t==='dark' ? 'block' : 'none';
-  // FIX: theme-color bhi theme ke hisab se - isi se neeche wali Green Patti aati thi
-  let mc = document.querySelector('meta[name="theme-color"]');
-  if(mc) mc.setAttribute('content', t==='dark' ? '#0B0F1E' : '#E8FDF2');
-  document.documentElement.style.background = t==='dark' ? '#0B0F1E' : '#E8FDF2';
-}
-function toggleTheme(){
-  let cur = localStorage.getItem('theme') || 'light';
-  localStorage.setItem('theme', cur==='dark' ? 'light' : 'dark');
-  applyTheme();
-}
+let activeFilter='All', historyFilter='All', editOldNumber='', selectedLogs=new Set();
+function applyTheme(){let t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');document.getElementById('themeIconSun').style.display=t==='dark'?'none':'block';document.getElementById('themeIconMoon').style.display=t==='dark'?'block':'none';let mc=document.querySelector('meta[name="theme-color"]');if(mc)mc.setAttribute('content',t==='dark'?'#0B0F1E':'#E8FDF2');document.documentElement.style.background=t==='dark'?'#0B0F1E':'#E8FDF2';}
+function toggleTheme(){let cur=localStorage.getItem('theme')||'light';localStorage.setItem('theme',cur==='dark'?'light':'dark');applyTheme();}
 applyTheme();
-function getFamily(){ try{ return JSON.parse(localStorage.getItem('family_v2') || '[]'); }catch(e){ return []; } }
-function saveFamily(f){ localStorage.setItem('family_v2', JSON.stringify(f)); }
-let family = getFamily();
-family = family.map(f=>({category:'Family', ...f}));
-saveFamily(family);
-function openProfilePopup(){
-  document.getElementById('popupName').innerText=myNameGlobal;
-  document.getElementById('popupNumber').innerText=myNumberGlobal;
-  let pp=document.getElementById('popupPic');
-  if(myPicGlobal) pp.innerHTML='<img src="'+myPicGlobal+'">';
-  else pp.innerText=myNameGlobal.charAt(0).toUpperCase()||'M';
-  document.getElementById('profilePopup').classList.add('show');
+function getFamily(){try{return JSON.parse(localStorage.getItem('family_v2')||'[]');}catch(e){return[];}}
+function saveFamily(f){localStorage.setItem('family_v2',JSON.stringify(f));}
+let family=getFamily();family=family.map(f=>({category:'Family',...f}));saveFamily(family);
+// CALL LOG STORAGE
+function getLogs(){try{return JSON.parse(localStorage.getItem('call_logs_v1')||'[]');}catch(e){return[];}}
+function saveLogs(l){localStorage.setItem('call_logs_v1',JSON.stringify(l.slice(0,500)));}
+function addCallLog(type,direction,durationSec){
+  if(!lastCallNumber) return;
+  let logs=getLogs();
+  logs.unshift({id:Date.now()+''+Math.floor(Math.random()*1000),name:getNameByNumber(lastCallNumber),number:lastCallNumber,type:type|| (lastCallIsVideo?'Video':'Audio'),direction:direction||'out',duration:durationSec||0,time:Date.now()});
+  saveLogs(logs); renderCallLogs();
 }
-function closeProfilePopup(){ document.getElementById('profilePopup').classList.remove('show'); }
-function openAddPopup(){ document.getElementById('addPopup').classList.add('show'); }
-function closeAddPopup(){ document.getElementById('addPopup').classList.remove('show'); }
-window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='flex'; });
-function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao - Install karne se Always Online chalega'); } }
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').then(()=>{ console.log('SW registered - Always Online'); }).catch(()=>{}); }
-async function requestWakeLock(){
-  try{ if('wakeLock' in navigator){ wakeLock = await navigator.wakeLock.request('screen'); } }catch(e){}
-}
-function keepOnline(){
-  if(myNumberGlobal && mqttClient && mqttConnected){ publishOnline(myNumberGlobal, myNameGlobal); }
-  if('serviceWorker' in navigator && navigator.serviceWorker.controller){
-    navigator.serviceWorker.controller.postMessage({type:'KEEP_ONLINE', number:myNumberGlobal, name:myNameGlobal, pic:myPicGlobal});
-  }
-}
-document.addEventListener('visibilitychange', ()=>{
-  if(!document.hidden){
-    keepOnline(); requestWakeLock();
-    if(peer && peer.disconnected) try{peer.reconnect();}catch(e){}
-    if(mqttClient && !mqttConnected) startPresence(myNumberGlobal, myNameGlobal);
-  } else { keepOnline(); }
-});
-window.addEventListener('online', ()=>{ keepOnline(); if(peer && peer.disconnected) try{peer.reconnect();}catch(e){} });
-window.addEventListener('focus', ()=>{ keepOnline(); });
-setInterval(()=>{ keepOnline(); }, 8000);
-function getNameByNumber(num){
-  if(!num) return 'Family';
-  let f = getFamily().find(x=>x.number===num);
-  if(f) return f.name;
-  if(nameMap[num]) return nameMap[num];
-  if(num===myNumberGlobal) return myNameGlobal;
-  return num;
-}
-function getPicByNumber(num){
-  if(!num) return '';
-  if(picMap[num]) return picMap[num];
-  if(num===myNumberGlobal) return myPicGlobal;
-  return '';
-}
-function setMyAvatarUI(){
-  let av=document.getElementById('myAvatar');
-  if(myPicGlobal){ av.innerHTML='<img src="'+myPicGlobal+'"><span class="tap-hint">TAP • EDIT</span>'; }
-  else { av.innerHTML='<span id="myAvatarLetter">'+(myNameGlobal.charAt(0).toUpperCase()||'M')+'</span><span class="tap-hint">TAP • EDIT</span>'; }
-}
-function changeMyPic(e){
-  let file=e.target.files[0]; if(!file) return;
-  let reader=new FileReader();
-  reader.onload=function(ev){
-    let img=new Image();
-    img.onload=function(){
-      let canvas=document.createElement('canvas');
-      let size=200; canvas.width=size; canvas.height=size;
-      let ctx=canvas.getContext('2d');
-      let s=Math.min(img.width, img.height);
-      let sx=(img.width-s)/2, sy=(img.height-s)/2;
-      ctx.drawImage(img, sx, sy, s, s, 0, 0, size, size);
-      let smallPic=canvas.toDataURL('image/jpeg', 0.65);
-      myPicGlobal=smallPic;
-      localStorage.setItem('myPic', smallPic);
-      setMyAvatarUI();
-      publishOnline(myNumberGlobal, myNameGlobal);
-      showToast('Photo lag gayi!');
-    };
-    img.src=ev.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-function removeMyPic(){ myPicGlobal=''; localStorage.removeItem('myPic'); setMyAvatarUI(); publishOnline(myNumberGlobal, myNameGlobal); showToast('Photo hata di'); }
-function setStatusUI(isOnline){
-  let pill = document.getElementById('userStatusPill');
-  let mid = document.getElementById('myStatus');
-  if(isOnline){ pill.classList.remove('off'); mid.innerText='Online'; }
-  else { pill.classList.add('off'); mid.innerText='Offline'; }
-}
-function logDebug(t){ let el=document.getElementById('debugBox'); if(el) el.innerText='Presence: '+t; }
-function showToast(msg){ let t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show'); setTimeout(()=>{ t.classList.remove('show'); }, 3500); }
-function formatTime(sec){ let m=Math.floor(sec/60), s=sec%60; return (m<10?'0'+m:m)+':'+(s<10?'0'+s:s); }
-function resetCallTimers(){
-  callStartTime=Date.now(); ringingStartTime=Date.now(); callConnectedTime=0; callConnected=false;
-  if(callTimerInterval) clearInterval(callTimerInterval); callTimerInterval=null;
-  document.getElementById('callTimer').innerText='Ringing...';
-  document.getElementById('callTimerTop').innerText='Ringing...';
-}
-function startConnectedTimer(){
-  callConnected=true; callConnectedTime=Date.now();
-  if(callTimerInterval) clearInterval(callTimerInterval);
-  callTimerInterval=setInterval(()=>{ let sec=Math.floor((Date.now()-callConnectedTime)/1000); let f=formatTime(sec); document.getElementById('callTimer').innerText=f; document.getElementById('callTimerTop').innerText=f; }, 1000);
-}
-function getTalkDuration(){ if(!callConnected || !callConnectedTime) return 0; return Math.floor((Date.now()-callConnectedTime)/1000); }
-function stopCallTimer(){ if(callTimerInterval){ clearInterval(callTimerInterval); callTimerInterval=null; } }
-function showCallEnded(type, name){
-  if(endedPopupShown) return; endedPopupShown=true;
-  let talkSec = getTalkDuration(); stopCallTimer();
-  let durText = formatTime(talkSec);
-  let displayName = getNameByNumber(lastCallNumber) || name;
-  let pic = getPicByNumber(lastCallNumber);
-  let iconEl=document.getElementById('endedIcon');
-  if(pic) iconEl.innerHTML='<img src="'+pic+'">';
-  else iconEl.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:30px;height:30px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
-  let title='', msg='', durLabel='';
-  if(type==='self'){ if(!callConnected){ title='Call Khatam Ho Gayi'; msg='Aapne call kaat di - Call lagi hi nahi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; } else { title='Call Khatam Ho Gayi'; msg='Aapne call kaat di'; durLabel='Baat Hui: '+durText; } }
-  else if(type==='remote'){ if(!callConnected){ title='Call Kaat Di Gayi'; msg=displayName+' ne call kaat di - Call lagi hi nahi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; } else { title='Call Disconnected'; msg=displayName+' ne call kaat di'; durLabel='Baat Hui: '+durText; } }
-  else if(type==='rejected'){ title='Call Reject Ho Gayi'; msg=displayName+' ne call reject kar di'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
-  else if(type==='missed'){ title='Missed Call'; msg='Aapne call nahi uthayi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
-  else if(type==='no-answer'){ title='No Answer'; msg=displayName+' ne call nahi uthayi'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
-  else if(type==='network'){ title='Call Disconnected'; msg='Network ki wajah se call kat gayi'; durLabel='Baat Hui: '+durText; }
-  document.getElementById('endedTitle').innerText=title;
-  document.getElementById('endedMsg').innerText=msg;
-  document.getElementById('endedDuration').innerText=durLabel;
-  document.getElementById('callEnded').style.display='flex';
-  let box=document.getElementById('lastCallBox');
-  if(box){ box.style.display='block'; box.innerHTML='Last Call: <b>'+displayName+'</b> • '+title+' • '+durLabel; }
-  setTimeout(()=>{ closeEndedPopup(); }, 6000);
-}
-function closeEndedPopup(){ document.getElementById('callEnded').style.display='none'; }
-function callBackLast(){ closeEndedPopup(); if(lastCallNumber){ makeCall(lastCallIsVideo, lastCallName); } }
-window.onload = ()=>{
-  myPicGlobal = localStorage.getItem('myPic') || '';
-  renderFamily();
-  let savedNum = localStorage.getItem('myNumber');
-  let savedName = localStorage.getItem('myName');
-  if(savedNum){ document.getElementById('myNumber').value=savedNum; document.getElementById('myName').value=savedName||''; login(true); }
-};
-function testMic(){
-  document.getElementById('micStatus').innerText='Mic maang rahe hain... Allow dabao';
-  navigator.mediaDevices.getUserMedia({video:false, audio:true}).then(s=>{ document.getElementById('micStatus').innerText='Mic Sahi Hai!'; s.getTracks().forEach(t=>t.stop()); }).catch(e=>{ document.getElementById('micStatus').innerText='Mic Block Hai!'; });
-}
-function sendCallSignal(toNumber, action){
-  if(!mqttClient || !mqttConnected) return;
-  try{ mqttClient.publish('family-call-v12/call/'+toNumber, JSON.stringify({action:action, from:myNumberGlobal, fromName:myNameGlobal, time:Date.now()}), {retain:false}); }catch(e){}
-}
-function handleCallSignal(data){
-  let fromNum = data.from;
-  let fromName = getNameByNumber(fromNum);
-  let isCalling = document.getElementById('callScreen').style.display==='flex';
-  let isRinging = document.getElementById('incoming').style.display==='flex';
-  if(!isCalling && !isRinging) return;
-  if(data.action==='ended'){ iEndedCall=true; forceEndCall(true); showCallEnded('remote', fromName); }
-  else if(data.action==='rejected'){ iEndedCall=true; forceEndCall(true); showCallEnded('rejected', fromName); }
-  else if(data.action==='no-answer'){ iEndedCall=true; forceEndCall(true); showCallEnded('no-answer', fromName); }
-}
-function startPresence(myNum, myName){
-  myNumberGlobal=myNum; myNameGlobal=myName;
-  if(typeof mqtt === 'undefined'){ logDebug('MQTT library load nahi hui, page refresh karo'); setTimeout(()=>{ startPresence(myNum, myName); }, 3000); return; }
-  let clientId = 'fam-'+myNum+'-'+Math.random().toString(36).substr(2,6);
-  logDebug('Presence connect ho raha hai...');
-  try{ if(mqttClient) try{mqttClient.end(true);}catch(e){} }catch(e){}
-  mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', { clientId: clientId, keepalive: 15, clean: true, reconnectPeriod: 2000, will: { topic: 'family-call-v12/presence/'+myNum, payload: JSON.stringify({status:'offline', name:myName, pic:''}), retain: true, properties: { willDelayInterval: 30 } } });
-  mqttClient.on('connect', ()=>{
-    mqttConnected=true; logDebug('Always Online - ID: '+myNum);
-    mqttClient.subscribe('family-call-v12/presence/#');
-    mqttClient.subscribe('family-call-v12/call/'+myNum);
-    publishOnline(myNum, myName);
-    requestWakeLock();
-    if(heartbeatTimer) clearInterval(heartbeatTimer);
-    heartbeatTimer=setInterval(()=>{ publishOnline(myNum, myName); keepOnline(); }, 4000);
-    if(cleanupTimer) clearInterval(cleanupTimer);
-    cleanupTimer=setInterval(()=>{ let now=Date.now(); family=getFamily(); family.forEach(f=>{ if(lastPingMap[f.number] && (now-lastPingMap[f.number] > 25000)){ if(onlineMap[f.number]!=='offline'){ onlineMap[f.number]='offline'; lastSeenMap[f.number]='App band hai'; renderFamily(); } } }); }, 5000);
-  });
-  mqttClient.on('message', (topic, payload)=>{
-    try{
-      if(topic.indexOf('/call/')!==-1){ let d = JSON.parse(payload.toString()); if(d.from!==myNum) handleCallSignal(d); return; }
-      let data = JSON.parse(payload.toString()); let num = topic.split('/').pop(); if(num===myNum) return;
-      if(data.name) nameMap[num]=data.name;
-      if(data.pic) picMap[num]=data.pic;
-      if(data.status==='online'){ onlineMap[num]='online'; lastPingMap[num]=Date.now(); lastSeenMap[num]='Abhi Online'; } else { onlineMap[num]='offline'; lastSeenMap[num]='App band hai'; } renderFamily();
-    }catch(e){}
-  });
-  mqttClient.on('error', ()=>{ logDebug('Presence error, retry...'); });
-  mqttClient.on('close', ()=>{ mqttConnected=false; logDebug('Reconnect ho raha hai...'); setTimeout(()=>{ if(myNumberGlobal) startPresence(myNumberGlobal, myNameGlobal); }, 2000); });
-}
-function publishOnline(num, name){ if(mqttClient && mqttConnected){ try{ mqttClient.publish('family-call-v12/presence/'+num, JSON.stringify({status:'online', name:name||'Me', pic:myPicGlobal||''}), {retain:true}); }catch(e){} } }
-function forceRefresh(){ renderFamily(); publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me'); showToast('Refresh ho gaya'); }
-function login(isAuto){
-  let num=document.getElementById('myNumber').value.trim();
-  let name=document.getElementById('myName').value.trim()||'Me';
-  if(num.length<10){ if(!isAuto) alert('Sahi number daalo'); return; }
-  localStorage.setItem('myNumber', num); localStorage.setItem('myName', name);
-  localStorage.setItem('alwaysOnline', '1');
-  myNameGlobal=name; myNumberGlobal=num;
-  document.getElementById('loginCard').style.display='none';
-  document.getElementById('profileCard').style.display='block';
-  document.getElementById('addCard').style.display='block';
-  document.getElementById('showMyName').innerText=name;
-  document.getElementById('showMyNum').innerText=num;
-  setMyAvatarUI();
-  setStatusUI(false);
-  document.getElementById('myStatus').innerText='Connecting...';
-  renderFamily();
-  if(peer){ try{peer.destroy();}catch(e){} }
-  peer=new Peer('family-'+num);
-  peer.on('open',()=>{ setStatusUI(true); startPresence(num, name); });
-  peer.on('disconnected',()=>{ setTimeout(()=>{ try{peer.reconnect();}catch(e){} }, 2000); });
-  peer.on('close',()=>{ setTimeout(()=>{ if(localStorage.getItem('alwaysOnline')==='1') login(true); }, 3000); });
-  peer.on('error',()=>{});
-  peer.on('call',call=>{
-    incomingCall=call;
-    let isV = call.metadata ? call.metadata.isVideo : true;
-    let callerNum = call.peer.replace('family-','');
-    lastCallNumber = callerNum;
-    lastCallName = getNameByNumber(callerNum);
-    lastCallIsVideo = isV;
-    resetCallTimers();
-    document.getElementById('inName').innerText=lastCallName;
-    document.getElementById('inNumber').innerText=callerNum;
-    let inPic = getPicByNumber(callerNum);
-    document.getElementById('inPic').innerHTML = inPic ? '<img src="'+inPic+'">' : '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:56px;height:56px"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-    document.getElementById('inType').innerText = isV ? 'Video Call aa rahi hai...' : 'Audio Call aa rahi hai...';
-    document.getElementById('incoming').style.display='flex';
-    document.getElementById('ringTone').play().catch(()=>{});
-    if(navigator.vibrate) navigator.vibrate([500,200,500]);
-    setTimeout(()=>{
-      if(document.getElementById('incoming').style.display==='flex'){
-        document.getElementById('incoming').style.display='none';
-        document.getElementById('ringTone').pause();
-        try{ incomingCall.close(); }catch(e){}
-        sendCallSignal(lastCallNumber, 'no-answer');
-        showToast('Missed Call - '+lastCallName);
-      }
-    }, 30000);
-  });
-}
-function copyMyNumber(){ let n=localStorage.getItem('myNumber'); navigator.clipboard.writeText(n); alert('Number copy ho gaya: '+n); }
-function logout(){
-  if(confirm('Logout karna hai? Tabhi Offline dikhoge, warna hamesha Online rahoge.')){
-    localStorage.removeItem('alwaysOnline');
-    if(mqttClient && mqttConnected){ try{mqttClient.publish('family-call-v12/presence/'+myNumberGlobal, JSON.stringify({status:'offline'}), {retain:true});}catch(e){} }
-    if('serviceWorker' in navigator && navigator.serviceWorker.controller){ navigator.serviceWorker.controller.postMessage({type:'LOGOUT'}); }
-    localStorage.removeItem('myNumber'); localStorage.removeItem('myName'); if(peer) try{peer.destroy();}catch(e){} location.reload();
-  }
-}
-function setFilter(cat){ activeFilter=cat; renderFamily(); }
-function addFamily(){
-  let n=document.getElementById('famName').value.trim();
-  let num=document.getElementById('famNumber').value.trim();
-  let cat=document.getElementById('famCategory').value || 'Family';
+function openProfilePopup(){document.getElementById('popupName').innerText=myNameGlobal;document.getElementById('popupNumber').innerText=myNumberGlobal;let pp=document.getElementById('popupPic');if(myPicGlobal)pp.innerHTML='<img src="'+myPicGlobal+'">';else pp.innerText=myNameGlobal.charAt(0).toUpperCase()||'M';document.getElementById('profilePopup').classList.add('show');}
+function closeProfilePopup(){document.getElementById('profilePopup').classList.remove('show');}
+function openAddPopup(){document.getElementById('addPopup').classList.add('show');}
+function closeAddPopup(){document.getElementById('addPopup').classList.remove('show');}
+function openEditPopup(num){let f=getFamily().find(x=>x.number===num);if(!f)return;editOldNumber=num;document.getElementById('editName').value=f.name;document.getElementById('editNumber').value=f.number;document.getElementById('editCategory').value=f.category||'Family';document.getElementById('editPopup').classList.add('show');}
+function closeEditPopup(){document.getElementById('editPopup').classList.remove('show');}
+function saveEdit(){
+  let n=document.getElementById('editName').value.trim();let num=document.getElementById('editNumber').value.trim();let cat=document.getElementById('editCategory').value||'Family';
   if(!n||!num){alert('Naam aur Number daalo');return;}
-  family = getFamily();
-  if(family.some(f=>f.number===num)){ alert('Ye number pehle se add hai!'); return; }
-  family.push({name:n,number:num,category:cat});
-  saveFamily(family);
-  document.getElementById('famName').value='';document.getElementById('famNumber').value='';
-  onlineMap[num]='offline';
-  closeAddPopup();
-  renderFamily(); showToast(n+' add ho gaya ['+cat+']');
+  let fam=getFamily();
+  if(num!==editOldNumber && fam.some(f=>f.number===num)){alert('Ye number pehle se add hai!');return;}
+  fam=fam.map(f=>f.number===editOldNumber?{name:n,number:num,category:cat}:f);saveFamily(fam);
+  // agar number badla to online map shift
+  if(num!==editOldNumber){onlineMap[num]=onlineMap[editOldNumber]||'offline';delete onlineMap[editOldNumber];}
+  closeEditPopup();renderFamily();showToast('Contact Update ho gaya');
 }
-function deleteFamily(num){
-  if(!confirm('Isko delete karna hai?')) return;
-  family = getFamily().filter(f=>f.number!==num);
-  saveFamily(family); delete onlineMap[num]; renderFamily();
-}
-function renderFamily(){
-  family = getFamily().map(f=>({category:'Family', ...f}));
-  saveFamily(family);
-  let onlineCount = family.filter(f=> onlineMap[f.number]==='online').length;
-  document.getElementById('famCount').innerHTML = '<span class="bdot"></span> ' + onlineCount + ' Online • ' + family.length + ' Total';
-  let cats=['All','Family','Friends','Office','Others'];
-  let tabsHtml='';
-  cats.forEach(c=>{
-    let cnt = c==='All' ? family.length : family.filter(f=>(f.category||'Family')===c).length;
-    tabsHtml+=`<button class="filter-tab ${activeFilter===c?'active':''}" onclick="setFilter('${c}')">${c}<span class="cnt">${cnt}</span></button>`;
-  });
-  let tabsEl=document.getElementById('filterTabs'); if(tabsEl) tabsEl.innerHTML=tabsHtml;
-  let filtered = activeFilter==='All' ? family : family.filter(f=>(f.category||'Family')===activeFilter);
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='flex';});
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBtn').style.display='none';});}else{alert('Chrome me 3 dot > Add to Home screen dabao');}}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(()=>{}).catch(()=>{});}
+async function requestWakeLock(){try{if('wakeLock' in navigator){wakeLock=await navigator.wakeLock.request('screen');}}catch(e){}}
+function keepOnline(){if(myNumberGlobal&&mqttClient&&mqttConnected){publishOnline(myNumberGlobal,myNameGlobal);}if('serviceWorker' in navigator&&navigator.serviceWorker.controller){navigator.serviceWorker.controller.postMessage({type:'KEEP_ONLINE',number:myNumberGlobal,name:myNameGlobal,pic:myPicGlobal});}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){keepOnline();requestWakeLock();if(peer&&peer.disconnected)try{peer.reconnect();}catch(e){}if(mqttClient&&!mqttConnected)startPresence(myNumberGlobal,myNameGlobal);}else{keepOnline();}});
+window.addEventListener('online',()=>{keepOnline();if(peer&&peer.disconnected)try{peer.reconnect();}catch(e){}});
+window.addEventListener('focus',()=>{keepOnline();});
+setInterval(()=>{keepOnline();},8000);
+function getNameByNumber(num){if(!num)return'Family';let f=getFamily().find(x=>x.number===num);if(f)return f.name;if(nameMap[num])return nameMap[num];if(num===myNumberGlobal)return myNameGlobal;return num;}
+function getPicByNumber(num){if(!num)return'';if(picMap[num])return picMap[num];if(num===myNumberGlobal)return myPicGlobal;return'';}
+function setMyAvatarUI(){let av=document.getElementById('myAvatar');if(myPicGlobal){av.innerHTML='<img src="'+myPicGlobal+'"><span class="tap-hint">TAP • EDIT</span>';}else{av.innerHTML='<span id="myAvatarLetter">'+(myNameGlobal.charAt(0).toUpperCase()||'M')+'</span><span class="tap-hint">TAP • EDIT</span>';}}
+function changeMyPic(e){let file=e.target.files[0];if(!file)return;let reader=new FileReader();reader.onload=function(ev){let img=new Image();img.onload=function(){let canvas=document.createElement('canvas');let size=200;canvas.width=size;canvas.height=size;let ctx=canvas.getContext('2d');let s=Math.min(img.width,img.height);let sx=(img.width-s)/2,sy=(img.height-s)/2;ctx.drawImage(img,sx,sy,s,s,0,0,size,size);let smallPic=canvas.toDataURL('image/jpeg',0.65);myPicGlobal=smallPic;localStorage.setItem('myPic',smallPic);setMyAvatarUI();publishOnline(myNumberGlobal,myNameGlobal);showToast('Photo lag gayi!');};img.src=ev.target.result;};reader.readAsDataURL(file);}
+function removeMyPic(){myPicGlobal='';localStorage.removeItem('myPic');setMyAvatarUI();publishOnline(myNumberGlobal,myNameGlobal);showToast('Photo hata di');}
+function setStatusUI(isOnline){let pill=document.getElementById('userStatusPill');let mid=document.getElementById('myStatus');if(isOnline){pill.classList.remove('off');mid.innerText='Online';}else{pill.classList.add('off');mid.innerText='Offline';}}
+function logDebug(t){let el=document.getElementById('debugBox');if(el)el.innerText='Presence: '+t;}
+function showToast(msg){let t=document.getElementById('toast');t.innerText=msg;t.classList.add('show');setTimeout(()=>{t.classList.remove('show');},3500);}
+function formatTime(sec){let m=Math.floor(sec/60),s=sec%60;return(m<10?'0'+m:m)+':'+(s<10?'0'+s:s);}
+function resetCallTimers(){callStartTime=Date.now();ringingStartTime=Date.now();callConnectedTime=0;callConnected=false;if(callTimerInterval)clearInterval(callTimerInterval);callTimerInterval=null;document.getElementById('callTimer').innerText='Ringing...';document.getElementById('callTimerTop').innerText='Ringing...';}
+function startConnectedTimer(){callConnected=true;callConnectedTime=Date.now();if(callTimerInterval)clearInterval(callTimerInterval);callTimerInterval=setInterval(()=>{let sec=Math.floor((Date.now()-callConnectedTime)/1000);let f=formatTime(sec);document.getElementById('callTimer').innerText=f;document.getElementById('callTimerTop').innerText=f;},1000);}
+function getTalkDuration(){if(!callConnected||!callConnectedTime)return 0;return Math.floor((Date.now()-callConnectedTime)/1000);}
+function stopCallTimer(){if(callTimerInterval){clearInterval(callTimerInterval);callTimerInterval=null;}}
+// CALL LOG RENDER
+function renderCallLogs(){
+  let logs=getLogs();
+  document.getElementById('historyCount').innerText=logs.length+' Calls';
+  let tabs=['All','Outgoing','Incoming','Missed'];let th='';
+  tabs.forEach(c=>{let cnt=c==='All'?logs.length:logs.filter(l=>l.direction===(c==='Outgoing'?'out':c==='Incoming'?'in':'missed')).length;th+=`<button class="filter-tab ${historyFilter===c?'active':''}" onclick="setHistoryFilter('${c}')">${c}<span class="cnt">${cnt}</span></button>`;});
+  document.getElementById('historyTabs').innerHTML=th;
+  let filtered=historyFilter==='All'?logs:logs.filter(l=>l.direction===(historyFilter==='Outgoing'?'out':historyFilter==='Incoming'?'in':'missed'));
   let h='';
-  if(filtered.length===0){ h=`<div class="empty-box">${activeFilter==='All'?'Abhi koi Member nahi hai':activeFilter+' me koi Member nahi hai'}<br>+ dabake Add Karo</div>`; }
-  else {
-    filtered.forEach(f=>{
-      let st = onlineMap[f.number] || 'offline';
-      let dotClass = st==='online' ? 'dot online' : 'dot';
-      let statusText = st==='online' ? 'Abhi Online • Call kar sakte ho' : (lastSeenMap[f.number]||'App band hai');
-      let cat = f.category||'Family';
-      let pic = getPicByNumber(f.number);
-      let avatarHtml = pic ? `<img src="${pic}">` : f.name.charAt(0).toUpperCase();
-      h+=`<div class="contact">
-        <div class="contact-top">
-          <div class="avatar">${avatarHtml}<span class="${dotClass}"></span></div>
-          <div class="contact-info">
-            <div class="contact-name">${f.name}</div>
-            <div class="contact-num"><svg viewBox="0 0 24 24" fill="none" stroke="#6B7F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ${f.number}</div>
-            <div><span class="cat-badge cat-${cat}">${cat}</span> <span class="status-line">${statusText}</span></div>
-          </div>
-          <div class="top-icons">
-            <button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',true)" title="Video"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
-            <button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',false)" title="Audio"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
-            <button class="mini-icon" onclick="deleteFamily('${f.number}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-          </div>
-        </div>
-      </div>`;
-    });
-  }
+  if(filtered.length===0){h=`<div class="empty-box">Abhi koi Call History nahi hai<br>Call karo, yahan Save hogi</div>`;}
+  else{filtered.forEach(l=>{
+    let d=new Date(l.time);let dateStr=d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})+' • '+d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
+    let tagClass=l.direction==='out'?'tag-out':l.direction==='in'?'tag-in':'tag-missed';
+    let tagText=l.direction==='out'?'↗ Outgoing':l.direction==='in'?'↙ Incoming':'✕ Missed';
+    let pic=getPicByNumber(l.number);let ava=pic?`<img src="${pic}">`: (l.name||'F').charAt(0).toUpperCase();
+    let checked=selectedLogs.has(l.id)?'checked':'';
+    h+=`<div class="log-item"><input type="checkbox" class="log-check" ${checked} onchange="toggleLogSelect('${l.id}',this.checked)"><div class="log-ava">${ava}</div><div class="log-info"><div class="log-name">${l.name} <span style="font-weight:400;font-size:11px;color:var(--sub)">• ${l.type}</span></div><div class="log-meta"><span>${l.number}</span><span>• ${dateStr}</span><span>• ${formatTime(l.duration||0)}</span></div><div style="margin-top:3px"><span class="log-tag ${tagClass}">${tagText}</span></div></div><div class="log-actions"><button class="mini-icon" title="Dobara Call" onclick="callFromLog('${l.number}','${l.name}',${l.type==='Video'})"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button><button class="mini-icon red" title="Delete" onclick="deleteOneLog('${l.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="#E74C3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div>`;
+  });}
+  document.getElementById('callLogList').innerHTML=h;
+}
+function setHistoryFilter(c){historyFilter=c;renderCallLogs();}
+function toggleLogSelect(id,checked){if(checked)selectedLogs.add(id);else selectedLogs.delete(id);}
+function toggleSelectAllLog(checked){let logs=getLogs();let filtered=historyFilter==='All'?logs:logs.filter(l=>l.direction===(historyFilter==='Outgoing'?'out':historyFilter==='Incoming'?'in':'missed'));selectedLogs.clear();if(checked)filtered.forEach(l=>selectedLogs.add(l.id));renderCallLogs();}
+function deleteOneLog(id){if(!confirm('Ye Call History delete karni hai?'))return;saveLogs(getLogs().filter(l=>l.id!==id));selectedLogs.delete(id);renderCallLogs();showToast('History Delete ho gayi');}
+function deleteSelectedLogs(){if(selectedLogs.size===0){alert('Pehle Checkbox se Select karo');return;}if(!confirm(selectedLogs.size+' Calls Delete karni hain?'))return;saveLogs(getLogs().filter(l=>!selectedLogs.has(l.id)));selectedLogs.clear();document.getElementById('selectAllLog').checked=false;renderCallLogs();showToast('Selected Delete ho gayi');}
+function deleteAllLogs(){if(getLogs().length===0){alert('History pehle se khali hai');return;}if(!confirm('Saari Call History Delete karni hai?'))return;saveLogs([]);selectedLogs.clear();document.getElementById('selectAllLog').checked=false;renderCallLogs();showToast('Saari History Delete ho gayi');}
+function callFromLog(num,name,isVideo){makeCall(isVideo,name,num);}
+function showCallEnded(type,name){
+  if(endedPopupShown)return;endedPopupShown=true;
+  let talkSec=getTalkDuration();stopCallTimer();let durText=formatTime(talkSec);
+  let displayName=getNameByNumber(lastCallNumber)||name;let pic=getPicByNumber(lastCallNumber);
+  // LOG SAVE - yahin se history banti hai
+  if(type==='self')addCallLog(lastCallIsVideo?'Video':'Audio','out',talkSec);
+  else if(type==='remote')addCallLog(lastCallIsVideo?'Video':'Audio','in',talkSec);
+  else if(type==='rejected')addCallLog(lastCallIsVideo?'Video':'Audio','out',0);
+  else if(type==='missed')addCallLog(lastCallIsVideo?'Video':'Audio','missed',0);
+  else if(type==='no-answer')addCallLog(lastCallIsVideo?'Video':'Audio','out',0);
+  else if(type==='network')addCallLog(lastCallIsVideo?'Video':'Audio',callConnected?'in':'missed',talkSec);
+  let iconEl=document.getElementById('endedIcon');
+  if(pic)iconEl.innerHTML='<img src="'+pic+'">';else iconEl.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:30px;height:30px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+  let title='',msg='',durLabel='';
+  if(type==='self'){if(!callConnected){title='Call Khatam Ho Gayi';msg='Aapne call kaat di - Call lagi hi nahi';durLabel='Baat Hui: 00:00 (Call lagi hi nahi)';}else{title='Call Khatam Ho Gayi';msg='Aapne call kaat di';durLabel='Baat Hui: '+durText;}}
+  else if(type==='remote'){if(!callConnected){title='Call Kaat Di Gayi';msg=displayName+' ne call kaat di - Call lagi hi nahi';durLabel='Baat Hui: 00:00 (Call lagi hi nahi)';}else{title='Call Disconnected';msg=displayName+' ne call kaat di';durLabel='Baat Hui: '+durText;}}
+  else if(type==='rejected'){title='Call Reject Ho Gayi';msg=displayName+' ne call reject kar di';durLabel='Baat Hui: 00:00 (Call lagi hi nahi)';}
+  else if(type==='missed'){title='Missed Call';msg='Aapne call nahi uthayi';durLabel='Baat Hui: 00:00 (Call lagi hi nahi)';}
+  else if(type==='no-answer'){title='No Answer';msg=displayName+' ne call nahi uthayi';durLabel='Baat Hui: 00:00 (Call lagi hi nahi)';}
+  else if(type==='network'){title='Call Disconnected';msg='Network ki wajah se call kat gayi';durLabel='Baat Hui: '+durText;}
+  document.getElementById('endedTitle').innerText=title;document.getElementById('endedMsg').innerText=msg;document.getElementById('endedDuration').innerText=durLabel;
+  document.getElementById('callEnded').style.display='flex';
+  let box=document.getElementById('lastCallBox');if(box){box.style.display='block';box.innerHTML='Last Call: <b>'+displayName+'</b> • '+title+' • '+durLabel;}
+  setTimeout(()=>{closeEndedPopup();},6000);
+}
+function closeEndedPopup(){document.getElementById('callEnded').style.display='none';}
+function callBackLast(){closeEndedPopup();if(lastCallNumber){makeCall(lastCallIsVideo,lastCallName);}}
+window.onload=()=>{myPicGlobal=localStorage.getItem('myPic')||'';renderFamily();renderCallLogs();let savedNum=localStorage.getItem('myNumber');let savedName=localStorage.getItem('myName');if(savedNum){document.getElementById('myNumber').value=savedNum;document.getElementById('myName').value=savedName||'';login(true);}};
+function testMic(){document.getElementById('micStatus').innerText='Mic maang rahe hain... Allow dabao';navigator.mediaDevices.getUserMedia({video:false,audio:true}).then(s=>{document.getElementById('micStatus').innerText='Mic Sahi Hai!';s.getTracks().forEach(t=>t.stop());}).catch(e=>{document.getElementById('micStatus').innerText='Mic Block Hai!';});}
+function sendCallSignal(toNumber,action){if(!mqttClient||!mqttConnected)return;try{mqttClient.publish('family-call-v12/call/'+toNumber,JSON.stringify({action:action,from:myNumberGlobal,fromName:myNameGlobal,time:Date.now()}),{retain:false});}catch(e){}}
+function handleCallSignal(data){let fromNum=data.from;let fromName=getNameByNumber(fromNum);let isCalling=document.getElementById('callScreen').style.display==='flex';let isRinging=document.getElementById('incoming').style.display==='flex';if(!isCalling&&!isRinging)return;if(data.action==='ended'){iEndedCall=true;forceEndCall(true);showCallEnded('remote',fromName);}else if(data.action==='rejected'){iEndedCall=true;forceEndCall(true);showCallEnded('rejected',fromName);}else if(data.action==='no-answer'){iEndedCall=true;forceEndCall(true);showCallEnded('no-answer',fromName);}}
+function startPresence(myNum,myName){myNumberGlobal=myNum;myNameGlobal=myName;if(typeof mqtt==='undefined'){logDebug('MQTT library load nahi hui, page refresh karo');setTimeout(()=>{startPresence(myNum,myName);},3000);return;}let clientId='fam-'+myNum+'-'+Math.random().toString(36).substr(2,6);logDebug('Presence connect ho raha hai...');try{if(mqttClient)try{mqttClient.end(true);}catch(e){}}catch(e){}mqttClient=mqtt.connect('wss://broker.emqx.io:8084/mqtt',{clientId:clientId,keepalive:15,clean:true,reconnectPeriod:2000,will:{topic:'family-call-v12/presence/'+myNum,payload:JSON.stringify({status:'offline',name:myName,pic:''}),retain:true,properties:{willDelayInterval:30}}});mqttClient.on('connect',()=>{mqttConnected=true;logDebug('Always Online - ID: '+myNum);mqttClient.subscribe('family-call-v12/presence/#');mqttClient.subscribe('family-call-v12/call/'+myNum);publishOnline(myNum,myName);requestWakeLock();if(heartbeatTimer)clearInterval(heartbeatTimer);heartbeatTimer=setInterval(()=>{publishOnline(myNum,myName);keepOnline();},4000);if(cleanupTimer)clearInterval(cleanupTimer);cleanupTimer=setInterval(()=>{let now=Date.now();family=getFamily();family.forEach(f=>{if(lastPingMap[f.number]&&(now-lastPingMap[f.number]>25000)){if(onlineMap[f.number]!=='offline'){onlineMap[f.number]='offline';lastSeenMap[f.number]='App band hai';renderFamily();}}});},5000);});mqttClient.on('message',(topic,payload)=>{try{if(topic.indexOf('/call/')!==-1){let d=JSON.parse(payload.toString());if(d.from!==myNum)handleCallSignal(d);return;}let data=JSON.parse(payload.toString());let num=topic.split('/').pop();if(num===myNum)return;if(data.name)nameMap[num]=data.name;if(data.pic)picMap[num]=data.pic;if(data.status==='online'){onlineMap[num]='online';lastPingMap[num]=Date.now();lastSeenMap[num]='Abhi Online';}else{onlineMap[num]='offline';lastSeenMap[num]='App band hai';}renderFamily();}catch(e){}});mqttClient.on('error',()=>{logDebug('Presence error, retry...');});mqttClient.on('close',()=>{mqttConnected=false;logDebug('Reconnect ho raha hai...');setTimeout(()=>{if(myNumberGlobal)startPresence(myNumberGlobal,myNameGlobal);},2000);});}
+function publishOnline(num,name){if(mqttClient&&mqttConnected){try{mqttClient.publish('family-call-v12/presence/'+num,JSON.stringify({status:'online',name:name||'Me',pic:myPicGlobal||''}),{retain:true});}catch(e){}}}
+function forceRefresh(){renderFamily();publishOnline(myNumberGlobal,localStorage.getItem('myName')||'Me');showToast('Refresh ho gaya');}
+function login(isAuto){let num=document.getElementById('myNumber').value.trim();let name=document.getElementById('myName').value.trim()||'Me';if(num.length<10){if(!isAuto)alert('Sahi number daalo');return;}localStorage.setItem('myNumber',num);localStorage.setItem('myName',name);localStorage.setItem('alwaysOnline','1');myNameGlobal=name;myNumberGlobal=num;document.getElementById('loginCard').style.display='none';document.getElementById('profileCard').style.display='block';document.getElementById('addCard').style.display='block';document.getElementById('historyCard').style.display='block';document.getElementById('showMyName').innerText=name;document.getElementById('showMyNum').innerText=num;setMyAvatarUI();setStatusUI(false);document.getElementById('myStatus').innerText='Connecting...';renderFamily();renderCallLogs();if(peer){try{peer.destroy();}catch(e){}}peer=new Peer('family-'+num);peer.on('open',()=>{setStatusUI(true);startPresence(num,name);});peer.on('disconnected',()=>{setTimeout(()=>{try{peer.reconnect();}catch(e){}},2000);});peer.on('close',()=>{setTimeout(()=>{if(localStorage.getItem('alwaysOnline')==='1')login(true);},3000);});peer.on('error',()=>{});peer.on('call',call=>{incomingCall=call;let isV=call.metadata?call.metadata.isVideo:true;let callerNum=call.peer.replace('family-','');lastCallNumber=callerNum;lastCallName=getNameByNumber(callerNum);lastCallIsVideo=isV;resetCallTimers();document.getElementById('inName').innerText=lastCallName;document.getElementById('inNumber').innerText=callerNum;let inPic=getPicByNumber(callerNum);document.getElementById('inPic').innerHTML=inPic?'<img src="'+inPic+'">':'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:56px;height:56px"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';document.getElementById('inType').innerText=isV?'Video Call aa rahi hai...':'Audio Call aa rahi hai...';document.getElementById('incoming').style.display='flex';document.getElementById('ringTone').play().catch(()=>{});if(navigator.vibrate)navigator.vibrate([500,200,500]);setTimeout(()=>{if(document.getElementById('incoming').style.display==='flex'){document.getElementById('incoming').style.display='none';document.getElementById('ringTone').pause();try{incomingCall.close();}catch(e){}sendCallSignal(lastCallNumber,'no-answer');showToast('Missed Call - '+lastCallName);}},30000);});}
+function copyMyNumber(){let n=localStorage.getItem('myNumber');navigator.clipboard.writeText(n);alert('Number copy ho gaya: '+n);}
+function logout(){if(confirm('Logout karna hai? Tabhi Offline dikhoge, warna hamesha Online rahoge.')){localStorage.removeItem('alwaysOnline');if(mqttClient&&mqttConnected){try{mqttClient.publish('family-call-v12/presence/'+myNumberGlobal,JSON.stringify({status:'offline'}),{retain:true});}catch(e){}}if('serviceWorker' in navigator&&navigator.serviceWorker.controller){navigator.serviceWorker.controller.postMessage({type:'LOGOUT'});}localStorage.removeItem('myNumber');localStorage.removeItem('myName');if(peer)try{peer.destroy();}catch(e){}location.reload();}}
+function setFilter(cat){activeFilter=cat;renderFamily();}
+function addFamily(){let n=document.getElementById('famName').value.trim();let num=document.getElementById('famNumber').value.trim();let cat=document.getElementById('famCategory').value||'Family';if(!n||!num){alert('Naam aur Number daalo');return;}family=getFamily();if(family.some(f=>f.number===num)){alert('Ye number pehle se add hai!');return;}family.push({name:n,number:num,category:cat});saveFamily(family);document.getElementById('famName').value='';document.getElementById('famNumber').value='';onlineMap[num]='offline';closeAddPopup();renderFamily();showToast(n+' add ho gaya ['+cat+']');}
+function deleteFamily(num){if(!confirm('Isko delete karna hai?'))return;family=getFamily().filter(f=>f.number!==num);saveFamily(family);delete onlineMap[num];renderFamily();}
+function renderFamily(){
+  family=getFamily().map(f=>({category:'Family',...f}));saveFamily(family);
+  let onlineCount=family.filter(f=>onlineMap[f.number]==='online').length;
+  document.getElementById('famCount').innerHTML='<span class="bdot"></span> '+onlineCount+' Online • '+family.length+' Total';
+  let cats=['All','Family','Friends','Office','Others'];let tabsHtml='';
+  cats.forEach(c=>{let cnt=c==='All'?family.length:family.filter(f=>(f.category||'Family')===c).length;tabsHtml+=`<button class="filter-tab ${activeFilter===c?'active':''}" onclick="setFilter('${c}')">${c}<span class="cnt">${cnt}</span></button>`;});
+  let tabsEl=document.getElementById('filterTabs');if(tabsEl)tabsEl.innerHTML=tabsHtml;
+  let filtered=activeFilter==='All'?family:family.filter(f=>(f.category||'Family')===activeFilter);
+  let h='';
+  if(filtered.length===0){h=`<div class="empty-box">${activeFilter==='All'?'Abhi koi Member nahi hai':activeFilter+' me koi Member nahi hai'}<br>+ dabake Add Karo</div>`;}
+  else{filtered.forEach(f=>{
+    let st=onlineMap[f.number]||'offline';let dotClass=st==='online'?'dot online':'dot';let statusText=st==='online'?'Abhi Online • Call kar sakte ho':(lastSeenMap[f.number]||'App band hai');let cat=f.category||'Family';let pic=getPicByNumber(f.number);let avatarHtml=pic?`<img src="${pic}">`:f.name.charAt(0).toUpperCase();
+    h+=`<div class="contact"><div class="contact-top"><div class="avatar">${avatarHtml}<span class="${dotClass}"></span></div><div class="contact-info"><div class="contact-name">${f.name}</div><div class="contact-num"><svg viewBox="0 0 24 24" fill="none" stroke="#6B7F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ${f.number}</div><div><span class="cat-badge cat-${cat}">${cat}</span> <span class="status-line">${statusText}</span></div></div><div class="top-icons">
+    <button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',true)" title="Video"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
+    <button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',false)" title="Audio"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+    <button class="mini-icon edit" onclick="openEditPopup('${f.number}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></button>
+    <button class="mini-icon red" onclick="deleteFamily('${f.number}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+    </div></div></div>`;
+  });}
   document.getElementById('familyList').innerHTML=h;
 }
-function callFamily(num,name,isVideo){
-  if(onlineMap[num]!=='online'){ if(!confirm(name+' abhi Offline dikh raha hai, phir bhi call lagau?')) return; }
-  makeCall(isVideo,name,num);
-}
-function setupCallUI(isVideo, name, number){
-  isVideoCall=isVideo;
-  let displayName = getNameByNumber(number) || name || number;
-  let pic = getPicByNumber(number);
-  document.getElementById('callName').innerText=displayName;
-  document.getElementById('callNumber').innerText=number;
-  document.getElementById('audioName').innerText=displayName;
-  document.getElementById('audioNumber').innerText=number;
-  document.getElementById('callTopPic').innerHTML = pic ? '<img src="'+pic+'">' : displayName.charAt(0).toUpperCase();
-  document.getElementById('audioBigPic').innerHTML = pic ? '<img src="'+pic+'">' : '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:60px;height:60px"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>';
-  if(isVideo){
-    document.getElementById('remoteVideo').style.display='block';
-    document.getElementById('myVideo').style.display='block';
-    document.getElementById('audioUI').style.display='none';
-    document.getElementById('callTop').style.display='flex';
-  } else {
-    document.getElementById('remoteVideo').style.display='none';
-    document.getElementById('myVideo').style.display='none';
-    document.getElementById('audioUI').style.display='flex';
-    document.getElementById('callTop').style.display='none';
-  }
-}
-function handleCallEvents(call){
-  call.on('stream',rs=>{
-    startConnectedTimer();
-    document.getElementById('remoteVideo').srcObject=rs;
-    let a=document.getElementById('remoteAudio'); a.srcObject=rs; a.play().catch(()=>{});
-    document.getElementById('callStatus').innerText = isVideoCall ? 'Video Call chal rahi hai...' : 'Audio Call chal rahi hai...';
-  });
-  call.on('close',()=>{
-    if(iEndedCall) return;
-    let name = getNameByNumber(lastCallNumber);
-    if(!callConnected){ forceEndCall(true); showCallEnded('rejected', name); }
-    else { forceEndCall(true); showCallEnded('remote', name); }
-  });
-  call.on('error',()=>{
-    if(iEndedCall) return;
-    forceEndCall(true);
-    showCallEnded('network', getNameByNumber(lastCallNumber));
-  });
-}
-function makeCall(isVideo,name,number){
-  let to=number || lastCallNumber; if(!to){alert('Number daalo');return;}
-  lastCallNumber=to; lastCallName=getNameByNumber(to); lastCallIsVideo=isVideo; iEndedCall=false; callConnected=false; endedPopupShown=false;
-  setupCallUI(isVideo, lastCallName, to); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Call laga rahe hain...';
-  resetCallTimers();
-  if(noAnswerTimer) clearTimeout(noAnswerTimer);
-  noAnswerTimer=setTimeout(()=>{ if(document.getElementById('callScreen').style.display==='flex' && !callConnected){ iEndedCall=true; forceEndCall(true); showCallEnded('no-answer', lastCallName); } }, 45000);
-  navigator.mediaDevices.getUserMedia({video:isVideo, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isVideo) document.getElementById('myVideo').srcObject=s; let call=peer.call('family-'+to, s, {metadata:{isVideo:isVideo}}); handleCallEvents(call); currentCall=call; }).catch(e=>{alert('Mic/Camera Allow karo');});
-}
-function acceptCall(){
-  let isV = incomingCall.metadata ? incomingCall.metadata.isVideo : true;
-  document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause();
-  iEndedCall=false; callConnected=false; endedPopupShown=false;
-  setupCallUI(isV, lastCallName, lastCallNumber); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Connecting...';
-  resetCallTimers();
-  navigator.mediaDevices.getUserMedia({video:isV, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isV) document.getElementById('myVideo').srcObject=s; incomingCall.answer(s); handleCallEvents(incomingCall); currentCall=incomingCall; });
-}
-function rejectCall(){
-  document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause();
-  sendCallSignal(lastCallNumber, 'rejected');
-  if(incomingCall) try{incomingCall.close();}catch(e){}
-  showToast('Call Reject kar di');
-  showCallEnded('missed', lastCallName);
-}
-function forceEndCall(silent){
-  document.getElementById('ringTone').pause();
-  if(noAnswerTimer){ clearTimeout(noAnswerTimer); noAnswerTimer=null; }
-  if(myStream)myStream.getTracks().forEach(t=>t.stop());
-  document.getElementById('callScreen').style.display='none';
-  document.getElementById('incoming').style.display='none';
-  document.getElementById('remoteVideo').srcObject=null;
-  document.getElementById('remoteAudio').srcObject=null;
-  if(!silent) stopCallTimer();
-  currentCall=null;
-}
-function endCall(){
-  iEndedCall=true;
-  let name = lastCallName;
-  sendCallSignal(lastCallNumber, 'ended');
-  if(currentCall) try{currentCall.close();}catch(e){}
-  forceEndCall();
-  showCallEnded('self', name);
-}
-function toggleMute(){
-  isMuted=!isMuted;
-  if(myStream)myStream.getAudioTracks().forEach(t=>t.enabled=!isMuted);
-  let b=document.getElementById('muteBtn');
-  if(isMuted){ b.classList.add('active'); b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px"><line x1="2" y1="2" x2="22" y2="22"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V5a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>'; }
-  else { b.classList.remove('active'); b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>'; }
-}
-function toggleSpeaker(){ let a=document.getElementById('remoteAudio'); a.volume=1; a.play(); alert('Speaker On - Volume Full karo'); }
+function callFamily(num,name,isVideo){if(onlineMap[num]!=='online'){if(!confirm(name+' abhi Offline dikh raha hai, phir bhi call lagau?'))return;}makeCall(isVideo,name,num);}
+function setupCallUI(isVideo,name,number){isVideoCall=isVideo;let displayName=getNameByNumber(number)||name||number;let pic=getPicByNumber(number);document.getElementById('callName').innerText=displayName;document.getElementById('callNumber').innerText=number;document.getElementById('audioName').innerText=displayName;document.getElementById('audioNumber').innerText=number;document.getElementById('callTopPic').innerHTML=pic?'<img src="'+pic+'">':displayName.charAt(0).toUpperCase();document.getElementById('audioBigPic').innerHTML=pic?'<img src="'+pic+'">':'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:60px;height:60px"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>';if(isVideo){document.getElementById('remoteVideo').style.display='block';document.getElementById('myVideo').style.display='block';document.getElementById('audioUI').style.display='none';document.getElementById('callTop').style.display='flex';}else{document.getElementById('remoteVideo').style.display='none';document.getElementById('myVideo').style.display='none';document.getElementById('audioUI').style.display='flex';document.getElementById('callTop').style.display='none';}}
+function handleCallEvents(call){call.on('stream',rs=>{startConnectedTimer();document.getElementById('remoteVideo').srcObject=rs;let a=document.getElementById('remoteAudio');a.srcObject=rs;a.play().catch(()=>{});document.getElementById('callStatus').innerText=isVideoCall?'Video Call chal rahi hai...':'Audio Call chal rahi hai...';});call.on('close',()=>{if(iEndedCall)return;let name=getNameByNumber(lastCallNumber);if(!callConnected){forceEndCall(true);showCallEnded('rejected',name);}else{forceEndCall(true);showCallEnded('remote',name);}});call.on('error',()=>{if(iEndedCall)return;forceEndCall(true);showCallEnded('network',getNameByNumber(lastCallNumber));});}
+function makeCall(isVideo,name,number){let to=number||lastCallNumber;if(!to){alert('Number daalo');return;}lastCallNumber=to;lastCallName=getNameByNumber(to);lastCallIsVideo=isVideo;iEndedCall=false;callConnected=false;endedPopupShown=false;setupCallUI(isVideo,lastCallName,to);document.getElementById('callScreen').style.display='flex';document.getElementById('callStatus').innerText='Call laga rahe hain...';resetCallTimers();if(noAnswerTimer)clearTimeout(noAnswerTimer);noAnswerTimer=setTimeout(()=>{if(document.getElementById('callScreen').style.display==='flex'&&!callConnected){iEndedCall=true;forceEndCall(true);showCallEnded('no-answer',lastCallName);}},45000);navigator.mediaDevices.getUserMedia({video:isVideo,audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}}).then(s=>{myStream=s;if(isVideo)document.getElementById('myVideo').srcObject=s;let call=peer.call('family-'+to,s,{metadata:{isVideo:isVideo}});handleCallEvents(call);currentCall=call;}).catch(e=>{alert('Mic/Camera Allow karo');});}
+function acceptCall(){let isV=incomingCall.metadata?incomingCall.metadata.isVideo:true;document.getElementById('incoming').style.display='none';document.getElementById('ringTone').pause();iEndedCall=false;callConnected=false;endedPopupShown=false;setupCallUI(isV,lastCallName,lastCallNumber);document.getElementById('callScreen').style.display='flex';document.getElementById('callStatus').innerText='Connecting...';resetCallTimers();navigator.mediaDevices.getUserMedia({video:isV,audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}}).then(s=>{myStream=s;if(isV)document.getElementById('myVideo').srcObject=s;incomingCall.answer(s);handleCallEvents(incomingCall);currentCall=incomingCall;});}
+function rejectCall(){document.getElementById('incoming').style.display='none';document.getElementById('ringTone').pause();sendCallSignal(lastCallNumber,'rejected');if(incomingCall)try{incomingCall.close();}catch(e){}showToast('Call Reject kar di');showCallEnded('missed',lastCallName);}
+function forceEndCall(silent){document.getElementById('ringTone').pause();if(noAnswerTimer){clearTimeout(noAnswerTimer);noAnswerTimer=null;}if(myStream)myStream.getTracks().forEach(t=>t.stop());document.getElementById('callScreen').style.display='none';document.getElementById('incoming').style.display='none';document.getElementById('remoteVideo').srcObject=null;document.getElementById('remoteAudio').srcObject=null;if(!silent)stopCallTimer();currentCall=null;}
+function endCall(){iEndedCall=true;let name=lastCallName;sendCallSignal(lastCallNumber,'ended');if(currentCall)try{currentCall.close();}catch(e){}forceEndCall();showCallEnded('self',name);}
+function toggleMute(){isMuted=!isMuted;if(myStream)myStream.getAudioTracks().forEach(t=>t.enabled=!isMuted);let b=document.getElementById('muteBtn');if(isMuted){b.classList.add('active');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px"><line x1="2" y1="2" x2="22" y2="22"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V5a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>';}else{b.classList.remove('active');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>';}}
+function toggleSpeaker(){let a=document.getElementById('remoteAudio');a.volume=1;a.play();alert('Speaker On - Volume Full karo');}
 </script>
 </body>
 </html>
