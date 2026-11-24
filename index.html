@@ -10,31 +10,36 @@
 <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/724/724715.png">
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',Arial}
-body{margin:0;min-height:100vh;background:linear-gradient(135deg,#075E54 0%,#128C7E 30%,#25D366 60%,#a8e063 100%);background-attachment:fixed;padding-bottom:20px}
-body::before{content:'';position:fixed;top:-80px;left:-80px;width:300px;height:300px;background:rgba(255,255,255,.25);border-radius:50%;filter:blur(40px);z-index:0}
-body::after{content:'';position:fixed;bottom:-60px;right:-60px;width:280px;height:280px;background:rgba(255,255,255,.2);border-radius:50%;filter:blur(40px);z-index:0}
-.header{position:relative;z-index:2;background:rgba(255,255,255,.15);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.3);color:#fff;padding:16px;display:flex;align-items:center;gap:12px}
-.header .logo{width:48px;height:48px;background:rgba(255,255,255,.9);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 15px rgba(0,0,0,.2)}
+body{margin:0;min-height:100vh;background:linear-gradient(135deg,#075E54 0%,#0a8a7a 25%,#25D366 55%,#7ed957 85%,#a8e063 100%);background-attachment:fixed;padding-bottom:25px;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-70px;left:-70px;width:320px;height:320px;background:radial-gradient(circle,rgba(255,255,255,.45),transparent 70%);border-radius:50%;filter:blur(20px);z-index:0}
+body::after{content:'';position:fixed;bottom:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,.4),transparent 70%);border-radius:50%;filter:blur(20px);z-index:0}
+.header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.18);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);border-bottom:1px solid rgba(255,255,255,.35);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.header .logo{width:50px;height:50px;background:rgba(255,255,255,.95);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 4px 15px rgba(0,0,0,.2)}
 .container{position:relative;z-index:2;max-width:480px;margin:auto;padding:14px}
-.glass{background:rgba(255,255,255,.22);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.45);border-radius:22px;padding:18px;margin:12px 0;box-shadow:0 8px 32px rgba(0,0,0,.15);color:#fff}
-.glass-white{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-radius:22px;padding:18px;margin:12px 0;box-shadow:0 8px 32px rgba(0,0,0,.15)}
-input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.9);border-radius:14px;font-size:16px;outline:none}
-.btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+/* SAB KUCH GLASS */
+.glass{background:rgba(255,255,255,.22);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:18px;margin:13px 0;box-shadow:0 10px 35px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.5);color:#fff}
+.glass-light{background:rgba(255,255,255,.35);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.6);border-radius:24px;padding:18px;margin:13px 0;box-shadow:0 10px 35px rgba(0,0,0,.15);color:#fff}
+input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.92);border-radius:14px;font-size:16px;outline:none;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+input:focus{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.35)}
+.btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
 .btn-green{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff}
-.btn-dark{background:#075E54;color:#fff}
-.btn-white{background:#fff;color:#075E54}
+.btn-dark{background:rgba(7,94,84,.9);backdrop-filter:blur(10px);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.btn-white{background:rgba(255,255,255,.95);color:#075E54}
 .btn-orange{background:linear-gradient(135deg,#ff9800,#ff5722);color:#fff}
-.btn-red{background:#e74c3c;color:#fff}
+.btn-glass{background:rgba(255,255,255,.25);color:#fff;border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(10px)}
 .profile-row{display:flex;align-items:center;gap:12px}
-.my-avatar{width:58px;height:58px;border-radius:50%;background:#fff;color:#075E54;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;border:3px solid rgba(255,255,255,.6)}
-.logout-btn{background:rgba(255,255,255,.95);color:#e74c3c;border:none;padding:9px 14px;border-radius:20px;font-weight:700;font-size:13px;cursor:pointer}
-.status-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff3b30;box-shadow:0 0 8px #ff3b30}
-.contact{display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,.95);border-radius:16px;margin:8px 0;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-.avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#25D366,#075E54);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700}
-.icon-btn{width:46px;height:46px;border-radius:50%;border:none;font-size:20px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.15)}
-.call-btn{background:#25D366;color:#fff}
-.video-btn{background:#075E54;color:#fff}
-.small{font-size:13px;opacity:.85}
+.my-avatar{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.95);color:#075E54;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:800;border:3px solid rgba(255,255,255,.7);box-shadow:0 4px 15px rgba(0,0,0,.2)}
+.logout-btn{background:rgba(255,255,255,.95);color:#e74c3c;border:none;padding:10px 14px;border-radius:20px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.status-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff3b30;box-shadow:0 0 10px #ff3b30}
+/* FAMILY MEMBER BHI AB GLASS */
+.contact{display:flex;align-items:center;gap:12px;padding:13px;background:rgba(255,255,255,.28);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.55);border-radius:18px;margin:9px 0;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.avatar{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.95);color:#075E54;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:800;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.icon-btn{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.5);font-size:21px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);backdrop-filter:blur(10px)}
+.call-btn{background:rgba(37,211,102,.95);color:#fff}
+.video-btn{background:rgba(7,94,84,.95);color:#fff}
+.del-btn{background:rgba(255,255,255,.25);color:#fff;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.4);font-size:14px;cursor:pointer}
+.small{font-size:13px;opacity:.9}
+.empty-box{text-align:center;padding:18px;background:rgba(255,255,255,.18);border:1px dashed rgba(255,255,255,.6);border-radius:16px;margin-top:10px}
 #callScreen{display:none;position:fixed;inset:0;background:#111;z-index:99;flex-direction:column}
 #remoteVideo{width:100%;height:100%;object-fit:cover;background:#000}
 #myVideo{width:110px;height:150px;object-fit:cover;border-radius:16px;position:absolute;top:15px;right:15px;border:2px solid #fff}
@@ -45,12 +50,13 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.5)
 .ctrl{width:58px;height:58px;border-radius:50%;border:none;font-size:22px;cursor:pointer;background:#fff}
 .ctrl.red{background:#e74c3c;color:#fff}
 .ctrl.active{background:#ff9800;color:#fff}
-#incoming{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);z-index:100;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+#incoming{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(15px);z-index:100;flex-direction:column;align-items:center;justify-content:center;color:#fff}
 #installBtn{display:none}
+.badge{background:rgba(255,255,255,.3);padding:4px 10px;border-radius:20px;font-size:12px}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo">📞</div><div style="flex:1"><h2 style="margin:0;font-size:21px">Family Call</h2><p style="margin:0;font-size:12px;opacity:.9">Glass • Audio • Video</p></div><span style="font-size:12px;background:rgba(255,255,255,.25);padding:6px 10px;border-radius:20px" id="topStatus">● Offline</span></div>
+<div class="header"><div class="logo">📞</div><div style="flex:1"><h2 style="margin:0;font-size:21px">Family Call</h2><p style="margin:0;font-size:12px;opacity:.9">✨ Full Glass • Audio • Video</p></div><span style="font-size:12px;background:rgba(255,255,255,.28);backdrop-filter:blur(10px);padding:7px 11px;border-radius:20px;border:1px solid rgba(255,255,255,.4)" id="topStatus">● Offline</span></div>
 
 <div class="container">
 <button id="installBtn" class="btn btn-orange" onclick="installApp()">📲 App Install Karo - Home Screen pe Icon</button>
@@ -58,9 +64,9 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.5)
 <div class="glass" id="loginCard">
 <h3 style="margin:0">👋 Welcome</h3><p class="small" style="margin:6px 0 12px">Ek baar login karo, hamesha saved rahega</p>
 <input id="myName" placeholder="Apna Naam - Mohammed">
-<input id="myNumber" type="tel" placeholder="Mobile Number - 98XXXXXXX">
+<input id="myNumber" type="tel" placeholder="Mobile Number">
 <button class="btn btn-green" onclick="login()">✅ Login Karo</button>
-<div style="background:rgba(255,255,255,.25);padding:12px;border-radius:14px;margin-top:12px;text-align:center"><b>🎤 Mic Test</b><br><button class="btn btn-white" onclick="testMic()">Mic Test Karo</button><p id="micStatus" class="small">Abhi test nahi hua</p></div>
+<div style="background:rgba(255,255,255,.25);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.4);padding:12px;border-radius:16px;margin-top:12px;text-align:center"><b>🎤 Mic Test</b><br><button class="btn btn-white" onclick="testMic()">Mic Test Karo</button><p id="micStatus" class="small">Abhi test nahi hua</p></div>
 </div>
 
 <div class="glass" id="profileCard" style="display:none">
@@ -68,31 +74,32 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.5)
 <div class="my-avatar" id="myAvatar">M</div>
 <div style="flex:1">
 <div style="font-weight:800;font-size:18px" id="showMyName">Mohammed</div>
-<div style="font-size:14px;opacity:.9">ID: <b id="showMyNum">-</b></div>
+<div style="font-size:14px;opacity:.95">ID: <b id="showMyNum">-</b></div>
 <div style="font-size:12px"><span class="status-dot" id="statusDot"></span> <span id="myStatus">Connecting...</span></div>
 </div>
 </div>
 <div style="display:flex;gap:10px;margin-top:14px">
 <button class="logout-btn" style="flex:1" onclick="logout()">🚪 Logout</button>
-<button onclick="copyMyNumber()" style="flex:1;background:rgba(255,255,255,.25);color:#fff;border:1px solid rgba(255,255,255,.4);padding:9px;border-radius:20px;font-weight:700">📋 Number Copy</button>
+<button onclick="copyMyNumber()" class="btn-glass" style="flex:1;padding:10px;border-radius:20px;font-weight:700;cursor:pointer">📋 Number Copy</button>
 </div>
-<p class="small" style="text-align:center;margin:8px 0 0">↑ Logout yahan se hoga - Offline me bhi kaam karega</p>
 </div>
 
-<div class="glass-white" id="addCard" style="display:none">
-<h3 style="margin:0;color:#075E54">👨‍👩‍👧 Family Members</h3>
+<div class="glass" id="addCard" style="display:none">
+<div style="display:flex;align-items:center;justify-content:space-between"><h3 style="margin:0">👨‍👩‍👧 Family Members</h3><span class="badge" id="famCount">0 Members</span></div>
+<p class="small" style="margin:6px 0">Add kiya hua member yahan hamesha saved rahega</p>
 <input id="famName" placeholder="Naam - Ammi">
 <input id="famNumber" type="tel" placeholder="Unka Number">
-<button class="btn btn-dark" onclick="addFamily()">+ Add Karo</button>
+<button class="btn btn-green" onclick="addFamily()">+ Add Karo</button>
+<button class="btn btn-glass" style="width:100%;padding:10px;border-radius:12px;margin-top:8px;cursor:pointer" onclick="renderFamily()">🔄 List Refresh Karo</button>
 <div id="familyList"></div>
 </div>
 
-<div class="glass-white" id="directCard" style="display:none">
-<h3 style="margin:0;color:#075E54">📞 Direct Call</h3>
+<div class="glass-light" id="directCard" style="display:none">
+<h3 style="margin:0">📞 Direct Call</h3>
 <input id="callTo" type="tel" placeholder="Number daalo">
 <button class="btn btn-green" onclick="makeCall(true)">🎥 Video Call</button>
 <button class="btn btn-dark" onclick="makeCall(false)">🎧 Audio Call</button>
-<p class="small" style="color:#666">Audio me sirf awaz, Video me video bhi</p>
+<p class="small">Audio me sirf awaz, Video me video bhi</p>
 </div>
 </div>
 
@@ -106,7 +113,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.5)
 </div>
 
 <div id="incoming">
-<div style="width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:55px" id="inIcon">👤</div>
+<div style="width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.15);backdrop-filter:blur(15px);border:3px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:55px" id="inIcon">👤</div>
 <h2 id="inName">Family</h2><p id="inType">Call aa rahi hai...</p>
 <audio id="ringTone" loop src="https://actions.google.com/sounds/v1/alarms/phone_call.ogg"></audio>
 <div style="display:flex;gap:20px"><button class="ctrl red" style="width:70px;height:70px;font-size:28px" onclick="rejectCall()">✖</button><button class="ctrl" style="width:70px;height:70px;background:#25D366;color:#fff;font-size:28px" onclick="acceptCall()">📞</button></div>
@@ -115,26 +122,23 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.5)
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>
 let peer, myStream, currentCall, incomingCall, isMuted=false, isVideoCall=true, deferredPrompt=null;
-let family = JSON.parse(localStorage.getItem('family_v2') || '[]');
+// FIX: Family ko hamesha ek hi jagah se padho
+function getFamily(){ try{ return JSON.parse(localStorage.getItem('family_v2') || '[]'); }catch(e){ return []; } }
+function saveFamily(f){ localStorage.setItem('family_v2', JSON.stringify(f)); }
+let family = getFamily();
 window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='block'; });
 function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao'); } }
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
-
-// === STATUS FIX - DONO JAGAH EK SAATH BADLEGA ===
 function updateStatus(isOnline){
   let top = document.getElementById('topStatus');
   let mid = document.getElementById('myStatus');
   let dot = document.getElementById('statusDot');
-  if(isOnline){
-    top.innerText='● Online'; mid.innerText='Online - Call aane ke liye taiyaar';
-    dot.style.background='#00ff88'; dot.style.boxShadow='0 0 8px #00ff88';
-  } else {
-    top.innerText='● Offline'; mid.innerText='Offline - Internet check karo';
-    dot.style.background='#ff3b30'; dot.style.boxShadow='0 0 8px #ff3b30';
-  }
+  if(isOnline){ top.innerText='● Online'; mid.innerText='Online - Call aane ke liye taiyaar'; dot.style.background='#00ff88'; dot.style.boxShadow='0 0 10px #00ff88'; }
+  else { top.innerText='● Offline'; mid.innerText='Offline - Internet check karo'; dot.style.background='#ff3b30'; dot.style.boxShadow='0 0 10px #ff3b30'; }
 }
-
 window.onload = ()=>{
+  // Page khulte hi family list dikhao, chahe login ho ya na ho
+  renderFamily();
   let savedNum = localStorage.getItem('myNumber');
   let savedName = localStorage.getItem('myName');
   if(savedNum){ document.getElementById('myNumber').value=savedNum; document.getElementById('myName').value=savedName||''; login(true); }
@@ -156,6 +160,7 @@ function login(isAuto){
   document.getElementById('showMyNum').innerText=num;
   document.getElementById('myAvatar').innerText=name.charAt(0).toUpperCase();
   updateStatus(false);
+  renderFamily();
   if(peer) peer.destroy();
   peer=new Peer('family-'+num);
   peer.on('open',()=>{ updateStatus(true); });
@@ -174,12 +179,41 @@ function login(isAuto){
     document.getElementById('ringTone').play().catch(()=>{});
     if(navigator.vibrate) navigator.vibrate([500,200,500]);
   });
-  renderFamily();
 }
 function copyMyNumber(){ let n=localStorage.getItem('myNumber'); navigator.clipboard.writeText(n); alert('Number copy ho gaya: '+n); }
-function logout(){ if(confirm('Logout karna hai? Dobara number daalna padega.')){ localStorage.removeItem('myNumber'); localStorage.removeItem('myName'); if(peer) try{peer.destroy();}catch(e){} location.reload(); } }
-function addFamily(){ let n=document.getElementById('famName').value.trim(); let num=document.getElementById('famNumber').value.trim(); if(!n||!num){alert('Naam aur Number daalo');return;} family.push({name:n,number:num}); localStorage.setItem('family_v2',JSON.stringify(family)); document.getElementById('famName').value='';document.getElementById('famNumber').value=''; renderFamily(); }
-function renderFamily(){ let h=''; family.forEach(f=>{ h+=`<div class="contact"><div class="avatar">${f.name.charAt(0).toUpperCase()}</div><div style="flex:1"><b>${f.name}</b><br><span class="small" style="color:#666">${f.number}</span></div><button class="icon-btn video-btn" onclick="callFamily('${f.number}','${f.name}',true)">🎥</button><button class="icon-btn call-btn" onclick="callFamily('${f.number}','${f.name}',false)">📞</button></div>`; }); document.getElementById('familyList').innerHTML=h; }
+function logout(){ if(confirm('Logout karna hai? Dobara number daalna padega. Family list saved rahegi.')){ localStorage.removeItem('myNumber'); localStorage.removeItem('myName'); if(peer) try{peer.destroy();}catch(e){} location.reload(); } }
+function addFamily(){
+  let n=document.getElementById('famName').value.trim();
+  let num=document.getElementById('famNumber').value.trim();
+  if(!n||!num){alert('Naam aur Number daalo');return;}
+  family = getFamily();
+  // Duplicate check
+  if(family.some(f=>f.number===num)){ alert('Ye number pehle se add hai!'); return; }
+  family.push({name:n,number:num});
+  saveFamily(family);
+  document.getElementById('famName').value='';document.getElementById('famNumber').value='';
+  renderFamily();
+  alert(n+' add ho gaya ✅');
+}
+function deleteFamily(num){
+  if(!confirm('Isko delete karna hai?')) return;
+  family = getFamily().filter(f=>f.number!==num);
+  saveFamily(family);
+  renderFamily();
+}
+function renderFamily(){
+  family = getFamily();
+  document.getElementById('famCount').innerText = family.length + ' Members';
+  let h='';
+  if(family.length===0){
+    h=`<div class="empty-box">👨‍👩‍👧 Abhi koi Family Member nahi hai<br><span class="small">Upar Naam + Number daal ke Add Karo</span></div>`;
+  } else {
+    family.forEach(f=>{
+      h+=`<div class="contact"><div class="avatar">${f.name.charAt(0).toUpperCase()}</div><div style="flex:1;color:#fff"><b>${f.name}</b><br><span class="small">${f.number}</span></div><button class="icon-btn video-btn" onclick="callFamily('${f.number}','${f.name}',true)">🎥</button><button class="icon-btn call-btn" onclick="callFamily('${f.number}','${f.name}',false)">📞</button><button class="del-btn" onclick="deleteFamily('${f.number}')">✖</button></div>`;
+    });
+  }
+  document.getElementById('familyList').innerHTML=h;
+}
 function callFamily(num,name,isVideo){document.getElementById('callTo').value=num;makeCall(isVideo,name);}
 function setupCallUI(isVideo, name){ isVideoCall=isVideo; document.getElementById('callName').innerText=name; document.getElementById('audioName').innerText=name; if(isVideo){ document.getElementById('remoteVideo').style.display='block'; document.getElementById('myVideo').style.display='block'; document.getElementById('audioUI').style.display='none'; } else { document.getElementById('remoteVideo').style.display='none'; document.getElementById('myVideo').style.display='none'; document.getElementById('audioUI').style.display='flex'; } }
 function handleCallEvents(call){ call.on('stream',rs=>{ document.getElementById('remoteVideo').srcObject=rs; let a=document.getElementById('remoteAudio'); a.srcObject=rs; a.play().catch(()=>{}); document.getElementById('callStatus').innerText = isVideoCall ? 'Video Call chal rahi hai...' : 'Audio Call chal rahi hai...'; }); call.on('close',()=>{ forceEndCall(); }); call.on('error',()=>{ forceEndCall(); }); }
