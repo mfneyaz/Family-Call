@@ -39,7 +39,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 .contact-num{font-size:14px;color:rgba(255,255,255,.95)}
 .contact-sub{font-size:12px;color:rgba(255,255,255,.85)}
 .top-status{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-.status-pill{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 8px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.6)}
+.status-pill{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5)}
 .status-pill.on{background:rgba(0,255,136,.25);color:#eafff3;border-color:rgba(0,255,136,.6)}
 .status-pill.off{background:rgba(255,255,255,.25);color:#fff}
 .status-pill .s-dot{width:8px;height:8px;border-radius:50%;background:#00ff88;box-shadow:0 0 6px #00ff88}
@@ -67,10 +67,19 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 .badge{background:rgba(255,255,255,.30);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5);padding:5px 11px;border-radius:20px;font-size:12px}
 .glass-chip{background:rgba(255,255,255,.28);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.45);padding:7px 11px;border-radius:20px}
 .debug-box{font-size:11px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);padding:8px 10px;border-radius:12px;margin-top:10px}
+/* === CALL ENDED POPUP === */
+#callEnded{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(15px);z-index:200;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px}
+#callEnded .ended-card{background:rgba(255,255,255,.18);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:28px 22px;max-width:340px;width:100%;box-shadow:0 15px 40px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.5)}
+#callEnded .ended-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.6));display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 14px;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(0,0,0,.85);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.4);color:#fff;padding:12px 18px;border-radius:20px;font-size:14px;font-weight:700;z-index:300;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;box-shadow:0 8px 25px rgba(0,0,0,.3)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.last-call{font-size:12px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:7px 10px;border-radius:12px;margin-top:10px;display:none}
 </style>
 </head>
 <body>
 <div class="header"><div class="logo">📞</div><div style="flex:1"><h2 style="margin:0;font-size:21px">Family Call</h2><p style="margin:0;font-size:12px;opacity:.9">✨ Full Glass • Audio • Video</p></div><span class="glass-chip" style="font-size:12px" id="topStatus">● Connecting...</span></div>
+
+<div id="toast"></div>
 
 <div class="container">
 <button id="installBtn" class="btn btn-orange" onclick="installApp()">📲 App Install Karo</button>
@@ -97,6 +106,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 <button onclick="copyMyNumber()" class="btn-glass" style="flex:1;padding:11px;border-radius:20px;font-weight:700;cursor:pointer">📋 Number Copy</button>
 </div>
 <div class="debug-box" id="debugBox">Presence: Connecting...</div>
+<div class="last-call" id="lastCallBox"></div>
 </div>
 
 <div class="glass" id="addCard" style="display:none">
@@ -121,9 +131,9 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 <video id="remoteVideo" autoplay playsinline></video>
 <audio id="remoteAudio" autoplay playsinline></audio>
 <video id="myVideo" autoplay muted playsinline></video>
-<div id="audioUI"><div class="bigAvatar">🎧</div><h2 id="audioName">Family</h2><p>Audio Call Chal Rahi Hai...</p><p style="font-size:40px">🎙️ 🔊</p></div>
-<div class="call-top"><h2 id="callName" style="margin:0">Family</h2><p id="callStatus" style="opacity:.8">Connecting...</p></div>
-<div class="call-controls"><button class="ctrl" id="muteBtn" onclick="toggleMute()">🎤</button><button class="ctrl" onclick="toggleSpeaker()">🔊</button><button class="ctrl red" onclick="endCall()">📞</button></div>
+<div id="audioUI"><div class="bigAvatar">🎧</div><h2 id="audioName">Family</h2><p>Audio Call Chal Rahi Hai...</p><p style="font-size:40px">🎙️ 🔊</p><p id="callTimer" style="font-size:18px;font-weight:700">00:00</p></div>
+<div class="call-top"><h2 id="callName" style="margin:0">Family</h2><p id="callStatus" style="opacity:.8">Connecting...</p><p id="callTimerTop" style="font-size:15px;font-weight:700;margin:4px 0 0">00:00</p></div>
+<div class="call-controls"><button class="ctrl" id="muteBtn" onclick="toggleMute()">🎤</button><button class="ctrl" onclick="toggleSpeaker()">🔊</button><button class="ctrl red" onclick="endCall('self')">📞</button></div>
 </div>
 
 <div id="incoming">
@@ -133,6 +143,18 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 <div style="display:flex;gap:20px"><button class="ctrl red" style="width:72px;height:72px;font-size:28px" onclick="rejectCall()">✖</button><button class="ctrl" style="width:72px;height:72px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-size:28px" onclick="acceptCall()">📞</button></div>
 </div>
 
+<!-- CALL ENDED POPUP -->
+<div id="callEnded">
+<div class="ended-card">
+<div class="ended-icon" id="endedIcon">📞</div>
+<h2 id="endedTitle" style="margin:0 0 6px">Call Khatam Ho Gayi</h2>
+<p id="endedMsg" style="margin:0 0 6px;opacity:.9">Call khatam ho gayi</p>
+<p id="endedDuration" style="margin:0 0 16px;font-weight:700">Call Duration: 00:00</p>
+<button class="btn btn-green" onclick="closeEndedPopup()">✅ OK</button>
+<button class="btn btn-glass" id="endedCallBackBtn" onclick="callBackLast()">📞 Dobara Call Karo</button>
+</div>
+</div>
+
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 <script>
@@ -140,6 +162,7 @@ let peer, myStream, currentCall, incomingCall, isMuted=false, isVideoCall=true, 
 let onlineMap = {}, lastSeenMap = {}, lastPingMap = {};
 let mqttClient=null, mqttConnected=false, heartbeatTimer=null, cleanupTimer=null;
 let myNumberGlobal='';
+let callStartTime=0, callTimerInterval=null, lastCallName='', lastCallNumber='', lastCallIsVideo=true, callConnected=false, iEndedCall=false, callWasRejected=false;
 function getFamily(){ try{ return JSON.parse(localStorage.getItem('family_v2') || '[]'); }catch(e){ return []; } }
 function saveFamily(f){ localStorage.setItem('family_v2', JSON.stringify(f)); }
 let family = getFamily();
@@ -154,6 +177,52 @@ function setStatusUI(isOnline){
   else { top.innerText='● Offline'; mid.innerText='Offline - Internet check karo'; dot.style.background='#ff3b30'; dot.style.boxShadow='0 0 10px #ff3b30'; }
 }
 function logDebug(t){ let el=document.getElementById('debugBox'); if(el) el.innerText='Presence: '+t; }
+function showToast(msg){
+  let t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show');
+  setTimeout(()=>{ t.classList.remove('show'); }, 3500);
+}
+function formatTime(sec){
+  let m=Math.floor(sec/60), s=sec%60;
+  return (m<10?'0'+m:m)+':'+(s<10?'0'+s:s);
+}
+function startCallTimer(){
+  callStartTime=Date.now(); callConnected=false;
+  if(callTimerInterval) clearInterval(callTimerInterval);
+  callTimerInterval=setInterval(()=>{
+    let sec=Math.floor((Date.now()-callStartTime)/1000);
+    let f=formatTime(sec);
+    document.getElementById('callTimer').innerText=f;
+    document.getElementById('callTimerTop').innerText=f;
+  }, 1000);
+}
+function stopCallTimer(){ if(callTimerInterval){ clearInterval(callTimerInterval); callTimerInterval=null; } return Math.floor((Date.now()-callStartTime)/1000); }
+// === NAYA: CALL ENDED POPUP ===
+function showCallEnded(type, name){
+  let dur = stopCallTimer();
+  let durText = formatTime(dur>0?dur:0);
+  let title='', msg='', icon='📞';
+  if(type==='self'){ title='Call Khatam Ho Gayi'; msg='Aapne call kaat di'; icon='✅'; }
+  else if(type==='remote'){ title='Call Disconnected'; msg=(name||'Samne wale')+' ne call kaat di'; icon='📞'; }
+  else if(type==='rejected'){ title='Call Reject Ho Gayi'; msg=(name||'Samne wale')+' ne call reject kar di'; icon='❌'; }
+  else if(type==='missed'){ title='Missed Call'; msg='Aapne call nahi uthayi'; icon='🔕'; }
+  else if(type==='no-answer'){ title='No Answer'; msg=(name||'Samne wale')+' ne call nahi uthayi'; icon='📵'; }
+  else if(type==='network'){ title='Call Disconnected'; msg='Network ki wajah se call kat gayi'; icon='📶'; }
+  document.getElementById('endedIcon').innerText=icon;
+  document.getElementById('endedTitle').innerText=title;
+  document.getElementById('endedMsg').innerText=msg;
+  document.getElementById('endedDuration').innerText='Call Duration: '+durText;
+  document.getElementById('callEnded').style.display='flex';
+  // Profile me last call bhi dikhao
+  let box=document.getElementById('lastCallBox');
+  if(box){ box.style.display='block'; box.innerHTML='📞 Last Call: <b>'+(name||lastCallName||'-')+'</b> • '+title+' • '+durText; }
+  // 6 sec baad apne aap band
+  setTimeout(()=>{ closeEndedPopup(); }, 6000);
+}
+function closeEndedPopup(){ document.getElementById('callEnded').style.display='none'; }
+function callBackLast(){
+  closeEndedPopup();
+  if(lastCallNumber){ document.getElementById('callTo').value=lastCallNumber; makeCall(lastCallIsVideo, lastCallName); }
+}
 window.onload = ()=>{
   renderFamily();
   let savedNum = localStorage.getItem('myNumber');
@@ -164,71 +233,30 @@ function testMic(){
   document.getElementById('micStatus').innerText='Mic maang rahe hain... Allow dabao';
   navigator.mediaDevices.getUserMedia({video:false, audio:true}).then(s=>{ document.getElementById('micStatus').innerText='✅ Mic Sahi Hai!'; s.getTracks().forEach(t=>t.stop()); }).catch(e=>{ document.getElementById('micStatus').innerText='❌ Mic Block Hai!'; });
 }
-
-// === MQTT.JS PRESENCE - NAYI LIBRARY, PAKKA LOAD HOGI ===
 function startPresence(myNum, myName){
   myNumberGlobal=myNum;
-  if(typeof mqtt === 'undefined'){
-    logDebug('MQTT library load nahi hui, page refresh karo');
-    setTimeout(()=>{ startPresence(myNum, myName); }, 3000);
-    return;
-  }
+  if(typeof mqtt === 'undefined'){ logDebug('MQTT library load nahi hui, page refresh karo'); setTimeout(()=>{ startPresence(myNum, myName); }, 3000); return; }
   let clientId = 'fam-'+myNum+'-'+Math.random().toString(36).substr(2,6);
   logDebug('Presence connect ho raha hai...');
   try{ if(mqttClient) try{mqttClient.end(true);}catch(e){} }catch(e){}
-  mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
-    clientId: clientId,
-    keepalive: 15,
-    clean: true,
-    will: { topic: 'family-call-v12/presence/'+myNum, payload: JSON.stringify({status:'offline', name:myName}), retain: true }
-  });
+  mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', { clientId: clientId, keepalive: 15, clean: true, will: { topic: 'family-call-v12/presence/'+myNum, payload: JSON.stringify({status:'offline', name:myName}), retain: true } });
   mqttClient.on('connect', ()=>{
-    mqttConnected=true;
-    logDebug('Presence Connected ✅ - ID: '+myNum);
+    mqttConnected=true; logDebug('Presence Connected ✅ - ID: '+myNum);
     mqttClient.subscribe('family-call-v12/presence/#');
     publishOnline(myNum, myName);
     if(heartbeatTimer) clearInterval(heartbeatTimer);
     heartbeatTimer=setInterval(()=>{ publishOnline(myNum, myName); }, 5000);
     if(cleanupTimer) clearInterval(cleanupTimer);
-    cleanupTimer=setInterval(()=>{
-      let now=Date.now();
-      family=getFamily();
-      family.forEach(f=>{
-        if(lastPingMap[f.number] && (now-lastPingMap[f.number] > 15000)){
-          if(onlineMap[f.number]!=='offline'){ onlineMap[f.number]='offline'; lastSeenMap[f.number]='App band hai'; renderFamily(); }
-        }
-      });
-    }, 5000);
+    cleanupTimer=setInterval(()=>{ let now=Date.now(); family=getFamily(); family.forEach(f=>{ if(lastPingMap[f.number] && (now-lastPingMap[f.number] > 15000)){ if(onlineMap[f.number]!=='offline'){ onlineMap[f.number]='offline'; lastSeenMap[f.number]='App band hai'; renderFamily(); } } }); }, 5000);
   });
   mqttClient.on('message', (topic, payload)=>{
-    try{
-      let data = JSON.parse(payload.toString());
-      let num = topic.split('/').pop();
-      if(num===myNum) return;
-      if(data.status==='online'){
-        onlineMap[num]='online'; lastPingMap[num]=Date.now(); lastSeenMap[num]='Abhi Online';
-      } else {
-        onlineMap[num]='offline'; lastSeenMap[num]='App band hai';
-      }
-      renderFamily();
-    }catch(e){}
+    try{ let data = JSON.parse(payload.toString()); let num = topic.split('/').pop(); if(num===myNum) return; if(data.status==='online'){ onlineMap[num]='online'; lastPingMap[num]=Date.now(); lastSeenMap[num]='Abhi Online'; } else { onlineMap[num]='offline'; lastSeenMap[num]='App band hai'; } renderFamily(); }catch(e){}
   });
   mqttClient.on('error', ()=>{ logDebug('Presence error, retry...'); });
   mqttClient.on('close', ()=>{ mqttConnected=false; logDebug('Presence disconnected, retry...'); });
-  mqttClient.on('reconnect', ()=>{ logDebug('Presence reconnect ho raha hai...'); });
 }
-function publishOnline(num, name){
-  if(mqttClient && mqttConnected){
-    try{ mqttClient.publish('family-call-v12/presence/'+num, JSON.stringify({status:'online', name:name||'Me'}), {retain:true}); }catch(e){}
-  }
-}
-function forceRefresh(){
-  family=getFamily();
-  renderFamily();
-  publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me');
-  alert('Refresh ho gaya ✅ - 5 sec wait karo');
-}
-
+function publishOnline(num, name){ if(mqttClient && mqttConnected){ try{ mqttClient.publish('family-call-v12/presence/'+num, JSON.stringify({status:'online', name:name||'Me'}), {retain:true}); }catch(e){} } }
+function forceRefresh(){ renderFamily(); publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me'); alert('Refresh ho gaya ✅ - 5 sec wait karo'); }
 function login(isAuto){
   let num=document.getElementById('myNumber').value.trim();
   let name=document.getElementById('myName').value.trim()||'Me';
@@ -253,12 +281,22 @@ function login(isAuto){
   peer.on('call',call=>{
     incomingCall=call;
     let isV = call.metadata ? call.metadata.isVideo : true;
-    document.getElementById('inName').innerText=call.peer.replace('family-','');
+    lastCallName = call.peer.replace('family-',''); lastCallNumber = lastCallName; lastCallIsVideo = isV;
+    document.getElementById('inName').innerText=lastCallName;
     document.getElementById('inType').innerText = isV ? '🎥 Video Call aa rahi hai...' : '🎧 Audio Call aa rahi hai...';
     document.getElementById('inIcon').innerText = isV ? '🎥' : '🎧';
     document.getElementById('incoming').style.display='flex';
     document.getElementById('ringTone').play().catch(()=>{});
     if(navigator.vibrate) navigator.vibrate([500,200,500]);
+    // 30 sec me nahi uthaya to Missed Call
+    setTimeout(()=>{
+      if(document.getElementById('incoming').style.display==='flex'){
+        document.getElementById('incoming').style.display='none';
+        document.getElementById('ringTone').pause();
+        try{ incomingCall.close(); }catch(e){}
+        showToast('🔕 Missed Call - '+lastCallName);
+      }
+    }, 30000);
   });
 }
 function copyMyNumber(){ let n=localStorage.getItem('myNumber'); navigator.clipboard.writeText(n); alert('Number copy ho gaya: '+n); }
@@ -322,12 +360,70 @@ function callFamily(num,name,isVideo){
   document.getElementById('callTo').value=num;makeCall(isVideo,name);
 }
 function setupCallUI(isVideo, name){ isVideoCall=isVideo; document.getElementById('callName').innerText=name; document.getElementById('audioName').innerText=name; if(isVideo){ document.getElementById('remoteVideo').style.display='block'; document.getElementById('myVideo').style.display='block'; document.getElementById('audioUI').style.display='none'; } else { document.getElementById('remoteVideo').style.display='none'; document.getElementById('myVideo').style.display='none'; document.getElementById('audioUI').style.display='flex'; } }
-function handleCallEvents(call){ call.on('stream',rs=>{ document.getElementById('remoteVideo').srcObject=rs; let a=document.getElementById('remoteAudio'); a.srcObject=rs; a.play().catch(()=>{}); document.getElementById('callStatus').innerText = isVideoCall ? 'Video Call chal rahi hai...' : 'Audio Call chal rahi hai...'; }); call.on('close',()=>{ forceEndCall(); }); call.on('error',()=>{ forceEndCall(); }); }
-function makeCall(isVideo,name){ let to=document.getElementById('callTo').value.trim(); if(!to){alert('Number daalo');return;} setupCallUI(isVideo, name||to); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Call laga rahe hain...'; navigator.mediaDevices.getUserMedia({video:isVideo, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isVideo) document.getElementById('myVideo').srcObject=s; let call=peer.call('family-'+to, s, {metadata:{isVideo:isVideo}}); handleCallEvents(call); currentCall=call; }).catch(e=>{alert('Mic/Camera Allow karo');}); }
-function acceptCall(){ let isV = incomingCall.metadata ? incomingCall.metadata.isVideo : true; document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause(); setupCallUI(isV, incomingCall.peer.replace('family-','')); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Connecting...'; navigator.mediaDevices.getUserMedia({video:isV, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isV) document.getElementById('myVideo').srcObject=s; incomingCall.answer(s); handleCallEvents(incomingCall); currentCall=incomingCall; }); }
-function rejectCall(){ document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause(); if(incomingCall) incomingCall.close(); }
-function forceEndCall(){ document.getElementById('ringTone').pause(); if(myStream)myStream.getTracks().forEach(t=>t.stop()); document.getElementById('callScreen').style.display='none'; document.getElementById('incoming').style.display='none'; document.getElementById('remoteVideo').srcObject=null; document.getElementById('remoteAudio').srcObject=null; currentCall=null; }
-function endCall(){ if(currentCall)currentCall.close(); forceEndCall(); }
+function handleCallEvents(call){
+  call.on('stream',rs=>{
+    callConnected=true;
+    document.getElementById('remoteVideo').srcObject=rs;
+    let a=document.getElementById('remoteAudio'); a.srcObject=rs; a.play().catch(()=>{});
+    document.getElementById('callStatus').innerText = isVideoCall ? 'Video Call chal rahi hai...' : 'Audio Call chal rahi hai...';
+  });
+  call.on('close',()=>{
+    // Agar maine kaata hai to popup pehle se dikh chuka hoga, dobara mat dikhao
+    if(iEndedCall){ iEndedCall=false; return; }
+    let name = lastCallName || call.peer.replace('family-','');
+    // Call lagi hi nahi thi aur samne se band hui = Reject / No Answer
+    if(!callConnected){
+      forceEndCall(true);
+      showCallEnded('rejected', name);
+    } else {
+      forceEndCall(true);
+      showCallEnded('remote', name);
+    }
+  });
+  call.on('error',()=>{
+    if(iEndedCall){ iEndedCall=false; return; }
+    forceEndCall(true);
+    showCallEnded('network', lastCallName);
+  });
+}
+function makeCall(isVideo,name){
+  let to=document.getElementById('callTo').value.trim(); if(!to){alert('Number daalo');return;}
+  lastCallName=name||to; lastCallNumber=to; lastCallIsVideo=isVideo; iEndedCall=false; callConnected=false; callWasRejected=false;
+  setupCallUI(isVideo, lastCallName); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Call laga rahe hain...';
+  startCallTimer();
+  navigator.mediaDevices.getUserMedia({video:isVideo, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isVideo) document.getElementById('myVideo').srcObject=s; let call=peer.call('family-'+to, s, {metadata:{isVideo:isVideo}}); handleCallEvents(call); currentCall=call; }).catch(e=>{alert('Mic/Camera Allow karo');});
+}
+function acceptCall(){
+  let isV = incomingCall.metadata ? incomingCall.metadata.isVideo : true;
+  document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause();
+  iEndedCall=false; callConnected=false;
+  setupCallUI(isV, incomingCall.peer.replace('family-','')); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Connecting...';
+  startCallTimer();
+  navigator.mediaDevices.getUserMedia({video:isV, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isV) document.getElementById('myVideo').srcObject=s; incomingCall.answer(s); handleCallEvents(incomingCall); currentCall=incomingCall; });
+}
+function rejectCall(){
+  document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause();
+  if(incomingCall) incomingCall.close();
+  showToast('❌ Call Reject kar di');
+  showCallEnded('missed', lastCallName);
+}
+function forceEndCall(silent){
+  document.getElementById('ringTone').pause();
+  if(myStream)myStream.getTracks().forEach(t=>t.stop());
+  document.getElementById('callScreen').style.display='none';
+  document.getElementById('incoming').style.display='none';
+  document.getElementById('remoteVideo').srcObject=null;
+  document.getElementById('remoteAudio').srcObject=null;
+  if(!silent) stopCallTimer();
+  currentCall=null;
+}
+function endCall(){
+  iEndedCall=true;
+  let name = lastCallName;
+  if(currentCall) currentCall.close();
+  forceEndCall();
+  showCallEnded('self', name);
+}
 function toggleMute(){ isMuted=!isMuted; if(myStream)myStream.getAudioTracks().forEach(t=>t.enabled=!isMuted); document.getElementById('muteBtn').innerText=isMuted?'🔇':'🎤'; document.getElementById('muteBtn').classList.toggle('active',isMuted); }
 function toggleSpeaker(){ let a=document.getElementById('remoteAudio'); a.volume=1; a.play(); alert('Speaker On - Volume Full karo'); }
 </script>
