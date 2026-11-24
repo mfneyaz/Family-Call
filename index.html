@@ -66,6 +66,13 @@ body.dark .user-status-pill{background:rgba(34,211,238,.15);color:#67E8F9;border
 .user-status-pill .sd{width:6px;height:6px;border-radius:50%;background:#00D68F;box-shadow:0 0 7px #00D68F}.user-status-pill.off .sd{background:#FF5A5A;box-shadow:0 0 7px #FF5A5A}
 .auto-badge{display:flex;align-items:center;gap:6px;background:rgba(246,255,251,.85);border:1px solid #E2F2EA;border-radius:10px;padding:6px 9px;font-size:11px;color:#6B7F76;margin-top:8px}body.dark .auto-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#A8B3D1}
 .auto-badge b{color:#0A8A5A}body.dark .auto-badge b{color:#67E8F9}
+.main-tabs{display:flex;gap:8px;background:var(--card);backdrop-filter:blur(22px) saturate(180%);border:1px solid var(--border);border-radius:18px;padding:6px;margin:10px 0 0;box-shadow:0 8px 18px var(--shadow);position:sticky;top:140px;z-index:19}
+.main-tab{flex:1;padding:11px 6px;border:none;border-radius:13px;background:transparent;font-size:13px;font-weight:800;color:var(--sub);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
+.main-tab svg{width:16px;height:16px}
+.main-tab.active{background:linear-gradient(135deg,#25D366,#0AC47A);color:#fff;box-shadow:0 6px 14px rgba(37,211,102,.3)}
+body.dark .main-tab.active{background:linear-gradient(135deg,#8B5CF6,#22D3EE);box-shadow:0 6px 14px rgba(139,92,246,.4)}
+.main-tab .tab-count{background:rgba(0,0,0,.12);padding:1px 7px;border-radius:10px;font-size:10px}
+.main-tab.active .tab-count{background:rgba(255,255,255,.25)}
 .filter-tabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}.filter-tabs::-webkit-scrollbar{display:none}
 .filter-tab{flex-shrink:0;padding:8px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(240,255,247,.6));backdrop-filter:blur(12px) saturate(160%);-webkit-backdrop-filter:blur(12px) saturate(160%);font-size:12px;font-weight:800;color:#6B7F76;cursor:pointer;box-shadow:0 3px 10px rgba(0,120,70,.06), inset 0 1px 0 rgba(255,255,255,.9);white-space:nowrap;transition:.2s;display:flex;align-items:center;gap:5px}
 body.dark .filter-tab{background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.16);color:#A8B3D1;box-shadow:0 3px 10px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.12)}
@@ -74,8 +81,8 @@ body.dark .filter-tab.active{background:linear-gradient(135deg,rgba(139,92,246,.
 .filter-tab .cnt{background:rgba(0,0,0,.07);padding:1px 6px;border-radius:10px;font-size:10px;margin-left:2px}.filter-tab.active .cnt{background:rgba(255,255,255,.55)}body.dark .filter-tab.active .cnt{background:rgba(255,255,255,.25)}
 .filter-tab svg{width:13px;height:13px;flex-shrink:0;vertical-align:-2px}
 .cat-badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:10px;display:inline-block;margin-top:2px}
-.cat-Family{background:#E8FDF2;color:#0A8A5A;border:1px solid #C8F2DC}.cat-Friends{background:#E8F0FF;color:#3B5BDB;border:1px solid #C8D6FF}.cat-Others{background:#F1F3F5;color:#495057;border:1px solid #DEE2E6}
-body.dark .cat-Family{background:rgba(34,211,238,.15);color:#67E8F9;border:1px solid rgba(34,211,238,.3)}body.dark .cat-Friends{background:rgba(139,92,246,.18);color:#C4B5FD;border:1px solid rgba(139,92,246,.3)}body.dark .cat-Others{background:rgba(255,255,255,.1);color:#CBD5E1;border:1px solid rgba(255,255,255,.15)}
+.cat-Family{background:#E8FDF2;color:#0A8A5A;border:1px solid #C8F2DC}.cat-Friends{background:#E8F0FF;color:#3B5BDB;border:1px solid #C8D6FF}
+body.dark .cat-Family{background:rgba(34,211,238,.15);color:#67E8F9;border:1px solid rgba(34,211,238,.3)}body.dark .cat-Friends{background:rgba(139,92,246,.18);color:#C4B5FD;border:1px solid rgba(139,92,246,.3)}
 #familyList{max-height:52vh;overflow-y:auto;padding-right:2px}
 .contact{background:var(--card2);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:20px;padding:11px 12px;margin:0 0 8px;box-shadow:0 8px 18px var(--shadow), inset 0 1px 0 rgba(255,255,255,.3)}
 .contact-top{display:flex;align-items:center;gap:10px}
@@ -172,6 +179,10 @@ body.dark .footer{background:rgba(11,15,30,.85);border-top:1px solid rgba(255,25
 <div class="debug-box" id="debugBox">Presence: Connecting...</div>
 <div class="last-call" id="lastCallBox"></div>
 </div>
+<div class="main-tabs" id="mainTabs" style="display:none">
+<button class="main-tab active" id="tabAddFriends" onclick="showMainTab('friends')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Add Friends <span class="tab-count" id="tabFriendsCount">0</span></button>
+<button class="main-tab" id="tabHistory" onclick="showMainTab('history')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Call History <span class="tab-count" id="tabHistoryCount">0</span></button>
+</div>
 <div class="card" id="addCard" style="display:none">
 <div class="card-title"><span class="title-left"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Add Members</span><div class="add-header-actions"><button class="mini-icon" onclick="forceRefresh()" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><button class="mini-icon" onclick="openAddPopup()" title="Add Member"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><span class="badge" id="famCount">0 Online</span></div></div>
 <p class="card-sub">Ab Add = Request jayegi • Samne wala Accept karega tabhi Add hoga</p>
@@ -188,8 +199,8 @@ body.dark .footer{background:rgba(11,15,30,.85);border-top:1px solid rgba(255,25
 </div>
 </div>
 <div id="profilePopup" onclick="if(event.target===this) closeProfilePopup()"><div class="popup-sheet"><div class="popup-handle"></div><div class="popup-profile"><div class="pp-pic" id="popupPic">M</div><div class="pp-name" id="popupName">Mohammed</div><div class="pp-num" id="popupNumber">-</div></div><button class="popup-opt" onclick="closeProfilePopup(); document.getElementById('picInput').click()"><span class="opt-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span><span style="flex:1;text-align:left">Photo Change Karo<small>Crop karke lagao</small></span><span>›</span></button><button class="popup-opt" onclick="closeProfilePopup(); removeMyPic()"><span class="opt-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="#E74C3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span><span style="flex:1;text-align:left">Photo Delete Karo</span><span>›</span></button><button class="popup-opt" onclick="closeProfilePopup(); copyMyNumber()"><span class="opt-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span><span style="flex:1;text-align:left">Number Copy Karo</span><span>›</span></button><button class="popup-opt" onclick="closeProfilePopup()"><span class="opt-icon grey"><svg viewBox="0 0 24 24" fill="none" stroke="#6B7F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span><span style="flex:1;text-align:left">Close</span><span>›</span></button></div></div>
-<div id="addPopup" onclick="if(event.target===this) closeAddPopup()"><div class="popup-sheet"><div class="popup-handle"></div><h3 class="popup-title">Add Member - Request Bhejo</h3><p class="popup-sub">Request jayegi • Accept hone par Add hoga</p><input id="famName" placeholder="Naam - Abbu"><input id="famNumber" type="tel" placeholder="Unka Number"><select id="famCategory"><option value="Family">Family</option><option value="Friends">Friends</option><option value="Others">Others</option></select><button class="btn btn-green" onclick="sendFriendRequest()">Request Bhejo</button><button class="btn btn-white" onclick="closeAddPopup()">Cancel</button></div></div>
-<div id="editPopup" onclick="if(event.target===this) closeEditPopup()"><div class="popup-sheet"><div class="popup-handle"></div><h3 class="popup-title">Edit Contact</h3><p class="popup-sub">Naam / Number / Category badlo</p><input id="editName" placeholder="Naam"><input id="editNumber" type="tel" placeholder="Number"><select id="editCategory"><option value="Family">Family</option><option value="Friends">Friends</option><option value="Others">Others</option></select><button class="btn btn-green" onclick="saveEdit()">Save Karo</button><button class="btn btn-white" onclick="closeEditPopup()">Cancel</button></div></div>
+<div id="addPopup" onclick="if(event.target===this) closeAddPopup()"><div class="popup-sheet"><div class="popup-handle"></div><h3 class="popup-title">Add Member - Request Bhejo</h3><p class="popup-sub">Request jayegi • Accept hone par Add hoga</p><input id="famName" placeholder="Naam - Abbu"><input id="famNumber" type="tel" placeholder="Unka Number"><select id="famCategory"><option value="Family">Family</option><option value="Friends">Friends</option></select><button class="btn btn-green" onclick="sendFriendRequest()">Request Bhejo</button><button class="btn btn-white" onclick="closeAddPopup()">Cancel</button></div></div>
+<div id="editPopup" onclick="if(event.target===this) closeEditPopup()"><div class="popup-sheet"><div class="popup-handle"></div><h3 class="popup-title">Edit Contact</h3><p class="popup-sub">Naam / Number / Category badlo</p><input id="editName" placeholder="Naam"><input id="editNumber" type="tel" placeholder="Number"><select id="editCategory"><option value="Family">Family</option><option value="Friends">Friends</option></select><button class="btn btn-green" onclick="saveEdit()">Save Karo</button><button class="btn btn-white" onclick="closeEditPopup()">Cancel</button></div></div>
 <div id="cropPopup"><div class="popup-sheet"><div class="popup-handle"></div><h3 class="popup-title">Photo Crop Karo</h3><p class="popup-sub">Photo ko Drag karo • Slider se Zoom karo • Phir Set dabao</p><div id="cropBox"><img id="cropImg"><div class="crop-grid"></div></div><label style="font-size:12px;font-weight:700">Zoom</label><input type="range" id="cropZoom" min="50" max="300" value="100" oninput="applyCrop()"><div style="display:flex;gap:8px"><button class="btn btn-white" onclick="closeCropPopup()" style="flex:1">Cancel</button><button class="btn btn-green" onclick="confirmCrop()" style="flex:1">Set Photo</button></div></div></div>
 <div id="requestPopup"><div class="popup-sheet"><div class="popup-handle"></div><h3 class="popup-title">New Friend Request</h3><div style="text-align:center"><div class="pp-pic" id="reqPic" style="width:80px;height:80px;border-radius:20px;margin:0 auto;background:linear-gradient(135deg,#25D366,#0AC47A);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff">?</div><h3 id="reqName" style="margin:10px 0 2px">Unknown</h3><p id="reqNumber" style="margin:0;color:var(--sub);font-size:13px">-</p><p id="reqCat" style="margin:6px 0 0"><span class="cat-badge cat-Family">Family</span></p><p style="font-size:12px;color:var(--sub)">Tumhe Add karna chahta hai</p></div><div style="display:flex;gap:8px"><button class="btn btn-white" onclick="respondRequest(false)" style="flex:1;color:#E74C3C">Reject</button><button class="btn btn-green" onclick="respondRequest(true)" style="flex:1">Accept</button></div></div></div>
 <div class="footer"><div class="f-line"></div><b>Designed & Developed by: Mohammad Firoz Alam</b><br><span>Family Call • Your Family-Friend Calling Application</span></div>
@@ -210,9 +221,20 @@ let cropState={img:null,scale:1,x:0,y:0,imgW:0,imgH:0,startX:0,startY:0,dragX:0,
 let isSpeakerOn=true,ringAudioCtx=null,ringOscTimer=null,audioUnlocked=false;
 let isPresenceStarting=false,lastPresenceStart=0,keepScreenOn=false,lastPublishTime=0,reconnectLogged=false;
 let myVideoDragging=false,mvStartX=0,mvStartY=0,mvOrigX=0,mvOrigY=0;
+let mainTabCurrent='friends';
 function applyTheme(){let t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');document.getElementById('themeIconSun').style.display=t==='dark'?'none':'block';document.getElementById('themeIconMoon').style.display=t==='dark'?'block':'none';document.documentElement.style.background=t==='dark'?'#0B0F1E':'#E8FDF2';}
 function toggleTheme(){let cur=localStorage.getItem('theme')||'light';localStorage.setItem('theme',cur==='dark'?'light':'dark');applyTheme();}
 applyTheme();
+function showMainTab(tab){
+  mainTabCurrent=tab;
+  document.getElementById('tabAddFriends').classList.toggle('active',tab==='friends');
+  document.getElementById('tabHistory').classList.toggle('active',tab==='history');
+  document.getElementById('addCard').style.display=tab==='friends'?'block':'none';
+  document.getElementById('historyCard').style.display=tab==='history'?'block':'none';
+  document.getElementById('tabFriendsCount').innerText=getFamily().length;
+  document.getElementById('tabHistoryCount').innerText=getLogs().length;
+  if(tab==='history') renderCallLogs();
+}
 function detectAutoQuality(){
   let conn=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
   let type=conn?conn.effectiveType||'4g':'4g';
@@ -272,7 +294,8 @@ function applyBitrate(call){
 }
 function getFamily(){try{return JSON.parse(localStorage.getItem('family_v2')||'[]');}catch(e){return[];}}
 function saveFamily(f){localStorage.setItem('family_v2',JSON.stringify(f));}
-let family=getFamily();family=family.map(f=>({category:f.category==='Office'?'Others':(f.category||'Family'),...f,category:f.category==='Office'?'Others':(f.category||'Family')}));saveFamily(family);
+function normalizeCategory(c){ if(c==='Friends') return 'Friends'; return 'Family'; }
+let family=getFamily();family=family.map(f=>({category:normalizeCategory(f.category),name:f.name,number:f.number}));saveFamily(family);
 function getPending(){try{return JSON.parse(localStorage.getItem('pending_req')||'[]');}catch(e){return[];}}
 function savePending(p){localStorage.setItem('pending_req',JSON.stringify(p));}
 function getLogs(){try{return JSON.parse(localStorage.getItem('call_logs_v1')||'[]');}catch(e){return[];}}
@@ -282,11 +305,11 @@ function openProfilePopup(){document.getElementById('popupName').innerText=myNam
 function closeProfilePopup(){document.getElementById('profilePopup').classList.remove('show');}
 function openAddPopup(){document.getElementById('addPopup').classList.add('show');}
 function closeAddPopup(){document.getElementById('addPopup').classList.remove('show');}
-function openEditPopup(num){let f=getFamily().find(x=>x.number===num);if(!f)return;editOldNumber=num;document.getElementById('editName').value=f.name;document.getElementById('editNumber').value=f.number;document.getElementById('editCategory').value=f.category||'Family';document.getElementById('editPopup').classList.add('show');}
+function openEditPopup(num){let f=getFamily().find(x=>x.number===num);if(!f)return;editOldNumber=num;document.getElementById('editName').value=f.name;document.getElementById('editNumber').value=f.number;document.getElementById('editCategory').value=normalizeCategory(f.category);document.getElementById('editPopup').classList.add('show');}
 function closeEditPopup(){document.getElementById('editPopup').classList.remove('show');}
-function saveEdit(){let n=document.getElementById('editName').value.trim();let num=document.getElementById('editNumber').value.trim();let cat=document.getElementById('editCategory').value||'Family';if(!n||!num){alert('Naam aur Number daalo');return;}let fam=getFamily();if(num!==editOldNumber&&fam.some(f=>f.number===num)){alert('Ye number pehle se add hai!');return;}fam=fam.map(f=>f.number===editOldNumber?{name:n,number:num,category:cat}:f);saveFamily(fam);if(num!==editOldNumber){onlineMap[num]=onlineMap[editOldNumber]||'offline';delete onlineMap[editOldNumber];}closeEditPopup();renderFamily();showToast('Contact Update ho gaya');}
+function saveEdit(){let n=document.getElementById('editName').value.trim();let num=document.getElementById('editNumber').value.trim();let cat=normalizeCategory(document.getElementById('editCategory').value);if(!n||!num){alert('Naam aur Number daalo');return;}let fam=getFamily();if(num!==editOldNumber&&fam.some(f=>f.number===num)){alert('Ye number pehle se add hai!');return;}fam=fam.map(f=>f.number===editOldNumber?{name:n,number:num,category:cat}:f);saveFamily(fam);if(num!==editOldNumber){onlineMap[num]=onlineMap[editOldNumber]||'offline';delete onlineMap[editOldNumber];}closeEditPopup();renderFamily();showToast('Contact Update ho gaya');}
 function sendFriendRequest(){
-  let n=document.getElementById('famName').value.trim();let num=document.getElementById('famNumber').value.trim();let cat=document.getElementById('famCategory').value||'Family';
+  let n=document.getElementById('famName').value.trim();let num=document.getElementById('famNumber').value.trim();let cat=normalizeCategory(document.getElementById('famCategory').value);
   if(!n||!num){alert('Naam aur Number daalo');return;}
   if(num===myNumberGlobal){alert('Khud ko Request nahi bhej sakte');return;}
   if(getFamily().some(f=>f.number===num)){alert('Ye pehle se Added hai!');return;}
@@ -298,17 +321,17 @@ function sendFriendRequest(){
 function handleFriendRequest(data){
   if(data.action==='request'){
     if(getFamily().some(f=>f.number===data.from)){sendRequestResponse(data.from,false);return;}
-    pendingRequest=data;
+    pendingRequest=data; pendingRequest.category=normalizeCategory(data.category);
     document.getElementById('reqName').innerText=data.fromName||data.from;
     document.getElementById('reqNumber').innerText=data.from;
-    document.getElementById('reqCat').innerHTML='<span class="cat-badge cat-'+(data.category||'Family')+'">'+(data.category||'Family')+'</span>';
+    document.getElementById('reqCat').innerHTML='<span class="cat-badge cat-'+pendingRequest.category+'">'+pendingRequest.category+'</span>';
     let rp=document.getElementById('reqPic');if(data.fromPic)rp.innerHTML='<img src="'+data.fromPic+'" style="width:100%;height:100%;object-fit:cover">';else rp.innerText=(data.fromName||'F').charAt(0).toUpperCase();
     document.getElementById('requestPopup').classList.add('show');
     if(navigator.vibrate) navigator.vibrate([300,100,300]);
   } else if(data.action==='accept'){
     let pend=getPending().find(p=>p.number===data.from);
     let fam=getFamily();
-    if(!fam.some(f=>f.number===data.from)){fam.push({name:pend?pend.name:data.fromName||data.from,number:data.from,category:pend?pend.category:data.category||'Family'});saveFamily(fam);}
+    if(!fam.some(f=>f.number===data.from)){fam.push({name:pend?pend.name:data.fromName||data.from,number:data.from,category:normalizeCategory(pend?pend.category:data.category)});saveFamily(fam);}
     savePending(getPending().filter(p=>p.number!==data.from));
     renderFamily();showToast(data.fromName+' ne Request Accept kar li!');
   } else if(data.action==='reject'){
@@ -316,10 +339,10 @@ function handleFriendRequest(data){
     renderFamily();showToast(data.fromName+' ne Request Reject kar di');
   }
 }
-function sendRequestResponse(to,accept){if(mqttClient&&mqttConnected){try{mqttClient.publish('family-call-v12/request/'+to,JSON.stringify({action:accept?'accept':'reject',from:myNumberGlobal,fromName:myNameGlobal,fromPic:myPicGlobal,category:pendingRequest?pendingRequest.category:'Family'}),{retain:false});}catch(e){}}}
+function sendRequestResponse(to,accept){if(mqttClient&&mqttConnected){try{mqttClient.publish('family-call-v12/request/'+to,JSON.stringify({action:accept?'accept':'reject',from:myNumberGlobal,fromName:myNameGlobal,fromPic:myPicGlobal,category:pendingRequest?normalizeCategory(pendingRequest.category):'Family'}),{retain:false});}catch(e){}}}
 function respondRequest(accept){
   if(!pendingRequest) return;
-  if(accept){let fam=getFamily();if(!fam.some(f=>f.number===pendingRequest.from)){fam.push({name:pendingRequest.fromName||pendingRequest.from,number:pendingRequest.from,category:pendingRequest.category||'Family'});saveFamily(fam);}sendRequestResponse(pendingRequest.from,true);showToast('Request Accept - '+pendingRequest.fromName+' Add ho gaya');}
+  if(accept){let fam=getFamily();if(!fam.some(f=>f.number===pendingRequest.from)){fam.push({name:pendingRequest.fromName||pendingRequest.from,number:pendingRequest.from,category:normalizeCategory(pendingRequest.category)});saveFamily(fam);}sendRequestResponse(pendingRequest.from,true);showToast('Request Accept - '+pendingRequest.fromName+' Add ho gaya');}
   else {sendRequestResponse(pendingRequest.from,false);showToast('Request Reject kar di');}
   pendingRequest=null;document.getElementById('requestPopup').classList.remove('show');renderFamily();
 }
@@ -370,6 +393,7 @@ function initMyVideoDrag(){
 }
 function renderCallLogs(){
   let logs=getLogs();document.getElementById('historyCount').innerText=logs.length+' Calls';
+  document.getElementById('tabHistoryCount').innerText=logs.length;
   let tabs=[
     {n:'All',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'},
     {n:'Outgoing',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>'},
@@ -432,7 +456,7 @@ function login(isAuto){
   unlockAudio();let num=document.getElementById('myNumber').value.trim();let name=document.getElementById('myName').value.trim()||'Me';
   if(num.length<10){if(!isAuto)alert('Sahi number daalo');return;}
   localStorage.setItem('myNumber',num);localStorage.setItem('myName',name);localStorage.setItem('alwaysOnline','1');myNameGlobal=name;myNumberGlobal=num;
-  document.getElementById('loginCard').style.display='none';document.getElementById('profileCard').style.display='block';document.getElementById('addCard').style.display='block';document.getElementById('historyCard').style.display='block';document.getElementById('showMyName').innerText=name;document.getElementById('showMyNum').innerText=num;setMyAvatarUI();setStatusUI(false);document.getElementById('myStatus').innerText='Connecting...';renderFamily();renderCallLogs();
+  document.getElementById('loginCard').style.display='none';document.getElementById('profileCard').style.display='block';document.getElementById('mainTabs').style.display='flex';document.getElementById('addCard').style.display='block';document.getElementById('historyCard').style.display='none';document.getElementById('showMyName').innerText=name;document.getElementById('showMyNum').innerText=num;setMyAvatarUI();setStatusUI(false);document.getElementById('myStatus').innerText='Connecting...';renderFamily();renderCallLogs();showMainTab('friends');
   if(peer && peer.open){ setStatusUI(true); if(!mqttConnected) startPresence(num,name); return; }
   if(peer){try{peer.destroy();}catch(e){}}
   peer=new Peer('family-'+num);
@@ -447,22 +471,22 @@ function logout(){if(confirm('Logout karna hai?')){localStorage.removeItem('alwa
 function setFilter(cat){activeFilter=cat;renderFamily();}
 function deleteFamily(num){if(!confirm('Isko delete karna hai?'))return;family=getFamily().filter(f=>f.number!==num);saveFamily(family);delete onlineMap[num];renderFamily();}
 function renderFamily(){
-  family=getFamily().map(f=>({category:'Family',...f}));saveFamily(family);
+  family=getFamily().map(f=>({category:normalizeCategory(f.category),name:f.name,number:f.number}));saveFamily(family);
+  document.getElementById('tabFriendsCount').innerText=family.length;
   let onlineCount=family.filter(f=>onlineMap[f.number]==='online').length;
   document.getElementById('famCount').innerHTML='<span class="bdot"></span> '+onlineCount+' Online • '+family.length+' Total';
   let cats=[
     {n:'All',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'},
     {n:'Family',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'},
-    {n:'Friends',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'},
-    {n:'Others',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'}
+    {n:'Friends',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'}
   ];
-  let tabsHtml='';cats.forEach(o=>{let c=o.n;let cnt=c==='All'?family.length:family.filter(f=>(f.category||'Family')===c).length;tabsHtml+=`<button class="filter-tab ${activeFilter===c?'active':''}" onclick="setFilter('${c}')">${o.icon} ${c}<span class="cnt">${cnt}</span></button>`;});let tabsEl=document.getElementById('filterTabs');if(tabsEl)tabsEl.innerHTML=tabsHtml;
+  let tabsHtml='';cats.forEach(o=>{let c=o.n;let cnt=c==='All'?family.length:family.filter(f=>normalizeCategory(f.category)===c).length;tabsHtml+=`<button class="filter-tab ${activeFilter===c?'active':''}" onclick="setFilter('${c}')">${o.icon} ${c}<span class="cnt">${cnt}</span></button>`;});let tabsEl=document.getElementById('filterTabs');if(tabsEl)tabsEl.innerHTML=tabsHtml;
   let pend=getPending().filter(p=>p.dir==='out');let ph='';
   pend.forEach(p=>{ph+=`<div class="pending-item"><span>⏳</span><div style="flex:1"><b>${p.name}</b> • ${p.number}<br><span style="color:#E67700">Request Pending - Accept ka wait...</span></div><button class="mini-icon red" onclick="cancelPending('${p.number}')">✕</button></div>`;});
   document.getElementById('pendingList').innerHTML=ph;
-  let filtered=activeFilter==='All'?family:family.filter(f=>(f.category||'Family')===activeFilter);
+  let filtered=activeFilter==='All'?family:family.filter(f=>normalizeCategory(f.category)===activeFilter);
   let h='';if(filtered.length===0){h=`<div class="empty-box">${activeFilter==='All'?'Abhi koi Member nahi hai - Request bhejo':activeFilter+' me koi Member nahi hai'}<br>+ dabake Request Bhejo</div>`;}
-  else{filtered.forEach(f=>{let st=onlineMap[f.number]||'offline';let dotClass=st==='online'?'dot online':'dot';let statusText=st==='online'?'Abhi Online • Call kar sakte ho':(lastSeenMap[f.number]||'App band hai');let cat=f.category||'Family';let pic=getPicByNumber(f.number);let avatarHtml=pic?`<img src="${pic}">`:f.name.charAt(0).toUpperCase();h+=`<div class="contact"><div class="contact-top"><div class="avatar">${avatarHtml}<span class="${dotClass}"></span></div><div class="contact-info"><div class="contact-name">${f.name}</div><div class="contact-num">${f.number}</div><div><span class="cat-badge cat-${cat}">${cat}</span> <span class="status-line">${statusText}</span></div></div><div class="top-icons"><button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',true)" title="Video"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button><button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',false)" title="Audio"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button><button class="mini-icon edit" onclick="openEditPopup('${f.number}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></button><button class="mini-icon red" onclick="deleteFamily('${f.number}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div></div>`;});}
+  else{filtered.forEach(f=>{let st=onlineMap[f.number]||'offline';let dotClass=st==='online'?'dot online':'dot';let statusText=st==='online'?'Abhi Online • Call kar sakte ho':(lastSeenMap[f.number]||'App band hai');let cat=normalizeCategory(f.category);let pic=getPicByNumber(f.number);let avatarHtml=pic?`<img src="${pic}">`:f.name.charAt(0).toUpperCase();h+=`<div class="contact"><div class="contact-top"><div class="avatar">${avatarHtml}<span class="${dotClass}"></span></div><div class="contact-info"><div class="contact-name">${f.name}</div><div class="contact-num">${f.number}</div><div><span class="cat-badge cat-${cat}">${cat}</span> <span class="status-line">${statusText}</span></div></div><div class="top-icons"><button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',true)" title="Video"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button><button class="mini-icon" onclick="callFamily('${f.number}','${f.name}',false)" title="Audio"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button><button class="mini-icon edit" onclick="openEditPopup('${f.number}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></button><button class="mini-icon red" onclick="deleteFamily('${f.number}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div></div>`;});}
   document.getElementById('familyList').innerHTML=h;
 }
 function cancelPending(num){savePending(getPending().filter(p=>p.number!==num));renderFamily();showToast('Request Cancel kar di');}
@@ -491,3 +515,4 @@ function toggleSpeaker(){
 </script>
 </body>
 </html>
+
