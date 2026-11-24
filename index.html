@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -122,6 +123,7 @@ input[type=range]{accent-color:#25D366}
 #toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(26,43,38,.95);backdrop-filter:blur(14px);color:#fff;padding:11px 16px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap}#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .last-call{font-size:11px;background:rgba(246,255,251,.9);border:1px solid #E2F2EA;padding:6px 9px;border-radius:10px;margin-top:8px;display:none}body.dark .last-call{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff}
 .online-banner{background:linear-gradient(135deg,#E8FDF2,#D8F5E8);border:1px solid #C8F2DC;border-radius:12px;padding:8px 10px;font-size:11px;color:#0A8A5A;font-weight:700;display:flex;align-items:center;gap:6px;margin-top:8px}body.dark .online-banner{background:rgba(139,92,246,.14);border:1px solid rgba(139,92,246,.3);color:#C4B5FD}
+.keep-screen-btn{width:100%;padding:10px;border:1px solid #C8F2DC;background:#E8FDF2;color:#0A8A5A;border-radius:12px;font-size:12px;font-weight:800;cursor:pointer;margin-top:8px}body.dark .keep-screen-btn{background:rgba(139,92,246,.15);border-color:rgba(139,92,246,.3);color:#C4B5FD}.keep-screen-btn.on{background:#25D366;color:#fff;border-color:#25D366}body.dark .keep-screen-btn.on{background:linear-gradient(135deg,#8B5CF6,#22D3EE);color:#fff}
 #callLogList{max-height:48vh;overflow-y:auto;padding-right:2px}
 .log-item{display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:10px 11px;margin:0 0 8px;box-shadow:0 6px 14px var(--shadow)}
 .log-item .log-check{width:18px;height:18px;accent-color:#25D366;flex-shrink:0;cursor:pointer}
@@ -160,6 +162,8 @@ body.dark .footer{background:rgba(11,15,30,.85);border-top:1px solid rgba(255,25
 </div>
 <div style="margin-top:10px"><b style="font-size:12px">📶 Data Saver - Kam Data me Call</b><p style="font-size:11px;color:var(--sub);margin:2px 0 0">Low = 60-70% Data bachega • Video 320p</p><div class="data-saver" id="dataSaverBtns"><button onclick="setDataSaver('low')" data-mode="low">Low Data</button><button onclick="setDataSaver('balanced')" data-mode="balanced">Balanced</button><button onclick="setDataSaver('hd')" data-mode="hd">HD</button></div></div>
 <div class="online-banner"><span style="width:8px;height:8px;border-radius:50%;background:#00D68F;box-shadow:0 0 8px #00D68F;display:inline-block"></span> Always Online ON</div>
+<button class="keep-screen-btn" id="keepScreenBtn" onclick="toggleKeepScreen()">🔒 Screen ON Rakho - Call ke liye</button>
+<p style="font-size:10px;color:var(--sub);margin:4px 0 0;text-align:center">Screen Band hogi to Call nahi aayega. Call ka wait hai to ye ON rakho.</p>
 <div class="debug-box" id="debugBox">Presence: Connecting...</div>
 <div class="last-call" id="lastCallBox"></div>
 </div>
@@ -199,7 +203,7 @@ let noAnswerTimer=null,ringingStartTime=0,activeFilter='All',historyFilter='All'
 let dataSaverMode=localStorage.getItem('dataSaver')||'balanced';
 let cropState={img:null,scale:1,x:0,y:0,imgW:0,imgH:0,startX:0,startY:0,dragX:0,dragY:0,dragging:false};
 let isSpeakerOn=true,ringAudioCtx=null,ringOscTimer=null,audioUnlocked=false;
-let isPresenceStarting=false,lastPresenceStart=0;
+let isPresenceStarting=false,lastPresenceStart=0,keepScreenOn=false;
 function applyTheme(){let t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');document.getElementById('themeIconSun').style.display=t==='dark'?'none':'block';document.getElementById('themeIconMoon').style.display=t==='dark'?'block':'none';document.documentElement.style.background=t==='dark'?'#0B0F1E':'#E8FDF2';}
 function toggleTheme(){let cur=localStorage.getItem('theme')||'light';localStorage.setItem('theme',cur==='dark'?'light':'dark');applyTheme();}
 applyTheme();
@@ -311,8 +315,18 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPro
 function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBtn').style.display='none';});}else{alert('Chrome me 3 dot > Add to Home screen dabao');}}
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(()=>{}).catch(()=>{});}
 async function requestWakeLock(){try{if('wakeLock' in navigator){wakeLock=await navigator.wakeLock.request('screen');}}catch(e){}}
+async function toggleKeepScreen(){
+  keepScreenOn=!keepScreenOn;
+  let btn=document.getElementById('keepScreenBtn');
+  if(keepScreenOn){
+    try{ wakeLock=await navigator.wakeLock.request('screen'); btn.innerText='✅ Screen ON Hai - Band nahi hogi'; btn.classList.add('on'); showToast('Screen ab Band nahi hogi'); }catch(e){ showToast('Is Mobile me Screen Lock support nahi hai'); keepScreenOn=false; }
+  } else {
+    try{ if(wakeLock) await wakeLock.release(); }catch(e){}
+    btn.innerText='🔒 Screen ON Rakho - Call ke liye'; btn.classList.remove('on');
+  }
+}
 function keepOnline(){if(myNumberGlobal&&mqttClient&&mqttConnected){publishOnline(myNumberGlobal,myNameGlobal);}if('serviceWorker' in navigator&&navigator.serviceWorker.controller){navigator.serviceWorker.controller.postMessage({type:'KEEP_ONLINE',number:myNumberGlobal,name:myNameGlobal,pic:myPicGlobal});}}
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){keepOnline();requestWakeLock();}else{keepOnline();}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){keepOnline();if(keepScreenOn) requestWakeLock();}else{keepOnline();}});
 window.addEventListener('online',()=>{keepOnline();if(peer&&peer.disconnected)try{peer.reconnect();}catch(e){}});
 window.addEventListener('focus',()=>{keepOnline();});
 setInterval(()=>{keepOnline();},20000);
@@ -371,7 +385,7 @@ function startPresence(myNum,myName){
   let clientId='fam-'+myNum+'-'+Math.random().toString(36).substr(2,6);logDebug('Presence connect ho raha hai...');
   try{if(mqttClient)try{mqttClient.end(true);}catch(e){}}catch(e){}
   mqttClient=mqtt.connect('wss://broker.emqx.io:8084/mqtt',{clientId:clientId,keepalive:60,clean:true,reconnectPeriod:5000,will:{topic:'family-call-v12/presence/'+myNum,payload:JSON.stringify({status:'offline',name:myName,pic:''}),retain:true}});
-  mqttClient.on('connect',()=>{isPresenceStarting=false;mqttConnected=true;logDebug('Always Online - ID: '+myNum);mqttClient.subscribe('family-call-v12/presence/#');mqttClient.subscribe('family-call-v12/call/'+myNum);mqttClient.subscribe('family-call-v12/request/'+myNum);publishOnline(myNum,myName);requestWakeLock();if(heartbeatTimer)clearInterval(heartbeatTimer);heartbeatTimer=setInterval(()=>{publishOnline(myNum,myName);},20000);if(cleanupTimer)clearInterval(cleanupTimer);cleanupTimer=setInterval(()=>{let now2=Date.now();family=getFamily();family.forEach(f=>{if(lastPingMap[f.number]&&(now2-lastPingMap[f.number]>70000)){if(onlineMap[f.number]!=='offline'){onlineMap[f.number]='offline';lastSeenMap[f.number]='App band hai';renderFamily();}}});},10000);});
+  mqttClient.on('connect',()=>{isPresenceStarting=false;mqttConnected=true;logDebug('Always Online - ID: '+myNum);mqttClient.subscribe('family-call-v12/presence/#');mqttClient.subscribe('family-call-v12/call/'+myNum);mqttClient.subscribe('family-call-v12/request/'+myNum);publishOnline(myNum,myName);requestWakeLock();if(heartbeatTimer)clearInterval(heartbeatTimer);heartbeatTimer=setInterval(()=>{publishOnline(myNum,myName);},20000);if(cleanupTimer)clearInterval(cleanupTimer);cleanupTimer=setInterval(()=>{let now2=Date.now();family=getFamily();family.forEach(f=>{if(lastPingMap[f.number]&&(now2-lastPingMap[f.number]>180000)){if(onlineMap[f.number]!=='offline'){onlineMap[f.number]='offline';lastSeenMap[f.number]='App band hai';renderFamily();}}});},10000);});
   mqttClient.on('message',(topic,payload)=>{try{
     if(topic.indexOf('/request/')!==-1){let d=JSON.parse(payload.toString());if(d.from!==myNum)handleFriendRequest(d);return;}
     if(topic.indexOf('/call/')!==-1){let d=JSON.parse(payload.toString());if(d.from!==myNum)handleCallSignal(d);return;}
