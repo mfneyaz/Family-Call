@@ -5,8 +5,8 @@
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0B0F1E",
-  "theme_color": "#0B0F1E",
+  "background_color": "#E8FDF2",
+"theme_color": "#E8FDF2",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/724/724715.png",
