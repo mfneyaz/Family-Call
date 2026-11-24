@@ -134,7 +134,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 </div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 <script>
 let peer, myStream, currentCall, incomingCall, isMuted=false, isVideoCall=true, deferredPrompt=null;
 let onlineMap = {}, lastSeenMap = {}, lastPingMap = {};
@@ -165,22 +165,44 @@ function testMic(){
   navigator.mediaDevices.getUserMedia({video:false, audio:true}).then(s=>{ document.getElementById('micStatus').innerText='✅ Mic Sahi Hai!'; s.getTracks().forEach(t=>t.stop()); }).catch(e=>{ document.getElementById('micStatus').innerText='❌ Mic Block Hai!'; });
 }
 
-// === MQTT PRESENCE - YEHI ASLI ONLINE SYSTEM HAI ===
+// === MQTT.JS PRESENCE - NAYI LIBRARY, PAKKA LOAD HOGI ===
 function startPresence(myNum, myName){
   myNumberGlobal=myNum;
-  // Har device ka alag clientId - warna ek dusre ko kick karega
+  if(typeof mqtt === 'undefined'){
+    logDebug('MQTT library load nahi hui, page refresh karo');
+    setTimeout(()=>{ startPresence(myNum, myName); }, 3000);
+    return;
+  }
   let clientId = 'fam-'+myNum+'-'+Math.random().toString(36).substr(2,6);
-  try{
-    mqttClient = new Paho.MQTT.Client('broker.emqx.io', 8084, '/mqtt', clientId);
-  }catch(e){ logDebug('MQTT load nahi hua'); return; }
-  mqttClient.onConnectionLost = (r)=>{
-    mqttConnected=false; logDebug('Presence disconnected, retry...');
-    setTimeout(()=>{ startPresence(myNum, myName); }, 4000);
-  };
-  mqttClient.onMessageArrived = (msg)=>{
+  logDebug('Presence connect ho raha hai...');
+  try{ if(mqttClient) try{mqttClient.end(true);}catch(e){} }catch(e){}
+  mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
+    clientId: clientId,
+    keepalive: 15,
+    clean: true,
+    will: { topic: 'family-call-v12/presence/'+myNum, payload: JSON.stringify({status:'offline', name:myName}), retain: true }
+  });
+  mqttClient.on('connect', ()=>{
+    mqttConnected=true;
+    logDebug('Presence Connected ✅ - ID: '+myNum);
+    mqttClient.subscribe('family-call-v12/presence/#');
+    publishOnline(myNum, myName);
+    if(heartbeatTimer) clearInterval(heartbeatTimer);
+    heartbeatTimer=setInterval(()=>{ publishOnline(myNum, myName); }, 5000);
+    if(cleanupTimer) clearInterval(cleanupTimer);
+    cleanupTimer=setInterval(()=>{
+      let now=Date.now();
+      family=getFamily();
+      family.forEach(f=>{
+        if(lastPingMap[f.number] && (now-lastPingMap[f.number] > 15000)){
+          if(onlineMap[f.number]!=='offline'){ onlineMap[f.number]='offline'; lastSeenMap[f.number]='App band hai'; renderFamily(); }
+        }
+      });
+    }, 5000);
+  });
+  mqttClient.on('message', (topic, payload)=>{
     try{
-      let topic = msg.destinationName;
-      let data = JSON.parse(msg.payloadString);
+      let data = JSON.parse(payload.toString());
       let num = topic.split('/').pop();
       if(num===myNum) return;
       if(data.status==='online'){
@@ -190,55 +212,20 @@ function startPresence(myNum, myName){
       }
       renderFamily();
     }catch(e){}
-  };
-  let will = new Paho.MQTT.Message(JSON.stringify({status:'offline', name:myName}));
-  will.destinationName = 'family-call-v12/presence/'+myNum;
-  will.retained = true;
-  mqttClient.connect({
-    useSSL:true, timeout:5, keepAliveInterval:15, willMessage:will,
-    onSuccess: ()=>{
-      mqttConnected=true; logDebug('Presence Connected ✅ - ID: '+myNum);
-      mqttClient.subscribe('family-call-v12/presence/#');
-      // Apna Online bhejo
-      let m = new Paho.MQTT.Message(JSON.stringify({status:'online', name:myName}));
-      m.destinationName='family-call-v12/presence/'+myNum; m.retained=true;
-      mqttClient.send(m);
-      // Har 5 sec me heartbeat
-      if(heartbeatTimer) clearInterval(heartbeatTimer);
-      heartbeatTimer=setInterval(()=>{
-        if(mqttConnected){
-          let hb = new Paho.MQTT.Message(JSON.stringify({status:'online', name:myName}));
-          hb.destinationName='family-call-v12/presence/'+myNum; hb.retained=true;
-          try{mqttClient.send(hb);}catch(e){}
-        }
-      }, 5000);
-      // Jo 15 sec se heartbeat nahi bheja wo Offline
-      if(cleanupTimer) clearInterval(cleanupTimer);
-      cleanupTimer=setInterval(()=>{
-        let now=Date.now();
-        family=getFamily();
-        family.forEach(f=>{
-          if(lastPingMap[f.number] && (now-lastPingMap[f.number] > 15000)){
-            if(onlineMap[f.number]!=='offline'){ onlineMap[f.number]='offline'; lastSeenMap[f.number]='App band hai'; renderFamily(); }
-          }
-        });
-      }, 5000);
-      // Dobara apna status sabko bhejo taaki dusra turant Online dekhe
-      setTimeout(()=>{ renderFamily(); }, 1000);
-    },
-    onFailure: ()=>{ logDebug('Presence fail, retry...'); setTimeout(()=>{ startPresence(myNum, myName); }, 4000); }
   });
+  mqttClient.on('error', ()=>{ logDebug('Presence error, retry...'); });
+  mqttClient.on('close', ()=>{ mqttConnected=false; logDebug('Presence disconnected, retry...'); });
+  mqttClient.on('reconnect', ()=>{ logDebug('Presence reconnect ho raha hai...'); });
+}
+function publishOnline(num, name){
+  if(mqttClient && mqttConnected){
+    try{ mqttClient.publish('family-call-v12/presence/'+num, JSON.stringify({status:'online', name:name||'Me'}), {retain:true}); }catch(e){}
+  }
 }
 function forceRefresh(){
   family=getFamily();
-  family.forEach(f=>{ if(!lastPingMap[f.number]) onlineMap[f.number]='offline'; });
   renderFamily();
-  // Apna Online dobara bhejo
-  if(mqttClient && mqttConnected){
-    let m = new Paho.MQTT.Message(JSON.stringify({status:'online', name:localStorage.getItem('myName')||'Me'}));
-    m.destinationName='family-call-v12/presence/'+myNumberGlobal; m.retained=true;
-    try{mqttClient.send(m);}catch(e){}
-  }
+  publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me');
   alert('Refresh ho gaya ✅ - 5 sec wait karo');
 }
 
@@ -277,7 +264,7 @@ function login(isAuto){
 function copyMyNumber(){ let n=localStorage.getItem('myNumber'); navigator.clipboard.writeText(n); alert('Number copy ho gaya: '+n); }
 function logout(){
   if(confirm('Logout karna hai?')){
-    if(mqttClient && mqttConnected){ let m=new Paho.MQTT.Message(JSON.stringify({status:'offline'})); m.destinationName='family-call-v12/presence/'+myNumberGlobal; m.retained=true; try{mqttClient.send(m);}catch(e){} }
+    if(mqttClient && mqttConnected){ try{mqttClient.publish('family-call-v12/presence/'+myNumberGlobal, JSON.stringify({status:'offline'}), {retain:true});}catch(e){} }
     localStorage.removeItem('myNumber'); localStorage.removeItem('myName'); if(peer) try{peer.destroy();}catch(e){} location.reload();
   }
 }
