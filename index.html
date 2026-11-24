@@ -69,7 +69,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 .ctrl.red{background:linear-gradient(135deg,#ff6b6b,#e74c3c);color:#fff}
 .ctrl.active{background:linear-gradient(135deg,#ffc107,#ff9800);color:#fff}
 #incoming{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(15px);z-index:100;flex-direction:column;align-items:center;justify-content:center;color:#fff}
-#incoming .in-pic{width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(15px);border:3px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;font-size:55px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+#incoming .in-pic{width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(15px);border:3px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;font-size:55px;overflow:hidden}
 #incoming .in-pic img{width:100%;height:100%;object-fit:cover}
 #installBtn{display:none}
 .badge{background:rgba(255,255,255,.30);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5);padding:5px 11px;border-radius:20px;font-size:12px}
@@ -146,7 +146,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 <audio id="remoteAudio" autoplay playsinline></audio>
 <video id="myVideo" autoplay muted playsinline></video>
 <div id="audioUI"><div class="bigAvatar" id="audioBigPic">🎧</div><h2 id="audioName" style="margin:14px 0 4px">Family</h2><p id="audioNumber" style="margin:0;opacity:.85;font-size:13px"></p><p style="margin:8px 0">Audio Call Chal Rahi Hai...</p><p style="font-size:40px;margin:6px 0">🎙️ 🔊</p><p id="callTimer" style="font-size:18px;font-weight:700">Ringing...</p></div>
-<div class="call-top"><div class="call-pic" id="callTopPic">F</div><h2 id="callName" style="margin:0">Family</h2><p id="callNumber" style="margin:2px 0 0;font-size:12px;opacity:.85"></p><p id="callStatus" style="opacity:.8;margin:4px 0 0">Connecting...</p><p id="callTimerTop" style="font-size:15px;font-weight:700;margin:4px 0 0">Ringing...</p></div>
+<div class="call-top" id="callTop"><div class="call-pic" id="callTopPic">F</div><h2 id="callName" style="margin:0">Family</h2><p id="callNumber" style="margin:2px 0 0;font-size:12px;opacity:.85"></p><p id="callStatus" style="opacity:.8;margin:4px 0 0">Connecting...</p><p id="callTimerTop" style="font-size:15px;font-weight:700;margin:4px 0 0">Ringing...</p></div>
 <div class="call-controls"><button class="ctrl" id="muteBtn" onclick="toggleMute()">🎤</button><button class="ctrl" onclick="toggleSpeaker()">🔊</button><button class="ctrl red" onclick="endCall()">📞</button></div>
 </div>
 
@@ -183,16 +183,13 @@ let family = getFamily();
 window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='block'; });
 function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao'); } }
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
-// === NAAM NIKALNA - NUMBER KI JAGAH NAAM ===
 function getNameByNumber(num){
   if(!num) return 'Family';
-  // Pehle Family List me dekho
   let f = getFamily().find(x=>x.number===num);
   if(f) return f.name;
-  // Phir MQTT se aaya naam dekho
   if(nameMap[num]) return nameMap[num];
   if(num===myNumberGlobal) return myNameGlobal;
-  return num; // Naam nahi mila to number hi dikhao
+  return num;
 }
 function getPicByNumber(num){
   if(!num) return '';
@@ -202,14 +199,9 @@ function getPicByNumber(num){
 }
 function setMyAvatarUI(){
   let av=document.getElementById('myAvatar');
-  let letter=document.getElementById('myAvatarLetter');
-  if(myPicGlobal){
-    av.innerHTML='<img src="'+myPicGlobal+'"><span class="cam">📷 Photo</span>';
-  } else {
-    av.innerHTML='<span id="myAvatarLetter">'+(myNameGlobal.charAt(0).toUpperCase()||'M')+'</span><span class="cam">📷 Photo</span>';
-  }
+  if(myPicGlobal){ av.innerHTML='<img src="'+myPicGlobal+'"><span class="cam">📷 Photo</span>'; }
+  else { av.innerHTML='<span id="myAvatarLetter">'+(myNameGlobal.charAt(0).toUpperCase()||'M')+'</span><span class="cam">📷 Photo</span>'; }
 }
-// === PROFILE PIC - CHHOTI KARKE SAVE KARO ===
 function changeMyPic(e){
   let file=e.target.files[0]; if(!file) return;
   let reader=new FileReader();
@@ -219,7 +211,6 @@ function changeMyPic(e){
       let canvas=document.createElement('canvas');
       let size=200; canvas.width=size; canvas.height=size;
       let ctx=canvas.getContext('2d');
-      // Center crop square
       let s=Math.min(img.width, img.height);
       let sx=(img.width-s)/2, sy=(img.height-s)/2;
       ctx.drawImage(img, sx, sy, s, s, 0, 0, size, size);
@@ -234,9 +225,7 @@ function changeMyPic(e){
   };
   reader.readAsDataURL(file);
 }
-function removeMyPic(){
-  myPicGlobal=''; localStorage.removeItem('myPic'); setMyAvatarUI(); publishOnline(myNumberGlobal, myNameGlobal); showToast('Photo hata di');
-}
+function removeMyPic(){ myPicGlobal=''; localStorage.removeItem('myPic'); setMyAvatarUI(); publishOnline(myNumberGlobal, myNameGlobal); showToast('Photo hata di'); }
 function setStatusUI(isOnline){
   let top = document.getElementById('topStatus');
   let mid = document.getElementById('myStatus');
@@ -265,7 +254,6 @@ function showCallEnded(type, name){
   let talkSec = getTalkDuration(); stopCallTimer();
   let durText = formatTime(talkSec);
   let displayName = getNameByNumber(lastCallNumber) || name;
-  // Ended popup me bhi photo
   let pic = getPicByNumber(lastCallNumber);
   let iconEl=document.getElementById('endedIcon');
   if(pic) iconEl.innerHTML='<img src="'+pic+'">';
@@ -373,7 +361,6 @@ function login(isAuto){
     lastCallName = getNameByNumber(callerNum);
     lastCallIsVideo = isV;
     resetCallTimers();
-    // Incoming me NAAM + PHOTO
     document.getElementById('inName').innerText=lastCallName;
     document.getElementById('inNumber').innerText=callerNum;
     let inPic = getPicByNumber(callerNum);
@@ -455,6 +442,7 @@ function callFamily(num,name,isVideo){
   if(onlineMap[num]!=='online'){ if(!confirm(name+' abhi Offline dikh raha hai, phir bhi call lagau?')) return; }
   document.getElementById('callTo').value=num;makeCall(isVideo,name);
 }
+// === FIX: Audio me upar wala band, Video me beech wala band ===
 function setupCallUI(isVideo, name, number){
   isVideoCall=isVideo;
   let displayName = getNameByNumber(number) || name || number;
@@ -463,10 +451,19 @@ function setupCallUI(isVideo, name, number){
   document.getElementById('callNumber').innerText=number;
   document.getElementById('audioName').innerText=displayName;
   document.getElementById('audioNumber').innerText=number;
-  // Call screen photo - upar chhoti + Audio me badi
   document.getElementById('callTopPic').innerHTML = pic ? '<img src="'+pic+'">' : displayName.charAt(0).toUpperCase();
   document.getElementById('audioBigPic').innerHTML = pic ? '<img src="'+pic+'">' : '🎧';
-  if(isVideo){ document.getElementById('remoteVideo').style.display='block'; document.getElementById('myVideo').style.display='block'; document.getElementById('audioUI').style.display='none'; } else { document.getElementById('remoteVideo').style.display='none'; document.getElementById('myVideo').style.display='none'; document.getElementById('audioUI').style.display='flex'; }
+  if(isVideo){
+    document.getElementById('remoteVideo').style.display='block';
+    document.getElementById('myVideo').style.display='block';
+    document.getElementById('audioUI').style.display='none';
+    document.getElementById('callTop').style.display='flex';
+  } else {
+    document.getElementById('remoteVideo').style.display='none';
+    document.getElementById('myVideo').style.display='none';
+    document.getElementById('audioUI').style.display='flex';
+    document.getElementById('callTop').style.display='none';
+  }
 }
 function handleCallEvents(call){
   call.on('stream',rs=>{
