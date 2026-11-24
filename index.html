@@ -70,7 +70,7 @@ input{width:100%;padding:14px;margin:7px 0;border:1px solid rgba(255,255,255,.6)
 #callEnded{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(15px);z-index:200;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px}
 #callEnded .ended-card{background:rgba(255,255,255,.18);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,.5);border-radius:24px;padding:28px 22px;max-width:340px;width:100%;box-shadow:0 15px 40px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.5)}
 #callEnded .ended-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.6));display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 14px}
-#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(0,0,0,.85);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.4);color:#fff;padding:12px 18px;border-radius:20px;font-size:14px;font-weight:700;z-index:300;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;box-shadow:0 8px 25px rgba(0,0,0,.3)}
+#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(0,0,0,.85);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.4);color:#fff;padding:12px 18px;border-radius:20px;font-size:14px;font-weight:700;z-index:300;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .last-call{font-size:12px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:7px 10px;border-radius:12px;margin-top:10px;display:none}
 </style>
@@ -160,8 +160,9 @@ let peer, myStream, currentCall, incomingCall, isMuted=false, isVideoCall=true, 
 let onlineMap = {}, lastSeenMap = {}, lastPingMap = {};
 let mqttClient=null, mqttConnected=false, heartbeatTimer=null, cleanupTimer=null;
 let myNumberGlobal='', myNameGlobal='Me';
-let callStartTime=0, callTimerInterval=null, lastCallName='', lastCallNumber='', lastCallIsVideo=true, callConnected=false, iEndedCall=false, endedPopupShown=false;
-let noAnswerTimer=null;
+// FIX: Ab 2 timer hain - Ringing aur Baat alag-alag
+let callStartTime=0, callConnectedTime=0, callTimerInterval=null, lastCallName='', lastCallNumber='', lastCallIsVideo=true, callConnected=false, iEndedCall=false, endedPopupShown=false;
+let noAnswerTimer=null, ringingStartTime=0;
 function getFamily(){ try{ return JSON.parse(localStorage.getItem('family_v2') || '[]'); }catch(e){ return []; } }
 function saveFamily(f){ localStorage.setItem('family_v2', JSON.stringify(f)); }
 let family = getFamily();
@@ -176,35 +177,57 @@ function setStatusUI(isOnline){
   else { top.innerText='● Offline'; mid.innerText='Offline - Internet check karo'; dot.style.background='#ff3b30'; dot.style.boxShadow='0 0 10px #ff3b30'; }
 }
 function logDebug(t){ let el=document.getElementById('debugBox'); if(el) el.innerText='Presence: '+t; }
-function showToast(msg){
-  let t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show');
-  setTimeout(()=>{ t.classList.remove('show'); }, 3500);
-}
+function showToast(msg){ let t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show'); setTimeout(()=>{ t.classList.remove('show'); }, 3500); }
 function formatTime(sec){ let m=Math.floor(sec/60), s=sec%60; return (m<10?'0'+m:m)+':'+(s<10?'0'+s:s); }
-function startCallTimer(){
-  callStartTime=Date.now(); callConnected=false;
-  if(callTimerInterval) clearInterval(callTimerInterval);
-  callTimerInterval=setInterval(()=>{ let sec=Math.floor((Date.now()-callStartTime)/1000); let f=formatTime(sec); document.getElementById('callTimer').innerText=f; document.getElementById('callTimerTop').innerText=f; }, 1000);
+// FIX: Ringing ka timer alag, Baat ka timer alag
+function resetCallTimers(){
+  callStartTime=Date.now(); ringingStartTime=Date.now(); callConnectedTime=0; callConnected=false;
+  if(callTimerInterval) clearInterval(callTimerInterval); callTimerInterval=null;
+  document.getElementById('callTimer').innerText='Ringing...';
+  document.getElementById('callTimerTop').innerText='Ringing...';
 }
-function stopCallTimer(){ if(callTimerInterval){ clearInterval(callTimerInterval); callTimerInterval=null; } return Math.floor((Date.now()-callStartTime)/1000); }
+function startConnectedTimer(){
+  // Call sach me connect hui - abhi se Baat ka timer chalega
+  callConnected=true; callConnectedTime=Date.now();
+  if(callTimerInterval) clearInterval(callTimerInterval);
+  callTimerInterval=setInterval(()=>{
+    let sec=Math.floor((Date.now()-callConnectedTime)/1000);
+    let f=formatTime(sec);
+    document.getElementById('callTimer').innerText=f;
+    document.getElementById('callTimerTop').innerText=f;
+  }, 1000);
+}
+function getTalkDuration(){
+  // Agar call kabhi connect hi nahi hui to Baat 00:00 hai
+  if(!callConnected || !callConnectedTime) return 0;
+  return Math.floor((Date.now()-callConnectedTime)/1000);
+}
+function stopCallTimer(){ if(callTimerInterval){ clearInterval(callTimerInterval); callTimerInterval=null; } }
 function showCallEnded(type, name){
   if(endedPopupShown) return; endedPopupShown=true;
-  let dur = stopCallTimer();
-  let durText = formatTime(dur>0?dur:0);
-  let title='', msg='', icon='📞';
-  if(type==='self'){ title='Call Khatam Ho Gayi'; msg='Aapne call kaat di'; icon='✅'; }
-  else if(type==='remote'){ title='Call Disconnected'; msg=(name||'Samne wale')+' ne call kaat di'; icon='📞'; }
-  else if(type==='rejected'){ title='Call Reject Ho Gayi'; msg=(name||'Samne wale')+' ne call reject kar di'; icon='❌'; }
-  else if(type==='missed'){ title='Missed Call'; msg='Aapne call nahi uthayi'; icon='🔕'; }
-  else if(type==='no-answer'){ title='No Answer'; msg=(name||'Samne wale')+' ne call nahi uthayi'; icon='📵'; }
-  else if(type==='network'){ title='Call Disconnected'; msg='Network ki wajah se call kat gayi'; icon='📶'; }
+  let talkSec = getTalkDuration();
+  stopCallTimer();
+  let durText = formatTime(talkSec);
+  let title='', msg='', icon='📞', durLabel='';
+  if(type==='self'){
+    if(!callConnected){ title='Call Khatam Ho Gayi'; msg='Aapne call kaat di - Call lagi hi nahi'; icon='✅'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
+    else { title='Call Khatam Ho Gayi'; msg='Aapne call kaat di'; icon='✅'; durLabel='Baat Hui: '+durText; }
+  }
+  else if(type==='remote'){
+    if(!callConnected){ title='Call Kaat Di Gayi'; msg=(name||'Samne wale')+' ne call kaat di - Call lagi hi nahi'; icon='📞'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
+    else { title='Call Disconnected'; msg=(name||'Samne wale')+' ne call kaat di'; icon='📞'; durLabel='Baat Hui: '+durText; }
+  }
+  else if(type==='rejected'){ title='Call Reject Ho Gayi'; msg=(name||'Samne wale')+' ne call reject kar di'; icon='❌'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
+  else if(type==='missed'){ title='Missed Call'; msg='Aapne call nahi uthayi'; icon='🔕'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
+  else if(type==='no-answer'){ title='No Answer'; msg=(name||'Samne wale')+' ne call nahi uthayi'; icon='📵'; durLabel='Baat Hui: 00:00 (Call lagi hi nahi)'; }
+  else if(type==='network'){ title='Call Disconnected'; msg='Network ki wajah se call kat gayi'; icon='📶'; durLabel='Baat Hui: '+durText; }
   document.getElementById('endedIcon').innerText=icon;
   document.getElementById('endedTitle').innerText=title;
   document.getElementById('endedMsg').innerText=msg;
-  document.getElementById('endedDuration').innerText='Call Duration: '+durText;
+  document.getElementById('endedDuration').innerText=durLabel;
   document.getElementById('callEnded').style.display='flex';
   let box=document.getElementById('lastCallBox');
-  if(box){ box.style.display='block'; box.innerHTML='📞 Last Call: <b>'+(name||lastCallName||'-')+'</b> • '+title+' • '+durText; }
+  if(box){ box.style.display='block'; box.innerHTML='📞 Last Call: <b>'+(name||lastCallName||'-')+'</b> • '+title+' • '+durLabel; }
   setTimeout(()=>{ closeEndedPopup(); }, 6000);
 }
 function closeEndedPopup(){ document.getElementById('callEnded').style.display='none'; }
@@ -219,33 +242,18 @@ function testMic(){
   document.getElementById('micStatus').innerText='Mic maang rahe hain... Allow dabao';
   navigator.mediaDevices.getUserMedia({video:false, audio:true}).then(s=>{ document.getElementById('micStatus').innerText='✅ Mic Sahi Hai!'; s.getTracks().forEach(t=>t.stop()); }).catch(e=>{ document.getElementById('micStatus').innerText='❌ Mic Block Hai!'; });
 }
-// === MQTT - PRESENCE + CALL-END SIGNAL DONO ===
 function sendCallSignal(toNumber, action){
   if(!mqttClient || !mqttConnected) return;
-  try{
-    mqttClient.publish('family-call-v12/call/'+toNumber, JSON.stringify({action:action, from:myNumberGlobal, fromName:myNameGlobal, time:Date.now()}), {retain:false});
-  }catch(e){}
+  try{ mqttClient.publish('family-call-v12/call/'+toNumber, JSON.stringify({action:action, from:myNumberGlobal, fromName:myNameGlobal, time:Date.now()}), {retain:false}); }catch(e){}
 }
 function handleCallSignal(data){
-  // Dusre ka signal aaya - Call kaat di / reject kar di
   let fromName = data.fromName || data.from || lastCallName;
-  // Agar main call laga raha hoon ya call me hoon, to hi react karo
   let isCalling = document.getElementById('callScreen').style.display==='flex';
   let isRinging = document.getElementById('incoming').style.display==='flex';
   if(!isCalling && !isRinging) return;
-  if(data.action==='ended'){
-    iEndedCall=true; // taaki dobara popup na aaye
-    forceEndCall(true);
-    showCallEnded('remote', fromName);
-  } else if(data.action==='rejected'){
-    iEndedCall=true;
-    forceEndCall(true);
-    showCallEnded('rejected', fromName);
-  } else if(data.action==='no-answer'){
-    iEndedCall=true;
-    forceEndCall(true);
-    showCallEnded('no-answer', fromName);
-  }
+  if(data.action==='ended'){ iEndedCall=true; forceEndCall(true); showCallEnded('remote', fromName); }
+  else if(data.action==='rejected'){ iEndedCall=true; forceEndCall(true); showCallEnded('rejected', fromName); }
+  else if(data.action==='no-answer'){ iEndedCall=true; forceEndCall(true); showCallEnded('no-answer', fromName); }
 }
 function startPresence(myNum, myName){
   myNumberGlobal=myNum; myNameGlobal=myName;
@@ -257,7 +265,7 @@ function startPresence(myNum, myName){
   mqttClient.on('connect', ()=>{
     mqttConnected=true; logDebug('Presence Connected ✅ - ID: '+myNum);
     mqttClient.subscribe('family-call-v12/presence/#');
-    mqttClient.subscribe('family-call-v12/call/'+myNum); // Apne liye call signal suno
+    mqttClient.subscribe('family-call-v12/call/'+myNum);
     publishOnline(myNum, myName);
     if(heartbeatTimer) clearInterval(heartbeatTimer);
     heartbeatTimer=setInterval(()=>{ publishOnline(myNum, myName); }, 5000);
@@ -266,11 +274,7 @@ function startPresence(myNum, myName){
   });
   mqttClient.on('message', (topic, payload)=>{
     try{
-      if(topic.indexOf('/call/')!==-1){
-        let d = JSON.parse(payload.toString());
-        if(d.from!==myNum) handleCallSignal(d);
-        return;
-      }
+      if(topic.indexOf('/call/')!==-1){ let d = JSON.parse(payload.toString()); if(d.from!==myNum) handleCallSignal(d); return; }
       let data = JSON.parse(payload.toString()); let num = topic.split('/').pop(); if(num===myNum) return;
       if(data.status==='online'){ onlineMap[num]='online'; lastPingMap[num]=Date.now(); lastSeenMap[num]='Abhi Online'; } else { onlineMap[num]='offline'; lastSeenMap[num]='App band hai'; } renderFamily();
     }catch(e){}
@@ -305,6 +309,8 @@ function login(isAuto){
     incomingCall=call;
     let isV = call.metadata ? call.metadata.isVideo : true;
     lastCallName = call.peer.replace('family-',''); lastCallNumber = lastCallName; lastCallIsVideo = isV;
+    // Incoming pe bhi timer reset - abhi sirf Ringing hai, Baat nahi
+    resetCallTimers();
     document.getElementById('inName').innerText=lastCallName;
     document.getElementById('inType').innerText = isV ? '🎥 Video Call aa rahi hai...' : '🎧 Audio Call aa rahi hai...';
     document.getElementById('inIcon').innerText = isV ? '🎥' : '🎧';
@@ -385,7 +391,8 @@ function callFamily(num,name,isVideo){
 function setupCallUI(isVideo, name){ isVideoCall=isVideo; document.getElementById('callName').innerText=name; document.getElementById('audioName').innerText=name; if(isVideo){ document.getElementById('remoteVideo').style.display='block'; document.getElementById('myVideo').style.display='block'; document.getElementById('audioUI').style.display='none'; } else { document.getElementById('remoteVideo').style.display='none'; document.getElementById('myVideo').style.display='none'; document.getElementById('audioUI').style.display='flex'; } }
 function handleCallEvents(call){
   call.on('stream',rs=>{
-    callConnected=true;
+    // FIX: Yahi asli Connect hai - jab samne ki aawaz/video aayi, tabhi Timer chalega
+    startConnectedTimer();
     document.getElementById('remoteVideo').srcObject=rs;
     let a=document.getElementById('remoteAudio'); a.srcObject=rs; a.play().catch(()=>{});
     document.getElementById('callStatus').innerText = isVideoCall ? 'Video Call chal rahi hai...' : 'Audio Call chal rahi hai...';
@@ -406,14 +413,11 @@ function makeCall(isVideo,name){
   let to=document.getElementById('callTo').value.trim(); if(!to){alert('Number daalo');return;}
   lastCallName=name||to; lastCallNumber=to; lastCallIsVideo=isVideo; iEndedCall=false; callConnected=false; endedPopupShown=false;
   setupCallUI(isVideo, lastCallName); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Call laga rahe hain...';
-  startCallTimer();
-  // 45 sec me koi jawab nahi to khud hi No Answer dikhao - atka nahi rahega
+  resetCallTimers();
   if(noAnswerTimer) clearTimeout(noAnswerTimer);
   noAnswerTimer=setTimeout(()=>{
     if(document.getElementById('callScreen').style.display==='flex' && !callConnected){
-      iEndedCall=true;
-      forceEndCall(true);
-      showCallEnded('no-answer', lastCallName);
+      iEndedCall=true; forceEndCall(true); showCallEnded('no-answer', lastCallName);
     }
   }, 45000);
   navigator.mediaDevices.getUserMedia({video:isVideo, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isVideo) document.getElementById('myVideo').srcObject=s; let call=peer.call('family-'+to, s, {metadata:{isVideo:isVideo}}); handleCallEvents(call); currentCall=call; }).catch(e=>{alert('Mic/Camera Allow karo');});
@@ -423,15 +427,15 @@ function acceptCall(){
   document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause();
   iEndedCall=false; callConnected=false; endedPopupShown=false;
   setupCallUI(isV, incomingCall.peer.replace('family-','')); document.getElementById('callScreen').style.display='flex'; document.getElementById('callStatus').innerText='Connecting...';
-  startCallTimer();
+  resetCallTimers();
   navigator.mediaDevices.getUserMedia({video:isV, audio:{echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(s=>{ myStream=s; if(isV) document.getElementById('myVideo').srcObject=s; incomingCall.answer(s); handleCallEvents(incomingCall); currentCall=incomingCall; });
 }
 function rejectCall(){
   document.getElementById('incoming').style.display='none'; document.getElementById('ringTone').pause();
-  // FIX: Caller ko turant MQTT se batao ki maine reject kar di
   sendCallSignal(lastCallNumber, 'rejected');
   if(incomingCall) try{incomingCall.close();}catch(e){}
   showToast('❌ Call Reject kar di');
+  // FIX: Reject wale ke yahan Baat 00:00 hi dikhegi
   showCallEnded('missed', lastCallName);
 }
 function forceEndCall(silent){
@@ -448,7 +452,6 @@ function forceEndCall(silent){
 function endCall(){
   iEndedCall=true;
   let name = lastCallName;
-  // FIX: Samne wale ko turant MQTT se batao ki maine kaat di - chahe call lagi ho ya lag rahi ho
   sendCallSignal(lastCallNumber, 'ended');
   if(currentCall) try{currentCall.close();}catch(e){}
   forceEndCall();
