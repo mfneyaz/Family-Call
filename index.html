@@ -12,14 +12,13 @@
 *{box-sizing:border-box;font-family:'Segoe UI',Arial}
 :root{--bg1:#E8FDF2;--bg2:#D8F5E8;--bg3:#EAFBF2;--card:rgba(255,255,255,.82);--card2:rgba(255,255,255,.92);--text:#1A2B26;--sub:#6B7F76;--border:rgba(255,255,255,.95);--input:rgba(255,255,255,.9);--shadow:rgba(0,120,70,.08)}
 body.dark{--bg1:#0B0F1E;--bg2:#121A33;--bg3:#0B0F1E;--card:rgba(255,255,255,.08);--card2:rgba(255,255,255,.09);--text:#FFFFFF;--sub:#A8B3D1;--border:rgba(255,255,255,.14);--input:rgba(255,255,255,.08);--shadow:rgba(0,0,0,.4)}
-body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 35%,var(--bg3) 70%,var(--bg1) 100%);padding-bottom:68px;overflow-x:hidden;color:var(--text);transition:.3s}
+body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 35%,var(--bg3) 70%,var(--bg1) 100%);padding-bottom:72px;overflow-x:hidden;color:var(--text);transition:.3s}
 body::before{content:'';position:fixed;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,200,120,.22),transparent 70%);border-radius:50%;z-index:0}
 body.dark::before{background:radial-gradient(circle,rgba(139,92,246,.35),transparent 70%)}
 body::after{content:'';position:fixed;bottom:-60px;left:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(37,211,102,.18),transparent 70%);border-radius:50%;z-index:0}
 body.dark::after{background:radial-gradient(circle,rgba(34,211,238,.28),transparent 70%)}
-/* HEADER - WhatsApp jaisa */
-.header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.75);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);padding:12px 16px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.8)}
-body.dark .header{background:rgba(11,15,30,.75);border-bottom:1px solid rgba(255,255,255,.1)}
+.header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.75);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);padding:12px 16px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.8)}
+body.dark .header{background:rgba(11,15,30,.85);border-bottom:1px solid rgba(255,255,255,.1)}
 .logo-icon{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,#25D366,#0AC47A,#00C9FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 20px rgba(37,211,102,.4), inset 0 1px 0 rgba(255,255,255,.6);position:relative}
 body.dark .logo-icon{background:linear-gradient(135deg,#8B5CF6,#22D3EE,#A855F7);box-shadow:0 8px 22px rgba(139,92,246,.55), inset 0 1px 0 rgba(255,255,255,.6)}
 .logo-icon svg{width:25px;height:25px}
@@ -29,14 +28,12 @@ body.dark .logo-icon{background:linear-gradient(135deg,#8B5CF6,#22D3EE,#A855F7);
 .theme-toggle{width:42px;height:42px;border-radius:14px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85));backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.07), inset 0 1px 0 #fff;flex-shrink:0}
 body.dark .theme-toggle{background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.06));box-shadow:0 4px 14px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.2)}
 .theme-toggle svg{width:20px;height:20px}
-.top-pill{background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.9);padding:6px 11px;border-radius:20px;font-size:12px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;align-items:center;gap:6px}
-body.dark .top-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff}
-.top-pill .d{width:8px;height:8px;border-radius:50%;background:#00D68F;box-shadow:0 0 10px #00D68F}
-.top-pill.off .d{background:#FF5A5A;box-shadow:0 0 10px #FF5A5A}
 .container{position:relative;z-index:2;max-width:480px;margin:auto;padding:12px}
+/* USER CARD - STICKY - UPAR NAHI JAYEGA */
+#profileCard{position:sticky;top:70px;z-index:20}
 .card{background:var(--card);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid var(--border);border-radius:24px;padding:14px;margin:10px 0;box-shadow:0 10px 26px var(--shadow), inset 0 1px 0 rgba(255,255,255,.4)}
 body.dark .card{box-shadow:0 12px 32px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.12)}
-.card-title{font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:space-between;margin:0 0 2px}
+.card-title{font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:space-between;margin:0 0 2px;gap:8px}
 .card-sub{font-size:11px;color:var(--sub);margin:0 0 10px}
 input,select{width:100%;padding:12px 13px;margin:5px 0;border:1px solid #E2F2EA;background:var(--input);border-radius:14px;font-size:14px;outline:none;color:var(--text)}
 body.dark input,body.dark select{border:1px solid rgba(255,255,255,.15)}
@@ -61,15 +58,18 @@ body.dark .mini-icon.dark{background:linear-gradient(135deg,#6366F1,#8B5CF6)}
 .mini-icon.red{background:linear-gradient(135deg,#FFF5F5,#FFEAEA);border:1px solid #FFE1E1}
 body.dark .mini-icon.red{background:linear-gradient(135deg,rgba(255,90,90,.18),rgba(255,90,90,.08));border:1px solid rgba(255,90,90,.3)}
 .mini-icon.red svg{stroke:#E74C3C}
+/* ADD MEMBERS HEADER - Count ke pehle Refresh + Plus */
+.add-header-actions{display:flex;align-items:center;gap:6px}
+.add-header-actions .mini-icon{width:34px;height:34px;border-radius:11px}
+.add-header-actions .mini-icon svg{width:16px;height:16px}
 .profile-row{display:flex;align-items:center;gap:10px}
 .my-avatar{width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#25D366,#0AC47A);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;position:relative;overflow:hidden;flex-shrink:0;border:2px solid #fff;box-shadow:0 8px 18px rgba(37,211,102,.25), inset 0 1px 0 rgba(255,255,255,.5);cursor:pointer}
 body.dark .my-avatar{background:linear-gradient(135deg,#8B5CF6,#22D3EE);box-shadow:0 8px 20px rgba(139,92,246,.45), inset 0 1px 0 rgba(255,255,255,.5)}
 .my-avatar img{width:100%;height:100%;object-fit:cover}
 .my-avatar .tap-hint{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);color:#fff;display:flex;align-items:center;justify-content:center;padding:3px 0;font-size:8px;font-weight:700;letter-spacing:.3px}
-.badge{background:#E8FDF2;color:#0A8A5A;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800;display:flex;align-items:center;gap:5px}
+.badge{background:#E8FDF2;color:#0A8A5A;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800;display:flex;align-items:center;gap:5px;white-space:nowrap}
 body.dark .badge{background:rgba(139,92,246,.18);color:#C4B5FD;border:1px solid rgba(139,92,246,.3)}
-.badge .bdot{width:7px;height:7px;border-radius:50%;background:#00D68F}
-/* USER CARD RIGHT - Online + Logout */
+.badge .bdot{width:7px;height:7px;border-radius:50%;background:#00D68F;flex-shrink:0}
 .user-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
 .user-status-pill{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800;background:#E8FDF2;color:#0A8A5A;border:1px solid #C8F2DC}
 body.dark .user-status-pill{background:rgba(34,211,238,.15);color:#67E8F9;border:1px solid rgba(34,211,238,.3)}
@@ -94,7 +94,12 @@ body.dark .cat-Family{background:rgba(34,211,238,.15);color:#67E8F9;border:1px s
 body.dark .cat-Friends{background:rgba(139,92,246,.18);color:#C4B5FD;border:1px solid rgba(139,92,246,.3)}
 body.dark .cat-Office{background:rgba(251,191,36,.15);color:#FCD34D;border:1px solid rgba(251,191,36,.3)}
 body.dark .cat-Others{background:rgba(255,255,255,.1);color:#CBD5E1;border:1px solid rgba(255,255,255,.15)}
-.contact{background:var(--card2);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:20px;padding:11px 12px;margin:8px 0;box-shadow:0 8px 18px var(--shadow), inset 0 1px 0 rgba(255,255,255,.3);position:relative}
+/* CONTACT LIST - SIRF YE SCROLL HOGA */
+#familyList{max-height:52vh;overflow-y:auto;padding-right:2px;scrollbar-width:thin;scrollbar-color:#C8F2DC transparent}
+#familyList::-webkit-scrollbar{width:4px}
+#familyList::-webkit-scrollbar-thumb{background:#C8F2DC;border-radius:10px}
+body.dark #familyList::-webkit-scrollbar-thumb{background:rgba(139,92,246,.5)}
+.contact{background:var(--card2);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:20px;padding:11px 12px;margin:0 0 8px;box-shadow:0 8px 18px var(--shadow), inset 0 1px 0 rgba(255,255,255,.3);position:relative}
 .contact-top{display:flex;align-items:center;gap:10px}
 .avatar{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#D8F5E8,#B8EBD0);color:#075E54;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;position:relative;flex-shrink:0;overflow:hidden;border:2px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.05)}
 body.dark .avatar{background:linear-gradient(135deg,#8B5CF6,#22D3EE);color:#fff;border:2px solid rgba(255,255,255,.2)}
@@ -109,7 +114,6 @@ body.dark .avatar{background:linear-gradient(135deg,#8B5CF6,#22D3EE);color:#fff;
 body.dark .status-line{color:#7C8AA8}
 .empty-box{text-align:center;padding:14px;background:rgba(246,255,251,.8);border:1px dashed #C8E8D5;border-radius:16px;margin-top:8px;font-size:12px;color:#6B7F76}
 body.dark .empty-box{background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.2);color:#A8B3D1}
-/* PROFILE POPUP */
 #profilePopup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(10px);z-index:250;align-items:flex-end;justify-content:center}
 #profilePopup.show{display:flex}
 .popup-sheet{background:rgba(255,255,255,.96);backdrop-filter:blur(22px);width:100%;max-width:480px;border-radius:28px 28px 0 0;padding:12px 18px 24px;animation:slideUp .25s ease}
@@ -133,6 +137,9 @@ body.dark .popup-opt .opt-icon.grey{background:rgba(255,255,255,.12)}
 .popup-opt svg{width:19px;height:19px}
 .popup-opt small{display:block;font-weight:500;font-size:11px;color:#6B7F76}
 body.dark .popup-opt small{color:#A8B3D1}
+/* ADD MEMBER MODAL - Same popup style */
+#addPopup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(10px);z-index:250;align-items:flex-end;justify-content:center}
+#addPopup.show{display:flex}
 #callScreen{display:none;position:fixed;inset:0;background:#0A1F18;z-index:99;flex-direction:column}
 #remoteVideo{width:100%;height:100%;object-fit:cover;background:#000}
 #myVideo{width:110px;height:150px;object-fit:cover;border-radius:20px;position:absolute;top:15px;right:15px;border:2px solid #fff}
@@ -168,17 +175,16 @@ body.dark .debug-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,
 body.dark .last-call{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff}
 .online-banner{background:linear-gradient(135deg,#E8FDF2,#D8F5E8);border:1px solid #C8F2DC;border-radius:12px;padding:8px 10px;font-size:11px;color:#0A8A5A;font-weight:700;display:flex;align-items:center;gap:6px;margin-top:8px}
 body.dark .online-banner{background:rgba(139,92,246,.14);border:1px solid rgba(139,92,246,.3);color:#C4B5FD}
-/* FOOTER */
-.footer{position:fixed;bottom:0;left:0;right:0;z-index:20;background:rgba(255,255,255,.8);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid rgba(255,255,255,.9);padding:12px 16px;text-align:center}
-body.dark .footer{background:rgba(11,15,30,.85);border-top:1px solid rgba(255,255,255,.12)}
-.footer b{font-size:12px}
-.footer span{font-size:11px;color:var(--sub)}
-.footer .f-line{width:28px;height:3px;border-radius:10px;background:linear-gradient(90deg,#25D366,#0AC47A);margin:0 auto 5px}
+/* FOOTER - Chhota + Thoda Dark */
+.footer{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:20;width:calc(100% - 28px);max-width:440px;background:rgba(15,45,32,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:9px 12px;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+body.dark .footer{background:rgba(5,8,20,.92);border:1px solid rgba(139,92,246,.25);box-shadow:0 8px 22px rgba(0,0,0,.4)}
+.footer b{font-size:11.5px;color:#fff}
+.footer span{font-size:10.5px;color:rgba(255,255,255,.65)}
+.footer .f-line{width:24px;height:3px;border-radius:10px;background:linear-gradient(90deg,#25D366,#0AC47A);margin:0 auto 4px}
 body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 </style>
 </head>
 <body>
-<!-- HEADER -->
 <div class="header">
 <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.5 9a2.5 2.5 0 0 0-3.5 3.5" stroke="#fff" stroke-width="1.6"/></svg><span class="mini-dot"></span></div>
 <div style="flex:1"><h2>Family Call</h2><p>Your Family-Friend Calling Application</p></div>
@@ -198,7 +204,7 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <div style="background:rgba(246,255,251,.8);border:1px solid #E2F2EA;padding:11px;border-radius:16px;margin-top:10px;text-align:center"><b style="display:flex;align-items:center;justify-content:center;gap:6px"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg> Mic Test</b><br><button class="btn btn-white" onclick="testMic()">Mic Test Karo</button><p id="micStatus" style="font-size:12px;color:#6B7F76">Abhi test nahi hua</p></div>
 </div>
 
-<!-- USER CARD - Right me Online + Logout -->
+<!-- USER CARD - STICKY -->
 <div class="card" id="profileCard" style="display:none">
 <div class="profile-row">
 <div class="my-avatar" id="myAvatar" onclick="openProfilePopup()"><span id="myAvatarLetter">M</span><span class="tap-hint">TAP • EDIT</span></div>
@@ -206,7 +212,7 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <div style="flex:1;min-width:0">
 <div style="font-weight:800;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="showMyName">Mohammed</div>
 <div style="font-size:12px;color:var(--sub)">ID: <b id="showMyNum" style="color:var(--text)">-</b></div>
-<div style="font-size:11px;color:var(--sub)">Photo badalne ke liye <b style="color:#0A8A5A">Photo pe Tap</b> karo</div>
+<div style="font-size:11px;color:var(--sub)">Photo ke liye <b style="color:#0A8A5A">Photo pe Tap</b> karo</div>
 </div>
 <div class="user-right">
 <span class="user-status-pill" id="userStatusPill"><span class="sd"></span><span id="myStatus">Connecting</span></span>
@@ -218,20 +224,18 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 <div class="last-call" id="lastCallBox"></div>
 </div>
 
+<!-- ADD MEMBERS CARD - Header me Refresh + Plus + Count -->
 <div class="card" id="addCard" style="display:none">
-<div class="card-title"><span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Add Members</span><span class="badge" id="famCount"><span class="bdot"></span> 0 Members</span></div>
-<p class="card-sub">Category chuno - Family / Friends / Office / Others</p>
-<input id="famName" placeholder="Naam - Abbu">
-<input id="famNumber" type="tel" placeholder="Unka Number">
-<select id="famCategory">
-<option value="Family">Family</option>
-<option value="Friends">Friends</option>
-<option value="Office">Office</option>
-<option value="Others">Others</option>
-</select>
-<button class="btn btn-green" onclick="addFamily()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Karo</button>
-<button class="btn btn-white" onclick="forceRefresh()"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Status Refresh Karo</button>
-<div class="filter-tabs" id="filterTabs" style="margin-top:12px"></div>
+<div class="card-title">
+<span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Add Members</span>
+<div class="add-header-actions">
+<button class="mini-icon" onclick="forceRefresh()" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+<button class="mini-icon green" onclick="openAddPopup()" title="Add Member"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+<span class="badge" id="famCount"><span class="bdot"></span> 0 Online</span>
+</div>
+</div>
+<p class="card-sub">Category chuno - Family / Friends / Office / Others • List neeche scroll hogi</p>
+<div class="filter-tabs" id="filterTabs"></div>
 <div id="familyList"></div>
 </div>
 </div>
@@ -268,7 +272,25 @@ body.dark .footer .f-line{background:linear-gradient(90deg,#8B5CF6,#22D3EE)}
 </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ADD MEMBER POPUP -->
+<div id="addPopup" onclick="if(event.target===this) closeAddPopup()">
+<div class="popup-sheet">
+<div class="popup-handle"></div>
+<h3 style="margin:0 0 4px;text-align:center">Add Member</h3>
+<p style="margin:0 0 12px;text-align:center;font-size:12px;color:#6B7F76">Naam + Number + Category chuno</p>
+<input id="famName" placeholder="Naam - Abbu">
+<input id="famNumber" type="tel" placeholder="Unka Number">
+<select id="famCategory">
+<option value="Family">Family</option>
+<option value="Friends">Friends</option>
+<option value="Office">Office</option>
+<option value="Others">Others</option>
+</select>
+<button class="btn btn-green" onclick="addFamily()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Karo</button>
+<button class="btn btn-white" onclick="closeAddPopup()">Cancel</button>
+</div>
+</div>
+
 <div class="footer"><div class="f-line"></div><b>Designed & Developed by: Mohammad Firoz Alam</b><br><span>Family Call • Your Family-Friend Calling Application</span></div>
 
 <div id="callScreen">
@@ -315,7 +337,6 @@ let myNumberGlobal='', myNameGlobal='Me', myPicGlobal='';
 let callStartTime=0, callConnectedTime=0, callTimerInterval=null, lastCallName='', lastCallNumber='', lastCallIsVideo=true, callConnected=false, iEndedCall=false, endedPopupShown=false;
 let noAnswerTimer=null, ringingStartTime=0;
 let activeFilter='All';
-// THEME
 function applyTheme(){
   let t = localStorage.getItem('theme') || 'light';
   document.body.classList.toggle('dark', t==='dark');
@@ -334,7 +355,6 @@ function saveFamily(f){ localStorage.setItem('family_v2', JSON.stringify(f)); }
 let family = getFamily();
 family = family.map(f=>({category:'Family', ...f}));
 saveFamily(family);
-// PROFILE POPUP
 function openProfilePopup(){
   document.getElementById('popupName').innerText=myNameGlobal;
   document.getElementById('popupNumber').innerText=myNumberGlobal;
@@ -344,6 +364,8 @@ function openProfilePopup(){
   document.getElementById('profilePopup').classList.add('show');
 }
 function closeProfilePopup(){ document.getElementById('profilePopup').classList.remove('show'); }
+function openAddPopup(){ document.getElementById('addPopup').classList.add('show'); }
+function closeAddPopup(){ document.getElementById('addPopup').classList.remove('show'); }
 window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='flex'; });
 function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao - Install karne se Always Online chalega'); } }
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').then(()=>{ console.log('SW registered - Always Online'); }).catch(()=>{}); }
@@ -513,7 +535,7 @@ function startPresence(myNum, myName){
   mqttClient.on('close', ()=>{ mqttConnected=false; logDebug('Reconnect ho raha hai...'); setTimeout(()=>{ if(myNumberGlobal) startPresence(myNumberGlobal, myNameGlobal); }, 2000); });
 }
 function publishOnline(num, name){ if(mqttClient && mqttConnected){ try{ mqttClient.publish('family-call-v12/presence/'+num, JSON.stringify({status:'online', name:name||'Me', pic:myPicGlobal||''}), {retain:true}); }catch(e){} } }
-function forceRefresh(){ renderFamily(); publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me'); alert('Refresh ho gaya - 5 sec wait karo'); }
+function forceRefresh(){ renderFamily(); publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me'); showToast('Refresh ho gaya'); }
 function login(isAuto){
   let num=document.getElementById('myNumber').value.trim();
   let name=document.getElementById('myName').value.trim()||'Me';
@@ -584,7 +606,8 @@ function addFamily(){
   saveFamily(family);
   document.getElementById('famName').value='';document.getElementById('famNumber').value='';
   onlineMap[num]='offline';
-  renderFamily(); alert(n+' add ho gaya ['+cat+'] - 5 sec me status aayega');
+  closeAddPopup();
+  renderFamily(); showToast(n+' add ho gaya ['+cat+']');
 }
 function deleteFamily(num){
   if(!confirm('Isko delete karna hai?')) return;
@@ -605,7 +628,7 @@ function renderFamily(){
   let tabsEl=document.getElementById('filterTabs'); if(tabsEl) tabsEl.innerHTML=tabsHtml;
   let filtered = activeFilter==='All' ? family : family.filter(f=>(f.category||'Family')===activeFilter);
   let h='';
-  if(filtered.length===0){ h=`<div class="empty-box">${activeFilter==='All'?'Abhi koi Member nahi hai':activeFilter+' me koi Member nahi hai'}<br>Upar Naam + Number + Category daal ke Add Karo</div>`; }
+  if(filtered.length===0){ h=`<div class="empty-box">${activeFilter==='All'?'Abhi koi Member nahi hai':activeFilter+' me koi Member nahi hai'}<br>+ dabake Add Karo</div>`; }
   else {
     filtered.forEach(f=>{
       let st = onlineMap[f.number] || 'offline';
