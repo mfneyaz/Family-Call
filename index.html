@@ -22,17 +22,15 @@ body::after{content:'';position:fixed;bottom:-60px;left:-60px;width:260px;height
 .top-pill .d{width:8px;height:8px;border-radius:50%;background:#00D68F;box-shadow:0 0 10px #00D68F}
 .top-pill.off .d{background:#FF5A5A;box-shadow:0 0 10px #FF5A5A}
 .container{position:relative;z-index:2;max-width:480px;margin:auto;padding:12px}
-/* CARD COMPACT */
 .card{background:rgba(255,255,255,.82);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid rgba(255,255,255,.95);border-radius:24px;padding:14px;margin:10px 0;box-shadow:0 10px 26px rgba(0,120,70,.08), inset 0 1px 0 rgba(255,255,255,.9)}
 .card-title{font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:space-between;margin:0 0 2px}
 .card-sub{font-size:11px;color:#6B7F76;margin:0 0 10px}
-input{width:100%;padding:12px 13px;margin:5px 0;border:1px solid #E2F2EA;background:rgba(255,255,255,.9);border-radius:14px;font-size:14px;outline:none;color:#1A2B26}
-input:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,211,102,.15)}
+input,select{width:100%;padding:12px 13px;margin:5px 0;border:1px solid #E2F2EA;background:rgba(255,255,255,.9);border-radius:14px;font-size:14px;outline:none;color:#1A2B26}
+input:focus,select:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,211,102,.15)}
 .btn{width:100%;padding:12px;border:none;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;margin-top:7px;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-green{background:linear-gradient(135deg,#25D366,#0AC47A);color:#fff;box-shadow:0 8px 16px rgba(37,211,102,.3), inset 0 1px 0 rgba(255,255,255,.4)}
 .btn-white{background:rgba(255,255,255,.95);color:#075E54;border:1px solid #E2F2EA;box-shadow:0 4px 10px rgba(0,0,0,.04)}
 .btn svg{width:18px;height:18px;flex-shrink:0}
-/* TOP-RIGHT MINI ICONS - AAPKI PHOTO JAISA */
 .top-icons{display:flex;gap:6px;flex-shrink:0}
 .mini-icon{width:36px;height:36px;border-radius:12px;border:1px solid rgba(255,255,255,.9);background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,255,247,.85));backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,120,70,.07), inset 0 1px 0 rgba(255,255,255,.9);transition:.15s;padding:0}
 .mini-icon:active{transform:scale(.88)}
@@ -41,7 +39,6 @@ input:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,21
 .mini-icon.dark{background:linear-gradient(135deg,#0F3D2E,#075E54);border:1px solid rgba(255,255,255,.3);box-shadow:0 6px 12px rgba(7,94,84,.25), inset 0 1px 0 rgba(255,255,255,.3)}
 .mini-icon.red{background:linear-gradient(135deg,#FFF5F5,#FFEAEA);border:1px solid #FFE1E1}
 .mini-icon.red svg{stroke:#E74C3C}
-/* PROFILE COMPACT - Ek line me sab */
 .profile-row{display:flex;align-items:center;gap:10px}
 .my-avatar{width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#25D366,#0AC47A);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;position:relative;overflow:hidden;flex-shrink:0;border:2px solid #fff;box-shadow:0 8px 18px rgba(37,211,102,.25), inset 0 1px 0 rgba(255,255,255,.5);cursor:pointer}
 .my-avatar img{width:100%;height:100%;object-fit:cover}
@@ -49,7 +46,18 @@ input:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,21
 .my-avatar .cam svg{width:12px;height:12px}
 .badge{background:#E8FDF2;color:#0A8A5A;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800;display:flex;align-items:center;gap:5px}
 .badge .bdot{width:7px;height:7px;border-radius:50%;background:#00D68F}
-/* CONTACT COMPACT - Top Right Icons */
+/* FILTER TABS - All / Family / Friends / Office / Others */
+.filter-tabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
+.filter-tabs::-webkit-scrollbar{display:none}
+.filter-tab{flex-shrink:0;padding:8px 14px;border-radius:20px;border:1px solid #E2F2EA;background:#fff;font-size:12px;font-weight:800;color:#6B7F76;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.04);white-space:nowrap}
+.filter-tab.active{background:linear-gradient(135deg,#25D366,#0AC47A);color:#fff;border-color:rgba(255,255,255,.5);box-shadow:0 6px 14px rgba(37,211,102,.3)}
+.filter-tab .cnt{background:rgba(0,0,0,.08);padding:1px 6px;border-radius:10px;font-size:10px;margin-left:4px}
+.filter-tab.active .cnt{background:rgba(255,255,255,.25)}
+.cat-badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:10px;display:inline-block;margin-top:2px}
+.cat-Family{background:#E8FDF2;color:#0A8A5A;border:1px solid #C8F2DC}
+.cat-Friends{background:#E8F0FF;color:#3B5BDB;border:1px solid #C8D6FF}
+.cat-Office{background:#FFF4E0;color:#E67700;border:1px solid #FFE1A8}
+.cat-Others{background:#F1F3F5;color:#495057;border:1px solid #DEE2E6}
 .contact{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.95);border-radius:20px;padding:11px 12px;margin:8px 0;box-shadow:0 8px 18px rgba(0,120,70,.06), inset 0 1px 0 #fff;position:relative}
 .contact-top{display:flex;align-items:center;gap:10px}
 .avatar{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#D8F5E8,#B8EBD0);color:#075E54;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;position:relative;flex-shrink:0;overflow:hidden;border:2px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.05)}
@@ -60,7 +68,6 @@ input:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,21
 .contact-name{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .contact-num{font-size:12px;color:#6B7F76;display:flex;align-items:center;gap:4px}
 .contact-num svg{width:11px;height:11px;stroke:#6B7F76}
-.contact-sub{font-size:11px;color:#6B7F76}
 .status-line{font-size:10px;color:#9AAFA6;margin-top:1px}
 .empty-box{text-align:center;padding:14px;background:rgba(246,255,251,.8);border:1px dashed #C8E8D5;border-radius:16px;margin-top:8px;font-size:12px;color:#6B7F76}
 #callScreen{display:none;position:fixed;inset:0;background:#0A1F18;z-index:99;flex-direction:column}
@@ -94,25 +101,25 @@ input:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,21
 #toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(26,43,38,.95);backdrop-filter:blur(14px);color:#fff;padding:11px 16px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .last-call{font-size:11px;background:rgba(246,255,251,.9);border:1px solid #E2F2EA;padding:6px 9px;border-radius:10px;margin-top:8px;display:none}
+.online-banner{background:linear-gradient(135deg,#E8FDF2,#D8F5E8);border:1px solid #C8F2DC;border-radius:12px;padding:8px 10px;font-size:11px;color:#0A8A5A;font-weight:700;display:flex;align-items:center;gap:6px;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="header"><div class="h-avatar" id="headerAvatar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div style="flex:1"><h2 id="headerName">Family Call</h2><p>Audio • Video • Photo</p></div><span class="top-pill" id="topStatus"><span class="d"></span> Connecting...</span></div>
+<div class="header"><div class="h-avatar" id="headerAvatar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div style="flex:1"><h2 id="headerName">Family Call</h2><p>Always Online • Audio • Video</p></div><span class="top-pill" id="topStatus"><span class="d"></span> Connecting...</span></div>
 
 <div id="toast"></div>
 
 <div class="container">
-<button id="installBtn" class="btn btn-green" onclick="installApp()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> App Install Karo</button>
+<button id="installBtn" class="btn btn-green" onclick="installApp()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> App Install Karo - Always Online ke liye</button>
 
 <div class="card" id="loginCard">
-<h3 style="margin:0">Welcome</h3><p class="card-sub">Ek baar login karo, hamesha saved rahega</p>
+<h3 style="margin:0">Welcome</h3><p class="card-sub">Ek baar login karo, hamesha Online rahega - WhatsApp jaisa</p>
 <input id="myName" placeholder="Apna Naam - Mohammed">
 <input id="myNumber" type="tel" placeholder="Mobile Number">
 <button class="btn btn-green" onclick="login()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Login Karo</button>
 <div style="background:rgba(246,255,251,.8);border:1px solid #E2F2EA;padding:11px;border-radius:16px;margin-top:10px;text-align:center"><b style="display:flex;align-items:center;justify-content:center;gap:6px"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg> Mic Test</b><br><button class="btn btn-white" onclick="testMic()">Mic Test Karo</button><p id="micStatus" style="font-size:12px;color:#6B7F76">Abhi test nahi hua</p></div>
 </div>
 
-<!-- USER CARD - COMPACT + TOP RIGHT ICONS -->
 <div class="card" id="profileCard" style="display:none">
 <div class="profile-row">
 <div class="my-avatar" id="myAvatar" onclick="document.getElementById('picInput').click()"><span id="myAvatarLetter">M</span><span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span></div>
@@ -121,7 +128,6 @@ input:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,21
 <div style="font-weight:800;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="showMyName">Mohammed</div>
 <div style="font-size:12px;color:#6B7F76">ID: <b id="showMyNum" style="color:#1A2B26">-</b> • <span id="myStatus">Connecting...</span></div>
 </div>
-<!-- TOP RIGHT - 4 MINI ICONS -->
 <div class="top-icons">
 <button class="mini-icon green" onclick="document.getElementById('picInput').click()" title="Photo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
 <button class="mini-icon" onclick="removeMyPic()" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="#1A2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
@@ -129,17 +135,26 @@ input:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,21
 <button class="mini-icon red" onclick="logout()" title="Logout"><svg viewBox="0 0 24 24" fill="none" stroke="#E74C3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
 </div>
 </div>
+<div class="online-banner"><span style="width:8px;height:8px;border-radius:50%;background:#00D68F;box-shadow:0 0 8px #00D68F;display:inline-block"></span> Always Online ON - Jab tak Internet hai, aap Online dikhoge</div>
 <div class="debug-box" id="debugBox">Presence: Connecting...</div>
 <div class="last-call" id="lastCallBox"></div>
 </div>
 
 <div class="card" id="addCard" style="display:none">
-<div class="card-title"><span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Family Members</span><span class="badge" id="famCount"><span class="bdot"></span> 0 Members</span></div>
-<p class="card-sub">Icon dabake call karo</p>
+<div class="card-title"><span style="display:flex;align-items:center;gap:7px"><svg viewBox="0 0 24 24" fill="none" stroke="#0A8A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Add Members</span><span class="badge" id="famCount"><span class="bdot"></span> 0 Members</span></div>
+<p class="card-sub">Category chuno - Family / Friends / Office / Others</p>
 <input id="famName" placeholder="Naam - Abbu">
 <input id="famNumber" type="tel" placeholder="Unka Number">
+<select id="famCategory">
+<option value="Family">👨‍👩‍👧 Family</option>
+<option value="Friends">👯 Friends</option>
+<option value="Office">💼 Office</option>
+<option value="Others">👤 Others</option>
+</select>
 <button class="btn btn-green" onclick="addFamily()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Karo</button>
 <button class="btn btn-white" onclick="forceRefresh()"><svg viewBox="0 0 24 24" fill="none" stroke="#075E54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Status Refresh Karo</button>
+<!-- FILTER TABS -->
+<div class="filter-tabs" id="filterTabs" style="margin-top:12px"></div>
 <div id="familyList"></div>
 </div>
 </div>
@@ -183,16 +198,46 @@ input:focus{border-color:#25D366;background:#fff;box-shadow:0 0 0 3px rgba(37,21
 <script>
 let peer, myStream, currentCall, incomingCall, isMuted=false, isVideoCall=true, deferredPrompt=null;
 let onlineMap = {}, lastSeenMap = {}, lastPingMap = {}, picMap = {}, nameMap = {};
-let mqttClient=null, mqttConnected=false, heartbeatTimer=null, cleanupTimer=null;
+let mqttClient=null, mqttConnected=false, heartbeatTimer=null, cleanupTimer=null, wakeLock=null;
 let myNumberGlobal='', myNameGlobal='Me', myPicGlobal='';
 let callStartTime=0, callConnectedTime=0, callTimerInterval=null, lastCallName='', lastCallNumber='', lastCallIsVideo=true, callConnected=false, iEndedCall=false, endedPopupShown=false;
 let noAnswerTimer=null, ringingStartTime=0;
+let activeFilter='All';
 function getFamily(){ try{ return JSON.parse(localStorage.getItem('family_v2') || '[]'); }catch(e){ return []; } }
 function saveFamily(f){ localStorage.setItem('family_v2', JSON.stringify(f)); }
 let family = getFamily();
+// Purane members ko default Family category do
+family = family.map(f=>({category:'Family', ...f}));
+saveFamily(family);
 window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBtn').style.display='flex'; });
-function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao'); } }
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').style.display='none'; }); } else { alert('Chrome me 3 dot > Add to Home screen dabao - Install karne se Always Online chalega'); } }
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').then(()=>{ console.log('SW registered - Always Online'); }).catch(()=>{}); }
+// === ALWAYS ONLINE - WhatsApp jaisa ===
+async function requestWakeLock(){
+  try{ if('wakeLock' in navigator){ wakeLock = await navigator.wakeLock.request('screen'); } }catch(e){}
+}
+function keepOnline(){
+  // Har 5 sec me Online ping - App band ho to bhi SW se chalega
+  if(myNumberGlobal && mqttClient && mqttConnected){ publishOnline(myNumberGlobal, myNameGlobal); }
+  // SW ko bhi batao ki main Online hoon
+  if('serviceWorker' in navigator && navigator.serviceWorker.controller){
+    navigator.serviceWorker.controller.postMessage({type:'KEEP_ONLINE', number:myNumberGlobal, name:myNameGlobal, pic:myPicGlobal});
+  }
+}
+document.addEventListener('visibilitychange', ()=>{
+  if(!document.hidden){
+    // Wapas aaye to turant Online + Peer reconnect
+    keepOnline(); requestWakeLock();
+    if(peer && peer.disconnected) try{peer.reconnect();}catch(e){}
+    if(mqttClient && !mqttConnected) startPresence(myNumberGlobal, myNameGlobal);
+  } else {
+    // App background me gaya - Offline MAT bhejo, Online hi rakho
+    keepOnline();
+  }
+});
+window.addEventListener('online', ()=>{ keepOnline(); if(peer && peer.disconnected) try{peer.reconnect();}catch(e){} });
+window.addEventListener('focus', ()=>{ keepOnline(); });
+setInterval(()=>{ keepOnline(); }, 8000);
 function getNameByNumber(num){
   if(!num) return 'Family';
   let f = getFamily().find(x=>x.number===num);
@@ -317,16 +362,18 @@ function startPresence(myNum, myName){
   let clientId = 'fam-'+myNum+'-'+Math.random().toString(36).substr(2,6);
   logDebug('Presence connect ho raha hai...');
   try{ if(mqttClient) try{mqttClient.end(true);}catch(e){} }catch(e){}
-  mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', { clientId: clientId, keepalive: 15, clean: true, will: { topic: 'family-call-v12/presence/'+myNum, payload: JSON.stringify({status:'offline', name:myName, pic:''}), retain: true } });
+  // Will me delay - taaki thodi der disconnect pe bhi Offline na dikhe
+  mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', { clientId: clientId, keepalive: 15, clean: true, reconnectPeriod: 2000, will: { topic: 'family-call-v12/presence/'+myNum, payload: JSON.stringify({status:'offline', name:myName, pic:''}), retain: true, properties: { willDelayInterval: 30 } } });
   mqttClient.on('connect', ()=>{
-    mqttConnected=true; logDebug('Presence Connected - ID: '+myNum);
+    mqttConnected=true; logDebug('Always Online ✅ - ID: '+myNum);
     mqttClient.subscribe('family-call-v12/presence/#');
     mqttClient.subscribe('family-call-v12/call/'+myNum);
     publishOnline(myNum, myName);
+    requestWakeLock();
     if(heartbeatTimer) clearInterval(heartbeatTimer);
-    heartbeatTimer=setInterval(()=>{ publishOnline(myNum, myName); }, 5000);
+    heartbeatTimer=setInterval(()=>{ publishOnline(myNum, myName); keepOnline(); }, 4000);
     if(cleanupTimer) clearInterval(cleanupTimer);
-    cleanupTimer=setInterval(()=>{ let now=Date.now(); family=getFamily(); family.forEach(f=>{ if(lastPingMap[f.number] && (now-lastPingMap[f.number] > 15000)){ if(onlineMap[f.number]!=='offline'){ onlineMap[f.number]='offline'; lastSeenMap[f.number]='App band hai'; renderFamily(); } } }); }, 5000);
+    cleanupTimer=setInterval(()=>{ let now=Date.now(); family=getFamily(); family.forEach(f=>{ if(lastPingMap[f.number] && (now-lastPingMap[f.number] > 25000)){ if(onlineMap[f.number]!=='offline'){ onlineMap[f.number]='offline'; lastSeenMap[f.number]='App band hai'; renderFamily(); } } }); }, 5000);
   });
   mqttClient.on('message', (topic, payload)=>{
     try{
@@ -338,7 +385,7 @@ function startPresence(myNum, myName){
     }catch(e){}
   });
   mqttClient.on('error', ()=>{ logDebug('Presence error, retry...'); });
-  mqttClient.on('close', ()=>{ mqttConnected=false; logDebug('Presence disconnected, retry...'); });
+  mqttClient.on('close', ()=>{ mqttConnected=false; logDebug('Reconnect ho raha hai...'); setTimeout(()=>{ if(myNumberGlobal) startPresence(myNumberGlobal, myNameGlobal); }, 2000); });
 }
 function publishOnline(num, name){ if(mqttClient && mqttConnected){ try{ mqttClient.publish('family-call-v12/presence/'+num, JSON.stringify({status:'online', name:name||'Me', pic:myPicGlobal||''}), {retain:true}); }catch(e){} } }
 function forceRefresh(){ renderFamily(); publishOnline(myNumberGlobal, localStorage.getItem('myName')||'Me'); alert('Refresh ho gaya - 5 sec wait karo'); }
@@ -347,6 +394,8 @@ function login(isAuto){
   let name=document.getElementById('myName').value.trim()||'Me';
   if(num.length<10){ if(!isAuto) alert('Sahi number daalo'); return; }
   localStorage.setItem('myNumber', num); localStorage.setItem('myName', name);
+  // Always Online ke liye save - Logout tak Online rahega
+  localStorage.setItem('alwaysOnline', '1');
   myNameGlobal=name; myNumberGlobal=num;
   document.getElementById('loginCard').style.display='none';
   document.getElementById('profileCard').style.display='block';
@@ -360,9 +409,9 @@ function login(isAuto){
   if(peer){ try{peer.destroy();}catch(e){} }
   peer=new Peer('family-'+num);
   peer.on('open',()=>{ setStatusUI(true); startPresence(num, name); });
-  peer.on('disconnected',()=>{ setTimeout(()=>{ try{peer.reconnect();}catch(e){} }, 3000); });
+  peer.on('disconnected',()=>{ setTimeout(()=>{ try{peer.reconnect();}catch(e){} }, 2000); });
+  peer.on('close',()=>{ setTimeout(()=>{ if(localStorage.getItem('alwaysOnline')==='1') login(true); }, 3000); });
   peer.on('error',()=>{});
-  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && peer && peer.disconnected) try{peer.reconnect();}catch(e){} });
   peer.on('call',call=>{
     incomingCall=call;
     let isV = call.metadata ? call.metadata.isVideo : true;
@@ -392,22 +441,27 @@ function login(isAuto){
 }
 function copyMyNumber(){ let n=localStorage.getItem('myNumber'); navigator.clipboard.writeText(n); alert('Number copy ho gaya: '+n); }
 function logout(){
-  if(confirm('Logout karna hai?')){
+  if(confirm('Logout karna hai? Tabhi Offline dikhoge, warna hamesha Online rahoge.')){
+    localStorage.removeItem('alwaysOnline');
     if(mqttClient && mqttConnected){ try{mqttClient.publish('family-call-v12/presence/'+myNumberGlobal, JSON.stringify({status:'offline'}), {retain:true});}catch(e){} }
+    if('serviceWorker' in navigator && navigator.serviceWorker.controller){ navigator.serviceWorker.controller.postMessage({type:'LOGOUT'}); }
     localStorage.removeItem('myNumber'); localStorage.removeItem('myName'); if(peer) try{peer.destroy();}catch(e){} location.reload();
   }
 }
+// === CATEGORY + FILTER ===
+function setFilter(cat){ activeFilter=cat; renderFamily(); }
 function addFamily(){
   let n=document.getElementById('famName').value.trim();
   let num=document.getElementById('famNumber').value.trim();
+  let cat=document.getElementById('famCategory').value || 'Family';
   if(!n||!num){alert('Naam aur Number daalo');return;}
   family = getFamily();
   if(family.some(f=>f.number===num)){ alert('Ye number pehle se add hai!'); return; }
-  family.push({name:n,number:num});
+  family.push({name:n,number:num,category:cat});
   saveFamily(family);
   document.getElementById('famName').value='';document.getElementById('famNumber').value='';
   onlineMap[num]='offline';
-  renderFamily(); alert(n+' add ho gaya - 5 sec me status aayega');
+  renderFamily(); alert(n+' add ho gaya ['+cat+'] - 5 sec me status aayega');
 }
 function deleteFamily(num){
   if(!confirm('Isko delete karna hai?')) return;
@@ -415,16 +469,27 @@ function deleteFamily(num){
   saveFamily(family); delete onlineMap[num]; renderFamily();
 }
 function renderFamily(){
-  family = getFamily();
+  family = getFamily().map(f=>({category:'Family', ...f}));
+  saveFamily(family);
   let onlineCount = family.filter(f=> onlineMap[f.number]==='online').length;
   document.getElementById('famCount').innerHTML = '<span class="bdot"></span> ' + onlineCount + ' Online • ' + family.length + ' Total';
+  // Filter Tabs
+  let cats=['All','Family','Friends','Office','Others'];
+  let tabsHtml='';
+  cats.forEach(c=>{
+    let cnt = c==='All' ? family.length : family.filter(f=>(f.category||'Family')===c).length;
+    tabsHtml+=`<button class="filter-tab ${activeFilter===c?'active':''}" onclick="setFilter('${c}')">${c}<span class="cnt">${cnt}</span></button>`;
+  });
+  let tabsEl=document.getElementById('filterTabs'); if(tabsEl) tabsEl.innerHTML=tabsHtml;
+  let filtered = activeFilter==='All' ? family : family.filter(f=>(f.category||'Family')===activeFilter);
   let h='';
-  if(family.length===0){ h=`<div class="empty-box">Abhi koi Family Member nahi hai<br>Upar Naam + Number daal ke Add Karo</div>`; }
+  if(filtered.length===0){ h=`<div class="empty-box">${activeFilter==='All'?'Abhi koi Member nahi hai':'${activeFilter} me koi Member nahi hai'}<br>Upar Naam + Number + Category daal ke Add Karo</div>`; }
   else {
-    family.forEach(f=>{
+    filtered.forEach(f=>{
       let st = onlineMap[f.number] || 'offline';
       let dotClass = st==='online' ? 'dot online' : 'dot';
       let statusText = st==='online' ? 'Abhi Online • Call kar sakte ho' : (lastSeenMap[f.number]||'App band hai');
+      let cat = f.category||'Family';
       let pic = getPicByNumber(f.number);
       let avatarHtml = pic ? `<img src="${pic}">` : f.name.charAt(0).toUpperCase();
       h+=`<div class="contact">
@@ -433,7 +498,7 @@ function renderFamily(){
           <div class="contact-info">
             <div class="contact-name">${f.name}</div>
             <div class="contact-num"><svg viewBox="0 0 24 24" fill="none" stroke="#6B7F76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ${f.number}</div>
-            <div class="status-line">${statusText}</div>
+            <div><span class="cat-badge cat-${cat}">${cat}</span> <span class="status-line">${statusText}</span></div>
           </div>
           <div class="top-icons">
             <button class="mini-icon dark" onclick="callFamily('${f.number}','${f.name}',true)" title="Video"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
