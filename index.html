@@ -208,7 +208,7 @@ let noAnswerTimer=null,ringingStartTime=0,activeFilter='All',historyFilter='All'
 let dataSaverMode='balanced';
 let cropState={img:null,scale:1,x:0,y:0,imgW:0,imgH:0,startX:0,startY:0,dragX:0,dragY:0,dragging:false};
 let isSpeakerOn=true,ringAudioCtx=null,ringOscTimer=null,audioUnlocked=false;
-let isPresenceStarting=false,lastPresenceStart=0,keepScreenOn=false;
+let isPresenceStarting=false,lastPresenceStart=0,keepScreenOn=false,lastPublishTime=0,reconnectLogged=false;
 let myVideoDragging=false,mvStartX=0,mvStartY=0,mvOrigX=0,mvOrigY=0;
 function applyTheme(){let t=localStorage.getItem('theme')||'light';document.body.classList.toggle('dark',t==='dark');document.getElementById('themeIconSun').style.display=t==='dark'?'none':'block';document.getElementById('themeIconMoon').style.display=t==='dark'?'block':'none';document.documentElement.style.background=t==='dark'?'#0B0F1E':'#E8FDF2';}
 function toggleTheme(){let cur=localStorage.getItem('theme')||'light';localStorage.setItem('theme',cur==='dark'?'light':'dark');applyTheme();}
@@ -337,11 +337,17 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPro
 function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBtn').style.display='none';});}else{alert('Chrome me 3 dot > Add to Home screen dabao');}}
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(()=>{}).catch(()=>{});}
 async function requestWakeLock(){try{if('wakeLock' in navigator){wakeLock=await navigator.wakeLock.request('screen');}}catch(e){}}
-function keepOnline(){if(myNumberGlobal&&mqttClient&&mqttConnected){publishOnline(myNumberGlobal,myNameGlobal);}if('serviceWorker' in navigator&&navigator.serviceWorker.controller){navigator.serviceWorker.controller.postMessage({type:'KEEP_ONLINE',number:myNumberGlobal,name:myNameGlobal,pic:myPicGlobal});}}
+function keepOnline(){
+  let now=Date.now();
+  if(now-lastPublishTime<10000) return;
+  lastPublishTime=now;
+  if(myNumberGlobal&&mqttClient&&mqttConnected){publishOnline(myNumberGlobal,myNameGlobal);}
+  if('serviceWorker' in navigator&&navigator.serviceWorker.controller){navigator.serviceWorker.controller.postMessage({type:'KEEP_ONLINE',number:myNumberGlobal,name:myNameGlobal,pic:myPicGlobal});}
+}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){keepOnline();}else{keepOnline();}});
 window.addEventListener('online',()=>{keepOnline();if(peer&&peer.disconnected)try{peer.reconnect();}catch(e){}});
 window.addEventListener('focus',()=>{keepOnline();});
-setInterval(()=>{keepOnline();},20000);
+setInterval(()=>{keepOnline();},30000);
 function getNameByNumber(num){if(!num)return'Family';let f=getFamily().find(x=>x.number===num);if(f)return f.name;if(nameMap[num])return nameMap[num];if(num===myNumberGlobal)return myNameGlobal;return num;}
 function getPicByNumber(num){if(!num)return'';if(picMap[num])return picMap[num];if(num===myNumberGlobal)return myPicGlobal;return'';}
 function setMyAvatarUI(){let av=document.getElementById('myAvatar');if(myPicGlobal){av.innerHTML='<img src="'+myPicGlobal+'"><span class="tap-hint">TAP • EDIT</span>';}else{av.innerHTML='<span id="myAvatarLetter">'+(myNameGlobal.charAt(0).toUpperCase()||'M')+'</span><span class="tap-hint">TAP • EDIT</span>';}}
@@ -398,25 +404,46 @@ function sendCallSignal(toNumber,action){if(!mqttClient||!mqttConnected)return;t
 function handleCallSignal(data){let fromNum=data.from;let fromName=getNameByNumber(fromNum);let isCalling=document.getElementById('callScreen').style.display==='flex';let isRinging=document.getElementById('incoming').style.display==='flex';if(!isCalling&&!isRinging)return;if(data.action==='ended'){iEndedCall=true;forceEndCall(true);showCallEnded('remote',fromName);}else if(data.action==='rejected'){iEndedCall=true;forceEndCall(true);showCallEnded('rejected',fromName);}else if(data.action==='no-answer'){iEndedCall=true;forceEndCall(true);showCallEnded('no-answer',fromName);}}
 function startPresence(myNum,myName){
   let now=Date.now();
-  if(isPresenceStarting && (now-lastPresenceStart<5000)) return;
+  if(isPresenceStarting && (now-lastPresenceStart<10000)) return;
+  if(mqttClient && mqttConnected) return;
   isPresenceStarting=true; lastPresenceStart=now;
   myNumberGlobal=myNum;myNameGlobal=myName;
-  if(typeof mqtt==='undefined'){isPresenceStarting=false;logDebug('MQTT load nahi hui');setTimeout(()=>{startPresence(myNum,myName);},5000);return;}
-  let clientId='fam-'+myNum+'-'+Math.random().toString(36).substr(2,6);logDebug('Presence connect ho raha hai...');
+  if(typeof mqtt==='undefined'){isPresenceStarting=false;logDebug('MQTT load nahi hui');setTimeout(()=>{startPresence(myNum,myName);},10000);return;}
+  let savedClientId=localStorage.getItem('myClientId');
+  if(!savedClientId){ savedClientId='fam-'+myNum+'-'+Date.now().toString(36); localStorage.setItem('myClientId',savedClientId); }
+  let clientId=savedClientId;
+  logDebug('Presence connect ho raha hai...');
   try{if(mqttClient)try{mqttClient.end(true);}catch(e){}}catch(e){}
-  mqttClient=mqtt.connect('wss://broker.emqx.io:8084/mqtt',{clientId:clientId,keepalive:60,clean:true,reconnectPeriod:5000,will:{topic:'family-call-v12/presence/'+myNum,payload:JSON.stringify({status:'offline',name:myName,pic:''}),retain:true}});
-  mqttClient.on('connect',()=>{isPresenceStarting=false;mqttConnected=true;logDebug('Always Online - ID: '+myNum);mqttClient.subscribe('family-call-v12/presence/#');mqttClient.subscribe('family-call-v12/call/'+myNum);mqttClient.subscribe('family-call-v12/request/'+myNum);publishOnline(myNum,myName);requestWakeLock();if(heartbeatTimer)clearInterval(heartbeatTimer);heartbeatTimer=setInterval(()=>{publishOnline(myNum,myName);},20000);if(cleanupTimer)clearInterval(cleanupTimer);cleanupTimer=setInterval(()=>{let now2=Date.now();family=getFamily();family.forEach(f=>{if(lastPingMap[f.number]&&(now2-lastPingMap[f.number]>180000)){if(onlineMap[f.number]!=='offline'){onlineMap[f.number]='offline';lastSeenMap[f.number]='App band hai';renderFamily();}}});},10000);});
+  mqttClient=mqtt.connect('wss://broker.emqx.io:8084/mqtt',{clientId:clientId,keepalive:120,clean:false,reconnectPeriod:10000,connectTimeout:15000,will:{topic:'family-call-v12/presence/'+myNum,payload:JSON.stringify({status:'offline',name:myName,pic:''}),retain:true}});
+  mqttClient.on('connect',()=>{isPresenceStarting=false;reconnectLogged=false;mqttConnected=true;logDebug('Online - ID: '+myNum);mqttClient.subscribe('family-call-v12/presence/#');mqttClient.subscribe('family-call-v12/call/'+myNum);mqttClient.subscribe('family-call-v12/request/'+myNum);publishOnline(myNum,myName);requestWakeLock();if(heartbeatTimer)clearInterval(heartbeatTimer);heartbeatTimer=setInterval(()=>{publishOnline(myNum,myName);},30000);if(cleanupTimer)clearInterval(cleanupTimer);cleanupTimer=setInterval(()=>{let now2=Date.now();family=getFamily();family.forEach(f=>{if(lastPingMap[f.number]&&(now2-lastPingMap[f.number]>180000)){if(onlineMap[f.number]!=='offline'){onlineMap[f.number]='offline';lastSeenMap[f.number]='App band hai';renderFamily();}}});},15000);});
   mqttClient.on('message',(topic,payload)=>{try{
     if(topic.indexOf('/request/')!==-1){let d=JSON.parse(payload.toString());if(d.from!==myNum)handleFriendRequest(d);return;}
     if(topic.indexOf('/call/')!==-1){let d=JSON.parse(payload.toString());if(d.from!==myNum)handleCallSignal(d);return;}
-    let data=JSON.parse(payload.toString());let num=topic.split('/').pop();if(num===myNum)return;if(data.name)nameMap[num]=data.name;if(data.pic)picMap[num]=data.pic;if(data.status==='online'){onlineMap[num]='online';lastPingMap[num]=Date.now();lastSeenMap[num]='Abhi Online';}else{onlineMap[num]='offline';lastSeenMap[num]='App band hai';}renderFamily();}catch(e){}});
-  mqttClient.on('error',()=>{logDebug('Presence error, retry...');});mqttClient.on('close',()=>{mqttConnected=false;logDebug('Reconnect ho raha hai...');setTimeout(()=>{isPresenceStarting=false;if(myNumberGlobal)startPresence(myNumberGlobal,myNameGlobal);},5000);});
+    let data=JSON.parse(payload.toString());let num=topic.split('/').pop();if(num===myNum)return;if(data.name)nameMap[num]=data.name;if(data.pic)picMap[num]=data.pic;
+    if(data.status==='online'){ if(onlineMap[num]!=='online'){onlineMap[num]='online';lastPingMap[num]=Date.now();lastSeenMap[num]='Abhi Online';renderFamily();} else {lastPingMap[num]=Date.now();} }
+    else { if(onlineMap[num]!=='offline'){onlineMap[num]='offline';lastSeenMap[num]='App band hai';renderFamily();} }
+  }catch(e){}});
+  mqttClient.on('error',()=>{});
+  mqttClient.on('close',()=>{mqttConnected=false;isPresenceStarting=false;if(!reconnectLogged){reconnectLogged=true;logDebug('Network hila - Reconnect ho raha hai...');}});
 }
 function publishOnline(num,name){if(mqttClient&&mqttConnected){try{mqttClient.publish('family-call-v12/presence/'+num,JSON.stringify({status:'online',name:name||'Me',pic:myPicGlobal||''}),{retain:true});}catch(e){}}}
-function forceRefresh(){renderFamily();publishOnline(myNumberGlobal,localStorage.getItem('myName')||'Me');showToast('Refresh ho gaya');}
-function login(isAuto){unlockAudio();let num=document.getElementById('myNumber').value.trim();let name=document.getElementById('myName').value.trim()||'Me';if(num.length<10){if(!isAuto)alert('Sahi number daalo');return;}localStorage.setItem('myNumber',num);localStorage.setItem('myName',name);localStorage.setItem('alwaysOnline','1');myNameGlobal=name;myNumberGlobal=num;document.getElementById('loginCard').style.display='none';document.getElementById('profileCard').style.display='block';document.getElementById('addCard').style.display='block';document.getElementById('historyCard').style.display='block';document.getElementById('showMyName').innerText=name;document.getElementById('showMyNum').innerText=num;setMyAvatarUI();setStatusUI(false);document.getElementById('myStatus').innerText='Connecting...';renderFamily();renderCallLogs();if(peer){try{peer.destroy();}catch(e){}}peer=new Peer('family-'+num);peer.on('open',()=>{setStatusUI(true);startPresence(num,name);});peer.on('disconnected',()=>{setTimeout(()=>{try{peer.reconnect();}catch(e){}},2000);});peer.on('close',()=>{setTimeout(()=>{if(localStorage.getItem('alwaysOnline')==='1')login(true);},3000);});peer.on('error',()=>{});peer.on('call',call=>{incomingCall=call;let isV=call.metadata?call.metadata.isVideo:true;let callerNum=call.peer.replace('family-','');lastCallNumber=callerNum;lastCallName=getNameByNumber(callerNum);lastCallIsVideo=isV;resetCallTimers();document.getElementById('inName').innerText=lastCallName;document.getElementById('inNumber').innerText=callerNum;let inPic=getPicByNumber(callerNum);document.getElementById('inPic').innerHTML=inPic?'<img src="'+inPic+'">':'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:56px;height:56px"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';document.getElementById('inType').innerText=isV?'Video Call aa rahi hai...':'Audio Call aa rahi hai...';document.getElementById('incoming').style.display='flex';playRing();if(navigator.vibrate)navigator.vibrate([500,200,500]);setTimeout(()=>{if(document.getElementById('incoming').style.display==='flex'){document.getElementById('incoming').style.display='none';stopRing();try{incomingCall.close();}catch(e){}sendCallSignal(lastCallNumber,'no-answer');showToast('Missed Call - '+lastCallName);}},30000);});}
+function forceRefresh(){lastPublishTime=0;renderFamily();publishOnline(myNumberGlobal,localStorage.getItem('myName')||'Me');showToast('Refresh ho gaya');}
+function login(isAuto){
+  unlockAudio();let num=document.getElementById('myNumber').value.trim();let name=document.getElementById('myName').value.trim()||'Me';
+  if(num.length<10){if(!isAuto)alert('Sahi number daalo');return;}
+  localStorage.setItem('myNumber',num);localStorage.setItem('myName',name);localStorage.setItem('alwaysOnline','1');myNameGlobal=name;myNumberGlobal=num;
+  document.getElementById('loginCard').style.display='none';document.getElementById('profileCard').style.display='block';document.getElementById('addCard').style.display='block';document.getElementById('historyCard').style.display='block';document.getElementById('showMyName').innerText=name;document.getElementById('showMyNum').innerText=num;setMyAvatarUI();setStatusUI(false);document.getElementById('myStatus').innerText='Connecting...';renderFamily();renderCallLogs();
+  if(peer && peer.open){ setStatusUI(true); if(!mqttConnected) startPresence(num,name); return; }
+  if(peer){try{peer.destroy();}catch(e){}}
+  peer=new Peer('family-'+num);
+  peer.on('open',()=>{setStatusUI(true);startPresence(num,name);});
+  peer.on('disconnected',()=>{setTimeout(()=>{try{peer.reconnect();}catch(e){}},5000);});
+  peer.on('close',()=>{setTimeout(()=>{if(localStorage.getItem('alwaysOnline')==='1')login(true);},8000);});
+  peer.on('error',()=>{});
+  peer.on('call',call=>{incomingCall=call;let isV=call.metadata?call.metadata.isVideo:true;let callerNum=call.peer.replace('family-','');lastCallNumber=callerNum;lastCallName=getNameByNumber(callerNum);lastCallIsVideo=isV;resetCallTimers();document.getElementById('inName').innerText=lastCallName;document.getElementById('inNumber').innerText=callerNum;let inPic=getPicByNumber(callerNum);document.getElementById('inPic').innerHTML=inPic?'<img src="'+inPic+'">':'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:56px;height:56px"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';document.getElementById('inType').innerText=isV?'Video Call aa rahi hai...':'Audio Call aa rahi hai...';document.getElementById('incoming').style.display='flex';playRing();if(navigator.vibrate)navigator.vibrate([500,200,500]);setTimeout(()=>{if(document.getElementById('incoming').style.display==='flex'){document.getElementById('incoming').style.display='none';stopRing();try{incomingCall.close();}catch(e){}sendCallSignal(lastCallNumber,'no-answer');showToast('Missed Call - '+lastCallName);}},30000);});
+}
 function copyMyNumber(){let n=localStorage.getItem('myNumber');navigator.clipboard.writeText(n);alert('Number copy ho gaya: '+n);}
-function logout(){if(confirm('Logout karna hai?')){localStorage.removeItem('alwaysOnline');if(mqttClient&&mqttConnected){try{mqttClient.publish('family-call-v12/presence/'+myNumberGlobal,JSON.stringify({status:'offline'}),{retain:true});}catch(e){}}if('serviceWorker' in navigator&&navigator.serviceWorker.controller){navigator.serviceWorker.controller.postMessage({type:'LOGOUT'});}localStorage.removeItem('myNumber');localStorage.removeItem('myName');if(peer)try{peer.destroy();}catch(e){}location.reload();}}
+function logout(){if(confirm('Logout karna hai?')){localStorage.removeItem('alwaysOnline');localStorage.removeItem('myClientId');if(mqttClient&&mqttConnected){try{mqttClient.publish('family-call-v12/presence/'+myNumberGlobal,JSON.stringify({status:'offline'}),{retain:true});}catch(e){}}if('serviceWorker' in navigator&&navigator.serviceWorker.controller){navigator.serviceWorker.controller.postMessage({type:'LOGOUT'});}localStorage.removeItem('myNumber');localStorage.removeItem('myName');if(peer)try{peer.destroy();}catch(e){}location.reload();}}
 function setFilter(cat){activeFilter=cat;renderFamily();}
 function deleteFamily(num){if(!confirm('Isko delete karna hai?'))return;family=getFamily().filter(f=>f.number!==num);saveFamily(family);delete onlineMap[num];renderFamily();}
 function renderFamily(){
