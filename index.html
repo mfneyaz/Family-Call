@@ -158,7 +158,7 @@ function acceptCall(){stopRing();let isV=incomingCall.metadata?incomingCall.meta
 function rejectCall(){stopRing();document.getElementById('incoming').style.display='none';sendCallSignal(lastCallNumber,'rejected');if(incomingCall)try{incomingCall.close()}catch(e){}showToast('Call Reject kar di');showCallEnded('missed')}
 function forceEndCall(silent){stopRing();document.getElementById('callScreen').classList.remove('video-mode');if(noAnswerTimer){clearTimeout(noAnswerTimer);noAnswerTimer=null}if(myStream)myStream.getTracks().forEach(t=>t.stop());document.getElementById('callScreen').style.display='none';document.getElementById('incoming').style.display='none';document.getElementById('remoteVideo').srcObject=null;document.getElementById('remoteAudio').srcObject=null;document.getElementById('myVideo').srcObject=null;if(!silent)stopCallTimer();currentCall=null}
 function endCall(){iEndedCall=true;sendCallSignal(lastCallNumber,'ended');if(currentCall)try{currentCall.close()}catch(e){}forceEndCall();showCallEnded('self')}
-function toggleMute(){isMuted```js
 function toggleMute(){isMuted=!isMuted;if(myStream)myStream.getAudioTracks().forEach(t=>t.enabled=!isMuted);document.getElementById('muteBtn').classList.toggle('active',isMuted);document.getElementById('muteLabel').innerText=isMuted?'Unmute':'Mute'}
 function toggleSpeaker(){isSpeakerOn=!isSpeakerOn;let a=document.getElementById('remoteAudio');if(a){a.volume=isSpeakerOn?1:0.35;a.muted=false;a.play().catch(()=>{})}document.getElementById('speakerBtn').classList.toggle('spk',isSpeakerOn);document.getElementById('speakerLabel').innerText=isSpeakerOn?'Speaker ON':'Speaker OFF';showToast(isSpeakerOn?'Speaker ON':'Speaker OFF')}
 </script></body></html>
+
